@@ -7,6 +7,7 @@ from Layout.Ui_Layout.Ui_main import Ui_MainWindow
 from Layout.SubLayout.info.LongBusSumPage import LongBusSumPage
 from Layout.SubLayout.info.CompanyOfficersPage import CompanyOfficerPage
 from Layout.SubLayout.Techanalysis.TechanalysisPage import TechAnalysispage
+from Layout.SubLayout.Techanalysis.OptimizationIndicatorTools import OptimizationIndicatorTool
 from Layout.SubLayout.Mmanagement.MmanagementPage import Moneymanagepage
 from Layout.SubLayout.Entrymanagement.EntmanagementPage import Entrymanagepage
 from Layout.Method_Class.backtrade import cerebrosetup
@@ -78,18 +79,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.aaentrymanagepage)
         self.ui.aa_DownLoad_btn.clicked.connect(
             self.techanalysisenterdownloadcsv)
+
         self.ui.ea_techPeriod_combo.currentTextChanged.connect(
             self.eatechPeriod_combo_box_changed)
         self.ui.ea_techInterval_combo.currentTextChanged.connect(
             self.eatechcheckintervalis1m)
         self.ui.ea_Techenter_btn.clicked.connect(
             self.eatechanalysisenterdetail)
+
         self.ui.ea_techanalysis_tools_btn.clicked.connect(
-            self.aatechanalysistoolpage)
-        self.ui.ea_techanalysis_tools_mmbtn.clicked.connect(
-            self.aamoneymanagepage)
-        self.ui.ea_techanalysis_tools_entriesbtn.clicked.connect(
-            self.aaentrymanagepage)
+            self.OptimizationIndicatorToolspage)
+        # self.ui.ea_techanalysis_tools_mmbtn.clicked.connect(
+        #     self.aamoneymanagepage)
+        # self.ui.ea_techanalysis_tools_entriesbtn.clicked.connect(
+        #     self.aaentrymanagepage)
 
     def side_meun_btn(self):
         self.ui.Btn_Home.clicked.connect(self.showtkhome)
@@ -459,8 +462,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         try:
             if (self.gettersymbol() != ""):
                 self.showtechanalysis()
+                self.clear_db_perm()
                 self.techanalysispagesetup()
-
                 self.techdetail()
 
             else:
@@ -632,6 +635,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         try:
             if (self.gettersymbol() != ""):
                 self.showaatechanalysis()
+                self.clear_db_perm()
                 self.aa_techanalysispagesetup()
                 self.aatechdetail()
 
@@ -747,6 +751,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.uishow = Entrymanagepage()
         self.uishow.show()
 
+    def OptimizationIndicatorToolspage(self):
+        self.uishow = OptimizationIndicatorTool()
+        self.uishow.show()
+
     # Tech Auto Analyis Page
     # ...............................................................................
     # EA Tech Auto Analyis Page
@@ -755,6 +763,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         try:
             if (self.gettersymbol() != ""):
                 self.showeatechanalysis()
+                self.clear_db_perm()
                 self.ea_techanalysispagesetup()
                 self.eatechdetail()
 
@@ -834,21 +843,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.settertoolhistory(self.pdtext)
         return True
 
-    def clearea_tableview(self):
-        self.model = QStandardItemModel()
-        self.model.clear()
-        self.model.setHorizontalHeaderLabels([])
-        self.ui.ea_tableView.setModel(self.model)
-        return True
-
     def eatechanalysisenterdetail(self):
         try:
             if (self.eatechanalysisenter() == True):
-                self.calculateinter()
-                if (self._from_ticker() == True):
-                    self.ui.ea_DownLoad_btn.show()
-                else:
-                    self.ui.ea_DownLoad_btn.hide()
+                pass
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))
@@ -882,12 +880,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         return GlobalValue.get_TechTool_history_var()
 ####################
 
+    def setterModelValue(self, text):
+        MoneyValue.set_model_perm_var(text)
+
     def getterModelValue(self):
         return MoneyValue.get_model_perm_var()
+####################
+
+    def setterModeParamlValue(self, text):
+        MoneyValue.set_model_name_var(text)
 
     def getterModeParamlValue(self):
         return MoneyValue.get_model_name_var()
 #####################
+
+    def setterEntryTechValue(self, text):
+        TechValue.set_tech_Entry_var(text)
 
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
@@ -896,16 +904,31 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def getterTechValue(self):
         return TechValue.get_tech_toolperm_var()
 
+    def setterTechValue(self, text):
+        TechValue.set_tech_toolperm_var(text)
 
 ####################
-
-
     def settersymbolnews(self, text):
         GlobalValue.set_Symbol_new_var(text)
 
     def gettersymbolnews(self):
         return GlobalValue.get_Symbol_new_var()
 ####################
+
+    def setterEntryRangeTechValue(self, text):
+        TechValue.set_tech_range_perm(text)
+
+    def getterEntryRangeTechValue(self):
+        return TechValue.get_tech_range_perm()
+##########################
+
+    def clear_db_perm(self):
+        self.setterEntryRangeTechValue({})
+        self.setterEntryTechValue({})
+        self.setterTechValue({})
+        self.setterModeParamlValue(None)
+        self.setterModelValue({})
+        print("Reset Perm Value")
 
 
 if __name__ == "__main__":

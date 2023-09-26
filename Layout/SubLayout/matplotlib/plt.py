@@ -23,8 +23,7 @@ class matplotlib_Canvas():
             up='#00ff00', down='#ff0000', wick='inherit', edge='inherit', volume='in')
         self.myrcparams = {'xtick.labelsize': 8,
                            'ytick.labelsize': 8, 'axes.labelsize': 8}
-        self.mpf_style = mpf.make_mpf_style(
-            base_mpf_style='nightclouds', marketcolors=self.color, rc=self.myrcparams)
+        self.mpf_style = mpf.make_mpf_style(marketcolors=self.color, rc=self.myrcparams)
         return self.mpf_style
 
     def plotitemgroup(self):

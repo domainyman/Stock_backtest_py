@@ -3031,7 +3031,6 @@ class talib_list():
             elif (text == "WILLR"):
                 self.willrcalculate()
             elif (text == "MAVP"):
-                """ERROR"""
                 self.mavpcalculate()
             elif (text == "BBANDS"):
                 self.bbandscalculate()
@@ -3081,17 +3080,6 @@ class talib_list():
                 self.obvcalculate()
         except BaseException as msg:
             print(str(msg))
-
-    # def baselist(self, text):
-    #     self.basechecklist = ["ADX", "ADXR", "APO", "AROON", "AROONOSC", "BOP", "CCI", "CMO", "DX", "RSI", "MACD", "MACDEXT", "MACDFIX", "MFI",
-    #                           "MINUS_DI", "MINUS_DM", "MOM", "PLUS_DI", "PLUS_DM", "PPO", "ROC", "ROCP", "ROCR", "ROCR100", "STOCH", "STOCHF",
-    #                           "STOCHRSI", "TRIX", "ULTOSC", "WILLR", "HT_DCPERIOD", "HT_DCPHASE", "HT_PHASOR", "HT_SINE", "HT_TRENDMODE",
-    #                           "BBANDS", "DEMA", "EMA", "HT_TRENDLINE", "KAMA", "MIDPOINT", "MIDPRICE", "SAR", "MAMA",
-    #                           "SAREXT", "SMA", "T3", "TEMA", "TRIMA", "WMA", "KDJ", "ATR", "NATR", "TRANGE", "AD", "ADOSC", "OBV"]
-    #     if text in self.basechecklist:
-    #         return True
-    #     else:
-    #         return False
 
     def matplotlib_main(self):
         matplotlib_Canvas(self.gettersymbolinfo(), self.gettertoolhistory())

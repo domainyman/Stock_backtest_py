@@ -78,6 +78,7 @@ py_files = [
     'Layout\\SubLayout\\Ta\\lib\\Volume_Indicator\\adosc.py',
     'Layout\\SubLayout\\Ta\\lib\\Volume_Indicator\\obv.py',
     'Layout\\SubLayout\\Techanalysis\\TechanalysisPage.py',
+    'Layout\\SubLayout\\Techanalysis\\OptimizationIndicatorTools.py'
     'Layout\\Method_Class\\backtrade.py',
     'Layout\\Ui_Layout\\Entrymanagement\\Ui_entrymanagement.py',
     'Layout\\Ui_Layout\\Info\\Ui_companyOfficers.py',

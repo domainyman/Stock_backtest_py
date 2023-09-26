@@ -5,7 +5,6 @@ class GlobalValue(object):
     history = None
     news = []
     TechTool = None
-    AATechTool = None
 
     @staticmethod
     def get_Symbol_static_var():
@@ -49,7 +48,7 @@ class GlobalValue(object):
 
     @staticmethod
     def get_TechTool_history_var():
-        # print('Get Tech History')
+        print('Get Tech History')
         return GlobalValue.TechTool
 
     @staticmethod
@@ -57,12 +56,3 @@ class GlobalValue(object):
         print('Set Tech History')
         GlobalValue.TechTool = value
 
-    @staticmethod
-    def get_AATechTool_history_var():
-        print('Get AA_Tech History')
-        return GlobalValue.AATechTool
-
-    @staticmethod
-    def set_AATechTool_history_var(value):
-        print('Set AA_Tech History')
-        GlobalValue.AATechTool = value

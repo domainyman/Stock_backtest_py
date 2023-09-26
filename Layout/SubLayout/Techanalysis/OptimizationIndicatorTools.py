@@ -7,13 +7,16 @@ from PyQt6.QtGui import QAction
 from PyQt6 import QtWidgets
 
 
-class TechAnalysispage(QDialog, Ui_TechAnalysis):
+class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
     def __init__(self):
         super().__init__()
         # use the Ui_login_form
         self.ui = Ui_TechAnalysis()
         self.ui.setupUi(self)
         self.setuptech()
+
+    def baserange(self, textname):
+        return {textname: {'First': '1', 'Last': '100', 'Step': '25'}}
 
     def setuptech(self):
         self.reloadvalue()
@@ -63,14 +66,17 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
     def deletedictitem(self):
         try:
             self.item = self.listwidgetitem()
+
             self.dict = self.getterTechValue()
             if (self.item in self.dict):
                 del self.dict[self.item]
             self.setterTechValue(self.dict)
+
             self.Entrydict = self.getterEntryTechValue()
             if (self.item in self.Entrydict):
                 del self.Entrydict[self.item]
             self.setterEntryTechValue(self.Entrydict)
+
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))
@@ -119,6 +125,9 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
             if (self.listcheckrepeat(self.text) == False):
                 self.insertbaseparam(self.text)
                 self.ui.toollistWidget.addItem(self.text)
+                print(self.getterTechValue())
+                print(self.getterEntryTechValue())
+                print(self.getterEntryRangeTechValue())
 
             else:
                 QMessageBox.warning(None, 'Select Repeat',
@@ -131,14 +140,21 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
         try:
             self.returnbase = talib_list()
             self.base = self.returnbase.basereturn(text)
-            self.global_dict = self.getterTechValue()
-            self.global_dict.update(self.base)
-            self.setterTechValue(self.global_dict)
+            if (self.base != None):
+                self.global_dict = self.getterTechValue()
+                self.global_dict.update(self.base)
+                self.setterTechValue(self.global_dict)
+
             self.entrybase = self.returnbase.entry_exit_basereturn(text)
             if (self.entrybase != None):
                 self.Entryglobal_dict = self.getterEntryTechValue()
                 self.Entryglobal_dict.update(self.entrybase)
                 self.setterEntryTechValue(self.Entryglobal_dict)
+
+            self.range_dict = self.getterEntryRangeTechValue()
+            self.range_dict.update(self.base(text))
+            self.setterEntryRangeTechValue(self.range_dict)
+
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))
@@ -188,6 +204,12 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
 
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
+
+    def setterEntryRangeTechValue(self, text):
+        TechValue.set_tech_range_perm(text)
+
+    def getterEntryRangeTechValue(self):
+        return TechValue.get_tech_range_perm()
 
     def clearwidget(self):
         layout = self.ui.groupverticalLayout  # 要清除的 QVBoxLayout

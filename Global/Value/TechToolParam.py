@@ -6,30 +6,30 @@ class TechValue(object):
 
     @staticmethod
     def get_tech_toolperm_var():
-        # print('Get Tech Tool Perm')
+        print('Get Tech Tool Perm')
         return TechValue.tool_perm
 
     @staticmethod
     def set_tech_toolperm_var(value):
-        # print('Set Tech Tool Perm')
+        print('Set Tech Tool Perm')
         TechValue.tool_perm = value
 
     @staticmethod
     def get_tech_Entry_var():
-        # print('Get Entry Tech Perm')
+        print('Get Entry Tech Perm')
         return TechValue.Entry_perm
 
     @staticmethod
     def set_tech_Entry_var(value):
-        # print('Set Entry Tech Perm')
+        print('Set Entry Tech Perm')
         TechValue.Entry_perm = value
 
     @staticmethod
     def get_tech_range_perm():
-        # print('Get Entry Tech Perm')
+        print('Get Tool Range Tech Perm')
         return TechValue.range_perm
 
     @staticmethod
     def set_tech_range_perm(value):
-        # print('Set Entry Tech Perm')
+        print('Set Tool Range Tech Perm')
         TechValue.range_perm = value
