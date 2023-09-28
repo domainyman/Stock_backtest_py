@@ -89,10 +89,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         self.ui.ea_techanalysis_tools_btn.clicked.connect(
             self.OptimizationIndicatorToolspage)
-        # self.ui.ea_techanalysis_tools_mmbtn.clicked.connect(
-        #     self.aamoneymanagepage)
-        # self.ui.ea_techanalysis_tools_entriesbtn.clicked.connect(
-        #     self.aaentrymanagepage)
+        self.ui.ea_techanalysis_tools_mmbtn.clicked.connect(self.aamoneymanagepage)
+        self.ui.ea_techanalysis_tools_entriesbtn.clicked.connect(self.aaentrymanagepage)
 
     def side_meun_btn(self):
         self.ui.Btn_Home.clicked.connect(self.showtkhome)

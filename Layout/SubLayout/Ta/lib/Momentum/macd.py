@@ -175,7 +175,6 @@ class macd():
         tool_dict = self.tool_dicts()
         self.global_dict.update(tool_dict)
         self.setterTechValue(self.global_dict)
-        print(self.getterTechValue())
         QMessageBox.information(None, 'Parameter Saved',
                                 'Saved Parameter Setting')
 

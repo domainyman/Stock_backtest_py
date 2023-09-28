@@ -12,9 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_TechAnalysis(object):
     def setupUi(self, TechAnalysis):
         TechAnalysis.setObjectName("TechAnalysis")
-        TechAnalysis.resize(1000, 630)
-        TechAnalysis.setMinimumSize(QtCore.QSize(1000, 630))
-        TechAnalysis.setMaximumSize(QtCore.QSize(1000, 630))
+        TechAnalysis.resize(1095, 702)
         TechAnalysis.setStyleSheet("background-color: rgb(47, 47, 47);\n"
 "border-color: rgb(47, 47, 47);\n"
 "color: rgb(255, 255, 255);")
@@ -56,7 +54,7 @@ class Ui_TechAnalysis(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.toollistWidget = QtWidgets.QListWidget(parent=TechAnalysis)
-        self.toollistWidget.setMaximumSize(QtCore.QSize(470, 16777215))
+        self.toollistWidget.setMaximumSize(QtCore.QSize(250, 16777215))
         self.toollistWidget.setStyleSheet("background-color: rgb(47, 47, 47);\n"
 "border-color: rgb(47, 47, 47);\n"
 "color: rgb(255, 255, 255);")

@@ -123,6 +123,12 @@ class rsi():
     def gettertoolhistory(self):
         return GlobalValue.get_TechTool_history_var()
 
+    def setterEntryRangeTechValue(self, text):
+        TechValue.set_tech_range_perm(text)
+
+    def getterEntryRangeTechValue(self):
+        return TechValue.get_tech_range_perm()
+
     def calculate(self):
         self.datadb = self.gettertoolhistory()
         self.datadb["RSI"] = talib.RSI(
