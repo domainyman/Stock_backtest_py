@@ -151,8 +151,9 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                 self.Entryglobal_dict.update(self.entrybase)
                 self.setterEntryTechValue(self.Entryglobal_dict)
 
+            self.basecase = self.baserange(text)
             self.range_dict = self.getterEntryRangeTechValue()
-            self.range_dict.update(self.base(text))
+            self.range_dict.update(self.basecase)
             self.setterEntryRangeTechValue(self.range_dict)
 
         except BaseException as msg:
