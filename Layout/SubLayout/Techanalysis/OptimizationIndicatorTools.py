@@ -248,7 +248,8 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             print("123123")
             self.dict_key_value = self.tech_tool_key[text].keys()
             for permvalue in self.dict_key_value:
-                self.returnwidget = self.createwidget_setup(text, textname=permvalue)
+                self.returnwidget = self.createwidget_setup(
+                    text, textname=permvalue)
                 self.ui.groupverticalLayout.addLayout(self.returnwidget)
         else:
             print("qwerwer")
@@ -262,127 +263,162 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             return False
 
     def createwidget_setup(self, textmain, textname=None):
-        if(textname == None):
+        if (textname == None):
             self.keyvalue = self.getterEntryRangeTechValue()[textmain]
             self.__dict__[textmain + 'mainlabel'] = QLabel(' Parameter :')
-            self.__dict__[textmain + 'mainlabel'].setMinimumSize(QSize(150, 25))
-            self.__dict__[textmain + 'mainlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.__dict__[textmain + 'mainlabel'].setStyleSheet("color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
+            self.__dict__[textmain +
+                          'mainlabel'].setMinimumSize(QSize(150, 25))
+            self.__dict__[
+                textmain + 'mainlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.__dict__[textmain + 'mainlabel'].setStyleSheet(
+                "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             for perm in self.keyvalue:
                 if (perm == "First"):
-                    self.__dict__[textmain + 'Firstparameter'] = self.keyvalue['First']
+                    self.__dict__[textmain +
+                                  'Firstparameter'] = self.keyvalue['First']
                     self.__dict__[textmain + 'firstlabel'] = QLabel('First :')
-                    self.__dict__[textmain + 'firstlabel'].setMinimumSize(QSize(150, 25))
-                    self.__dict__[textmain + 'firstlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                    self.__dict__[textmain + 'firstlabel'].setStyleSheet("color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
+                    self.__dict__[textmain +
+                                  'firstlabel'].setMinimumSize(QSize(150, 25))
+                    self.__dict__[
+                        textmain + 'firstlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                    self.__dict__[textmain + 'firstlabel'].setStyleSheet(
+                        "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
                     self.__dict__[textmain + 'firstedit'] = QLineEdit()
-                    self.__dict__[textmain + 'firstedit'].setText(str(self.__dict__[textmain + 'Firstparameter']))
-                    self.__dict__[textmain + 'firstedit'].setMinimumSize(QSize(200, 25))
-                    self.__dict__[textmain + 'firstedit'].setStyleSheet("background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
+                    self.__dict__[
+                        textmain + 'firstedit'].setText(str(self.__dict__[textmain + 'Firstparameter']))
+                    self.__dict__[textmain +
+                                  'firstedit'].setMinimumSize(QSize(200, 25))
+                    self.__dict__[textmain + 'firstedit'].setStyleSheet(
+                        "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
         ###############################
                 elif (perm == "Last"):
-                    self.__dict__[textmain + 'Lastparameter'] = self.keyvalue['Last']
+                    self.__dict__[textmain +
+                                  'Lastparameter'] = self.keyvalue['Last']
                     self.__dict__[textmain + 'nextlabel'] = QLabel('Last :')
-                    self.__dict__[textmain + 'nextlabel'].setMinimumSize(QSize(150, 25))
-                    self.__dict__[textmain + 'nextlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                    self.__dict__[textmain + 'nextlabel'].setStyleSheet("color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
+                    self.__dict__[textmain +
+                                  'nextlabel'].setMinimumSize(QSize(150, 25))
+                    self.__dict__[
+                        textmain + 'nextlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                    self.__dict__[textmain + 'nextlabel'].setStyleSheet(
+                        "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
                     self.__dict__[textmain + 'nextedit'] = QLineEdit()
-                    self.__dict__[textmain + 'nextedit'].setText(str(self.__dict__[textmain + 'Lastparameter']))
-                    self.__dict__[textmain + 'nextedit'].setMinimumSize(QSize(200, 25))
-                    self.__dict__[textmain + 'nextedit'].setStyleSheet("background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
+                    self.__dict__[
+                        textmain + 'nextedit'].setText(str(self.__dict__[textmain + 'Lastparameter']))
+                    self.__dict__[textmain +
+                                  'nextedit'].setMinimumSize(QSize(200, 25))
+                    self.__dict__[textmain + 'nextedit'].setStyleSheet(
+                        "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
         ################################
                 elif (perm == "Step"):
-                    self.__dict__[textmain + 'Stepparameter'] = self.keyvalue['Step']
+                    self.__dict__[textmain +
+                                  'Stepparameter'] = self.keyvalue['Step']
                     self.__dict__[textmain + 'steplabel'] = QLabel('Step :')
-                    self.__dict__[textmain + 'steplabel'].setMinimumSize(QSize(150, 25))
-                    self.__dict__[textmain + 'steplabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
-                    self.__dict__[textmain + 'steplabel'].setStyleSheet("color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
+                    self.__dict__[textmain +
+                                  'steplabel'].setMinimumSize(QSize(150, 25))
+                    self.__dict__[
+                        textmain + 'steplabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                    self.__dict__[textmain + 'steplabel'].setStyleSheet(
+                        "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
                     self.__dict__[textmain + 'stepedit'] = QLineEdit()
-                    self.__dict__[textmain + 'stepedit'].setText(str(self.__dict__[textmain + 'Stepparameter']))
-                    self.__dict__[textmain + 'stepedit'].setMinimumSize(QSize(200, 25))
-                    self.__dict__[textmain + 'stepedit'].setStyleSheet("background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
+                    self.__dict__[
+                        textmain + 'stepedit'].setText(str(self.__dict__[textmain + 'Stepparameter']))
+                    self.__dict__[textmain +
+                                  'stepedit'].setMinimumSize(QSize(200, 25))
+                    self.__dict__[textmain + 'stepedit'].setStyleSheet(
+                        "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
             ########################
             self.__dict__[textmain + 'formlayout'] = QFormLayout()
-            self.__dict__[textmain + 'formlayout'].addRow(self.__dict__[textmain + 'mainlabel'])
-            self.__dict__[textmain + 'formlayout'].addRow(self.__dict__[textmain + 'firstlabel'], self.__dict__[textmain + 'firstedit'])
-            self.__dict__[textmain + 'formlayout'].addRow(self.__dict__[textmain + 'nextlabel'], self.__dict__[textmain + 'nextedit'])
-            self.__dict__[textmain + 'formlayout'].addRow(self.__dict__[textmain + 'steplabel'], self.__dict__[textmain + 'stepedit'])
+            self.__dict__[
+                textmain + 'formlayout'].addRow(self.__dict__[textmain + 'mainlabel'])
+            self.__dict__[textmain + 'formlayout'].addRow(
+                self.__dict__[textmain + 'firstlabel'], self.__dict__[textmain + 'firstedit'])
+            self.__dict__[textmain + 'formlayout'].addRow(
+                self.__dict__[textmain + 'nextlabel'], self.__dict__[textmain + 'nextedit'])
+            self.__dict__[textmain + 'formlayout'].addRow(
+                self.__dict__[textmain + 'steplabel'], self.__dict__[textmain + 'stepedit'])
 
             self.__dict__[textmain + 'button'] = QPushButton('Submit')
             self.__dict__[textmain + 'button'].clicked.connect(lambda: self.uploadRangeValue(
                 textmain, self.__dict__[textmain + 'firstedit'].text(), self.__dict__[textmain + 'nextedit'].text(), self.__dict__[textmain + 'stepedit'].text()))
             self.__dict__[textmain + 'button'].setMinimumSize(QSize(200, 25))
-            self.__dict__[textmain + 'button'].setStyleSheet("color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
+            self.__dict__[textmain + 'button'].setStyleSheet(
+                "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             self.__dict__[textmain + 'layout'] = QVBoxLayout()
-            self.__dict__[textmain + 'layout'].addLayout(self.__dict__[textmain + 'formlayout'])
-            self.__dict__[textmain + 'layout'].addWidget(self.__dict__[textmain + 'button'])
+            self.__dict__[
+                textmain + 'layout'].addLayout(self.__dict__[textmain + 'formlayout'])
+            self.__dict__[
+                textmain + 'layout'].addWidget(self.__dict__[textmain + 'button'])
             return self.__dict__[textmain + 'layout']
         else:
-            self.keyvalue = self.getterEntryRangeTechValue()[textmain][textname]
+            self.keyvalue = self.getterEntryRangeTechValue()[
+                textmain][textname]
             # main
             self.__dict__[textmain + textname +
-                        'mainlabel'] = QLabel(textname + ' Parameter :')
+                          'mainlabel'] = QLabel(textname + ' Parameter :')
             self.__dict__[textmain + textname +
-                        'mainlabel'].setMinimumSize(QSize(150, 25))
+                          'mainlabel'].setMinimumSize(QSize(150, 25))
             self.__dict__[textmain + textname +
-                        'mainlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                          'mainlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.__dict__[textmain + textname + 'mainlabel'].setStyleSheet(
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             for perm in self.keyvalue:
                 if (perm == "First"):
                     self.__dict__[textmain + textname +
-                                'Firstparameter'] = self.keyvalue['First']
+                                  'Firstparameter'] = self.keyvalue['First']
                     self.__dict__[textmain + textname +
-                                'firstlabel'] = QLabel('First :')
+                                  'firstlabel'] = QLabel('First :')
                     self.__dict__[textmain + textname +
-                                'firstlabel'].setMinimumSize(QSize(150, 25))
+                                  'firstlabel'].setMinimumSize(QSize(150, 25))
                     self.__dict__[textmain + textname +
-                                'firstlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                                  'firstlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                     self.__dict__[textmain + textname + 'firstlabel'].setStyleSheet(
                         "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-                    self.__dict__[textmain + textname + 'firstedit'] = QLineEdit()
                     self.__dict__[textmain + textname +
-                                'firstedit'].setText(str(self.__dict__[textmain + textname + 'Firstparameter']))
+                                  'firstedit'] = QLineEdit()
                     self.__dict__[textmain + textname +
-                                'firstedit'].setMinimumSize(QSize(200, 25))
+                                  'firstedit'].setText(str(self.__dict__[textmain + textname + 'Firstparameter']))
+                    self.__dict__[textmain + textname +
+                                  'firstedit'].setMinimumSize(QSize(200, 25))
                     self.__dict__[textmain + textname + 'firstedit'].setStyleSheet(
                         "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
         ###############################
                 elif (perm == "Last"):
                     self.__dict__[textmain + textname +
-                                'Lastparameter'] = self.keyvalue['Last']
+                                  'Lastparameter'] = self.keyvalue['Last']
                     self.__dict__[textmain + textname +
-                                'nextlabel'] = QLabel('Last :')
+                                  'nextlabel'] = QLabel('Last :')
                     self.__dict__[textmain + textname +
-                                'nextlabel'].setMinimumSize(QSize(150, 25))
+                                  'nextlabel'].setMinimumSize(QSize(150, 25))
                     self.__dict__[textmain + textname +
-                                'nextlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                                  'nextlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                     self.__dict__[textmain + textname + 'nextlabel'].setStyleSheet(
                         "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-                    self.__dict__[textmain + textname + 'nextedit'] = QLineEdit()
                     self.__dict__[textmain + textname +
-                                'nextedit'].setText(str(self.__dict__[textmain + textname + 'Lastparameter']))
+                                  'nextedit'] = QLineEdit()
                     self.__dict__[textmain + textname +
-                                'nextedit'].setMinimumSize(QSize(200, 25))
+                                  'nextedit'].setText(str(self.__dict__[textmain + textname + 'Lastparameter']))
+                    self.__dict__[textmain + textname +
+                                  'nextedit'].setMinimumSize(QSize(200, 25))
                     self.__dict__[textmain + textname + 'nextedit'].setStyleSheet(
                         "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
         ################################
                 elif (perm == "Step"):
                     self.__dict__[textmain + textname +
-                                'Stepparameter'] = self.keyvalue['Step']
+                                  'Stepparameter'] = self.keyvalue['Step']
                     self.__dict__[textmain + textname +
-                                'steplabel'] = QLabel('Step :')
+                                  'steplabel'] = QLabel('Step :')
                     self.__dict__[textmain + textname +
-                                'steplabel'].setMinimumSize(QSize(150, 25))
+                                  'steplabel'].setMinimumSize(QSize(150, 25))
                     self.__dict__[textmain + textname +
-                                'steplabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+                                  'steplabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
                     self.__dict__[textmain + textname + 'steplabel'].setStyleSheet(
                         "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-                    self.__dict__[textmain + textname + 'stepedit'] = QLineEdit()
                     self.__dict__[textmain + textname +
-                                'stepedit'].setText(str(self.__dict__[textmain + textname + 'Stepparameter']))
+                                  'stepedit'] = QLineEdit()
                     self.__dict__[textmain + textname +
-                                'stepedit'].setMinimumSize(QSize(200, 25))
+                                  'stepedit'].setText(str(self.__dict__[textmain + textname + 'Stepparameter']))
+                    self.__dict__[textmain + textname +
+                                  'stepedit'].setMinimumSize(QSize(200, 25))
                     self.__dict__[textmain + textname + 'stepedit'].setStyleSheet(
                         "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
             ########################
@@ -390,27 +426,28 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             self.__dict__[textmain + textname + 'formlayout'].addRow(
                 self.__dict__[textmain + textname + 'mainlabel'])
             self.__dict__[textmain + textname + 'formlayout'].addRow(self.__dict__[
-                                                                    textmain + textname + 'firstlabel'], self.__dict__[textmain + textname + 'firstedit'])
+                textmain + textname + 'firstlabel'], self.__dict__[textmain + textname + 'firstedit'])
             self.__dict__[textmain + textname + 'formlayout'].addRow(self.__dict__[
-                                                                    textmain + textname + 'nextlabel'], self.__dict__[textmain + textname + 'nextedit'])
+                textmain + textname + 'nextlabel'], self.__dict__[textmain + textname + 'nextedit'])
             self.__dict__[textmain + textname + 'formlayout'].addRow(self.__dict__[
-                                                                    textmain + textname + 'steplabel'], self.__dict__[textmain + textname + 'stepedit'])
+                textmain + textname + 'steplabel'], self.__dict__[textmain + textname + 'stepedit'])
 
-            self.__dict__[textmain + textname + 'button'] = QPushButton('Submit')
-            self.__dict__[textmain + textname + 'button'].clicked.connect(lambda: self.uploadRangeValue(
-                textmain, self.__dict__[textmain + textname + 'firstedit'].text(), self.__dict__[textmain + textname + 'nextedit'].text(), self.__dict__[textmain + textname + 'stepedit'].text(),textname))
             self.__dict__[textmain + textname +
-                        'button'].setMinimumSize(QSize(200, 25))
+                          'button'] = QPushButton('Submit')
+            self.__dict__[textmain + textname + 'button'].clicked.connect(lambda: self.uploadRangeValue(
+                textmain, self.__dict__[textmain + textname + 'firstedit'].text(), self.__dict__[textmain + textname + 'nextedit'].text(), self.__dict__[textmain + textname + 'stepedit'].text(), textname))
+            self.__dict__[textmain + textname +
+                          'button'].setMinimumSize(QSize(200, 25))
             self.__dict__[textmain + textname + 'button'].setStyleSheet(
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             self.__dict__[textmain + textname + 'layout'] = QVBoxLayout()
             self.__dict__[textmain + textname + 'layout'].addLayout(
                 self.__dict__[textmain + textname + 'formlayout'])
             self.__dict__[textmain + textname +
-                        'layout'].addWidget(self.__dict__[textmain + textname + 'button'])
+                          'layout'].addWidget(self.__dict__[textmain + textname + 'button'])
             return self.__dict__[textmain + textname + 'layout']
 
-    def tool_dicts(self,textname, firstname, lastname, stepname):
+    def tool_dicts(self, textname, firstname, lastname, stepname):
         self.tool_dict = {}
         self.tool_dict[textname] = {}
         self.tool_dict[textname]['First'] = firstname
@@ -418,10 +455,11 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         self.tool_dict[textname]['Step'] = stepname
         return self.tool_dict
 
-    def uploadRangeValue(self,textmain, firstname, lastname, stepname,textname=None):
-        if(textname == None):
+    def uploadRangeValue(self, textmain, firstname, lastname, stepname, textname=None):
+        if (textname == None):
             self.global_dict = self.getterEntryRangeTechValue()
-            tool_dict = self.tool_dicts(textmain, firstname, lastname, stepname)
+            tool_dict = self.tool_dicts(
+                textmain, firstname, lastname, stepname)
             self.global_dict.update(tool_dict)
             self.setterEntryRangeTechValue(self.global_dict)
             print(self.getterEntryRangeTechValue())
@@ -429,7 +467,8 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                                     'Saved Parameter Setting')
         else:
             self.global_dict = self.getterEntryRangeTechValue()
-            tool_dict = self.tool_dicts(textname, firstname, lastname, stepname)
+            tool_dict = self.tool_dicts(
+                textname, firstname, lastname, stepname)
             self.global_dict[textmain].update(tool_dict)
             self.setterEntryRangeTechValue(self.global_dict)
             print(self.getterEntryRangeTechValue())
