@@ -58,22 +58,22 @@ class t3():
                        'parameter_5timeperiod': '150', 'parameter_5vfactor': '0', }}
 
     def entry_exit_base(self):
-        self.entryprofo = {'T3': {'Parameters_1 - Parameters_2': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
-                                    'Parameters_2 - Parameters_3': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
-                                    'Parameters_3 - Parameters_4': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
-                                    'Parameters_4 - Parameters_5': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}}
+        self.entryprofo = {'T3': {'Parameters_1 - Parameters_2': {'Golden Cross': 'True', 'Death Cross': 'True'},
+                                    'Parameters_2 - Parameters_3': {'Golden Cross': 'True', 'Death Cross': 'True'},
+                                    'Parameters_3 - Parameters_4': {'Golden Cross': 'True', 'Death Cross': 'True'},
+                                    'Parameters_4 - Parameters_5': {'Golden Cross': 'True', 'Death Cross': 'True'}}}
         return self.entryprofo
     
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.parameters_1_Parameters_2 = self.tech_dict['T3'][
-            'Parameters_1 - Parameters_2']['GOLDEN CROSS']
+            'Parameters_1 - Parameters_2']['Golden Cross']
         self.parameters_2_Parameters_3 = self.tech_dict['T3'][
-            'Parameters_2 - Parameters_3']['GOLDEN CROSS']
+            'Parameters_2 - Parameters_3']['Golden Cross']
         self.parameters_3_Parameters_4 = self.tech_dict['T3'][
-            'Parameters_3 - Parameters_4']['GOLDEN CROSS']
+            'Parameters_3 - Parameters_4']['Golden Cross']
         self.parameters_4_Parameters_5 = self.tech_dict['T3'][
-            'Parameters_4 - Parameters_5']['GOLDEN CROSS']
+            'Parameters_4 - Parameters_5']['Golden Cross']
         if (self.parameters_1_Parameters_2 == 'False' and self.parameters_2_Parameters_3 == 'False' and self.parameters_3_Parameters_4 == 'False' and self.parameters_4_Parameters_5 == 'False'):
             return True
         elif (self.parameters_1_Parameters_2 == 'True' or self.parameters_2_Parameters_3 == 'True' or self.parameters_3_Parameters_4 == 'True' or self.parameters_4_Parameters_5 == 'True'):
@@ -245,7 +245,7 @@ class t3():
     def buysignalsetup_1_2(self):
         tech_dict = self.getterEntryTechValue()
         if 'T3' in tech_dict:
-            self.data = tech_dict['T3']['Parameters_1 - Parameters_2']['GOLDEN CROSS']
+            self.data = tech_dict['T3']['Parameters_1 - Parameters_2']['Golden Cross']
             return self.data
         else:
             self.datadef = 'True'
@@ -263,7 +263,7 @@ class t3():
     def buysignalsetup_2_3(self):
         tech_dict = self.getterEntryTechValue()
         if 'T3' in tech_dict:
-            self.data = tech_dict['T3']['Parameters_2 - Parameters_3']['GOLDEN CROSS']
+            self.data = tech_dict['T3']['Parameters_2 - Parameters_3']['Golden Cross']
             return self.data
         else:
             self.datadef = 'True'
@@ -281,7 +281,7 @@ class t3():
     def buysignalsetup_3_4(self):
         tech_dict = self.getterEntryTechValue()
         if 'T3' in tech_dict:
-            self.data = tech_dict['T3']['Parameters_3 - Parameters_4']['GOLDEN CROSS']
+            self.data = tech_dict['T3']['Parameters_3 - Parameters_4']['Golden Cross']
             return self.data
         else:
             self.datadef = 'True'
@@ -299,7 +299,7 @@ class t3():
     def buysignalsetup_4_5(self):
         tech_dict = self.getterEntryTechValue()
         if 'T3' in tech_dict:
-            self.data = tech_dict['T3']['Parameters_4 - Parameters_5']['GOLDEN CROSS']
+            self.data = tech_dict['T3']['Parameters_4 - Parameters_5']['Golden Cross']
             return self.data
         else:
             self.datadef = 'True'
@@ -519,8 +519,8 @@ class t3():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.buylabel_1_2 = QLabel('Parameters_1-2-GOLDEN CROSS:')
-        self.buylabel_1_2.setMinimumSize(QSize(150, 25))
+        self.buylabel_1_2 = QLabel('Parameters_1 - 2: Golden Cross:')
+        self.buylabel_1_2.setMinimumSize(QSize(200, 25))
         self.buylabel_1_2.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel_1_2.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
@@ -529,8 +529,8 @@ class t3():
         self.buysignalcb_1_2.setMinimumSize(QSize(200, 25))
         self.buysignalcb_1_2.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.selllabel_1_2 = QLabel('Parameters_1-2-Death Cross :')
-        self.selllabel_1_2.setMinimumSize(QSize(150, 25))
+        self.selllabel_1_2 = QLabel('Parameters_1 - 2: Death Cross :')
+        self.selllabel_1_2.setMinimumSize(QSize(200, 25))
         self.selllabel_1_2.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel_1_2.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
@@ -539,8 +539,8 @@ class t3():
         self.sellsignalcb_1_2.setMinimumSize(QSize(200, 25))
         self.sellsignalcb_1_2.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.buylabel_2_3 = QLabel('Parameters_2-3-GOLDEN CROSS:')
-        self.buylabel_2_3.setMinimumSize(QSize(150, 25))
+        self.buylabel_2_3 = QLabel('Parameters_2 - 3: Golden Cross:')
+        self.buylabel_2_3.setMinimumSize(QSize(200, 25))
         self.buylabel_2_3.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel_2_3.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
@@ -549,8 +549,8 @@ class t3():
         self.buysignalcb_2_3.setMinimumSize(QSize(200, 25))
         self.buysignalcb_2_3.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.selllabel_2_3 = QLabel('Parameters_2-3-Death Cross :')
-        self.selllabel_2_3.setMinimumSize(QSize(150, 25))
+        self.selllabel_2_3 = QLabel('Parameters_2 - 3: Death Cross :')
+        self.selllabel_2_3.setMinimumSize(QSize(200, 25))
         self.selllabel_2_3.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel_2_3.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
@@ -559,8 +559,8 @@ class t3():
         self.sellsignalcb_2_3.setMinimumSize(QSize(200, 25))
         self.sellsignalcb_2_3.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.buylabel_3_4 = QLabel('Parameters_3-4-GOLDEN CROSS:')
-        self.buylabel_3_4.setMinimumSize(QSize(150, 25))
+        self.buylabel_3_4 = QLabel('Parameters_3 - 4: Golden Cross:')
+        self.buylabel_3_4.setMinimumSize(QSize(200, 25))
         self.buylabel_3_4.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel_3_4.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
@@ -569,8 +569,8 @@ class t3():
         self.buysignalcb_3_4.setMinimumSize(QSize(200, 25))
         self.buysignalcb_3_4.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.selllabel_3_4 = QLabel('Parameters_3-4-Death Cross :')
-        self.selllabel_3_4.setMinimumSize(QSize(150, 25))
+        self.selllabel_3_4 = QLabel('Parameters_3 - 4: Death Cross :')
+        self.selllabel_3_4.setMinimumSize(QSize(200, 25))
         self.selllabel_3_4.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel_3_4.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
@@ -579,8 +579,8 @@ class t3():
         self.sellsignalcb_3_4.setMinimumSize(QSize(200, 25))
         self.sellsignalcb_3_4.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.buylabel_4_5 = QLabel('Parameters_4-5-GOLDEN CROSS:')
-        self.buylabel_4_5.setMinimumSize(QSize(150, 25))
+        self.buylabel_4_5 = QLabel('Parameters_4 - 5: Golden Cross:')
+        self.buylabel_4_5.setMinimumSize(QSize(200, 25))
         self.buylabel_4_5.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel_4_5.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
@@ -589,8 +589,8 @@ class t3():
         self.buysignalcb_4_5.setMinimumSize(QSize(200, 25))
         self.buysignalcb_4_5.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.selllabel_4_5 = QLabel('Parameters_4-5-Death Cross :')
-        self.selllabel_4_5.setMinimumSize(QSize(150, 25))
+        self.selllabel_4_5 = QLabel('Parameters_4 - 5: Death Cross :')
+        self.selllabel_4_5.setMinimumSize(QSize(200, 25))
         self.selllabel_4_5.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel_4_5.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
@@ -622,16 +622,16 @@ class t3():
         self.tool_dict = {}
         self.tool_dict['T3'] = {}
         self.tool_dict['T3']['Parameters_1 - Parameters_2'] = {}
-        self.tool_dict['T3']['Parameters_1 - Parameters_2']['GOLDEN CROSS'] = self.buysignalcb_1_2.currentText()
+        self.tool_dict['T3']['Parameters_1 - Parameters_2']['Golden Cross'] = self.buysignalcb_1_2.currentText()
         self.tool_dict['T3']['Parameters_1 - Parameters_2']['Death Cross'] = self.sellsignalcb_1_2.currentText()
         self.tool_dict['T3']['Parameters_2 - Parameters_3'] = {}
-        self.tool_dict['T3']['Parameters_2 - Parameters_3']['GOLDEN CROSS'] = self.buysignalcb_2_3.currentText()
+        self.tool_dict['T3']['Parameters_2 - Parameters_3']['Golden Cross'] = self.buysignalcb_2_3.currentText()
         self.tool_dict['T3']['Parameters_2 - Parameters_3']['Death Cross'] = self.sellsignalcb_2_3.currentText()
         self.tool_dict['T3']['Parameters_3 - Parameters_4'] = {}
-        self.tool_dict['T3']['Parameters_3 - Parameters_4']['GOLDEN CROSS'] = self.buysignalcb_3_4.currentText()
+        self.tool_dict['T3']['Parameters_3 - Parameters_4']['Golden Cross'] = self.buysignalcb_3_4.currentText()
         self.tool_dict['T3']['Parameters_3 - Parameters_4']['Death Cross'] = self.sellsignalcb_3_4.currentText()
         self.tool_dict['T3']['Parameters_4 - Parameters_5'] = {}
-        self.tool_dict['T3']['Parameters_4 - Parameters_5']['GOLDEN CROSS'] = self.buysignalcb_4_5.currentText()
+        self.tool_dict['T3']['Parameters_4 - Parameters_5']['Golden Cross'] = self.buysignalcb_4_5.currentText()
         self.tool_dict['T3']['Parameters_4 - Parameters_5']['Death Cross'] = self.sellsignalcb_4_5.currentText()
         return self.tool_dict
 

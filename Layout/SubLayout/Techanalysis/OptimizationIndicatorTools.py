@@ -1,6 +1,6 @@
 from Layout.Ui_Layout.TechAnalysis.Ui_techanalysisindicatorsTool import Ui_TechAnalysis
 from Layout.SubLayout.Ta.talib_lib import talib_list
-from PyQt6.QtWidgets import QDialog, QMessageBox, QMenu, QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox
+from PyQt6.QtWidgets import QDialog, QMessageBox, QMenu, QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QScrollBar, QMessageBox
 from PyQt6.QtCore import QSize, Qt
 from Global.Value.TechToolParam import TechValue
 from PyQt6.QtCore import Qt
@@ -20,9 +20,12 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         if (textperm == 'matype'):
             self.baseoption = {textname: {textperm: {
                 'First': '0', 'Last': '8', 'Step': '1'}}}
-        else:
+        elif (textperm == 'timeperiod'):
             self.baseoption = {textname: {textperm: {
                 'First': '1', 'Last': '100', 'Step': '25'}}}
+        else:
+            self.baseoption = {textname: {textperm: {
+                'First': '0', 'Last': '0', 'Step': '0'}}}
         return self.baseoption
 
     def baserange(self, textname):
@@ -245,14 +248,12 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
     def return_Tech_tool_perm(self, text):
         self.tech_tool_key = self.getterTechValue()
         if (self.check_dict_contains_dict(self.tech_tool_key, text) == True):
-            print("123123")
             self.dict_key_value = self.tech_tool_key[text].keys()
             for permvalue in self.dict_key_value:
                 self.returnwidget = self.createwidget_setup(
                     text, textname=permvalue)
                 self.ui.groupverticalLayout.addLayout(self.returnwidget)
         else:
-            print("qwerwer")
             self.returnwidget = self.createwidget_setup(text)
             self.ui.groupverticalLayout.addLayout(self.returnwidget)
 
@@ -265,12 +266,21 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
     def createwidget_setup(self, textmain, textname=None):
         if (textname == None):
             self.keyvalue = self.getterEntryRangeTechValue()[textmain]
-            self.__dict__[textmain + 'mainlabel'] = QLabel(' Parameter :')
+            self.techvalue = self.getterTechValue()[textmain]
+            self.__dict__[textmain + 'mainlabel'] = QLabel(textmain)
             self.__dict__[textmain +
                           'mainlabel'].setMinimumSize(QSize(150, 25))
             self.__dict__[
                 textmain + 'mainlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.__dict__[textmain + 'mainlabel'].setStyleSheet(
+                "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
+            self.__dict__[textmain +
+                          'dfvalue'] = QLabel('Parameter : ' + self.techvalue)
+            self.__dict__[textmain +
+                          'dfvalue'].setMinimumSize(QSize(100, 25))
+            self.__dict__[
+                textmain + 'dfvalue'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.__dict__[textmain + 'dfvalue'].setStyleSheet(
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             for perm in self.keyvalue:
                 if (perm == "First"):
@@ -329,7 +339,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             ########################
             self.__dict__[textmain + 'formlayout'] = QFormLayout()
             self.__dict__[
-                textmain + 'formlayout'].addRow(self.__dict__[textmain + 'mainlabel'])
+                textmain + 'formlayout'].addRow(self.__dict__[textmain + 'mainlabel'], self.__dict__[textmain + 'dfvalue'])
             self.__dict__[textmain + 'formlayout'].addRow(
                 self.__dict__[textmain + 'firstlabel'], self.__dict__[textmain + 'firstedit'])
             self.__dict__[textmain + 'formlayout'].addRow(
@@ -352,14 +362,23 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         else:
             self.keyvalue = self.getterEntryRangeTechValue()[
                 textmain][textname]
+            self.techvalue = self.getterTechValue()[textmain][textname]
             # main
             self.__dict__[textmain + textname +
-                          'mainlabel'] = QLabel(textname + ' Parameter :')
+                          'mainlabel'] = QLabel(textname)
             self.__dict__[textmain + textname +
                           'mainlabel'].setMinimumSize(QSize(150, 25))
             self.__dict__[textmain + textname +
                           'mainlabel'].setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.__dict__[textmain + textname + 'mainlabel'].setStyleSheet(
+                "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
+            self.__dict__[textmain + textname +
+                          'dfvalue'] = QLabel('Parameter : ' + self.techvalue)
+            self.__dict__[textmain + textname +
+                          'dfvalue'].setMinimumSize(QSize(100, 25))
+            self.__dict__[textmain + textname +
+                          'dfvalue'].setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.__dict__[textmain + textname + 'dfvalue'].setStyleSheet(
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             for perm in self.keyvalue:
                 if (perm == "First"):
@@ -424,7 +443,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             ########################
             self.__dict__[textmain + textname + 'formlayout'] = QFormLayout()
             self.__dict__[textmain + textname + 'formlayout'].addRow(
-                self.__dict__[textmain + textname + 'mainlabel'])
+                self.__dict__[textmain + textname + 'mainlabel'], self.__dict__[textmain + textname + 'dfvalue'])
             self.__dict__[textmain + textname + 'formlayout'].addRow(self.__dict__[
                 textmain + textname + 'firstlabel'], self.__dict__[textmain + textname + 'firstedit'])
             self.__dict__[textmain + textname + 'formlayout'].addRow(self.__dict__[

@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_TechAnalysis(object):
     def setupUi(self, TechAnalysis):
         TechAnalysis.setObjectName("TechAnalysis")
-        TechAnalysis.resize(1095, 702)
+        TechAnalysis.resize(1095, 706)
         TechAnalysis.setStyleSheet("background-color: rgb(47, 47, 47);\n"
 "border-color: rgb(47, 47, 47);\n"
 "color: rgb(255, 255, 255);")
@@ -64,9 +64,19 @@ class Ui_TechAnalysis(object):
         self.widget.setObjectName("widget")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.widget)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.scrollArea = QtWidgets.QScrollArea(parent=self.widget)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 799, 600))
+        self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_3)
+        self.verticalLayout.setObjectName("verticalLayout")
         self.groupverticalLayout = QtWidgets.QVBoxLayout()
         self.groupverticalLayout.setObjectName("groupverticalLayout")
-        self.verticalLayout_3.addLayout(self.groupverticalLayout)
+        self.verticalLayout.addLayout(self.groupverticalLayout)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents_3)
+        self.verticalLayout_3.addWidget(self.scrollArea)
         self.horizontalLayout_2.addWidget(self.widget)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
