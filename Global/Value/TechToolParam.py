@@ -3,6 +3,7 @@ class TechValue(object):
     tool_perm = {}
     Entry_perm = {}
     range_perm = {}
+    range_entry_perm = {}
 
     @staticmethod
     def get_tech_toolperm_var():
@@ -33,3 +34,13 @@ class TechValue(object):
     def set_tech_range_perm(value):
         print('Set Tool Range Tech Perm')
         TechValue.range_perm = value
+
+    @staticmethod
+    def get_entry_range_perm():
+        print('Get Entry Range Perm')
+        return TechValue.range_entry_perm
+
+    @staticmethod
+    def set_entry_range_perm(value):
+        print('Set Entry Range Perm')
+        TechValue.range_entry_perm = value

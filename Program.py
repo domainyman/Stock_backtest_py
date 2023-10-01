@@ -9,6 +9,7 @@ from Layout.SubLayout.info.CompanyOfficersPage import CompanyOfficerPage
 from Layout.SubLayout.Techanalysis.TechanalysisPage import TechAnalysispage
 from Layout.SubLayout.Techanalysis.OptimizationIndicatorTools import OptimizationIndicatorTool
 from Layout.SubLayout.Mmanagement.MmanagementPage import Moneymanagepage
+from Layout.SubLayout.Entrymanagement.OptEntmanagementPage import optEntrymanagepage
 from Layout.SubLayout.Entrymanagement.EntmanagementPage import Entrymanagepage
 from Layout.Method_Class.backtrade import cerebrosetup
 from Layout.SubLayout.Search.SearchSymbol import Tickersearch
@@ -90,7 +91,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.ea_techanalysis_tools_btn.clicked.connect(
             self.OptimizationIndicatorToolspage)
         self.ui.ea_techanalysis_tools_mmbtn.clicked.connect(self.aamoneymanagepage)
-        self.ui.ea_techanalysis_tools_entriesbtn.clicked.connect(self.aaentrymanagepage)
+        self.ui.ea_techanalysis_tools_entriesbtn.clicked.connect(self.Optentrymanagepage)
 
     def side_meun_btn(self):
         self.ui.Btn_Home.clicked.connect(self.showtkhome)
@@ -753,6 +754,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.uishow = OptimizationIndicatorTool()
         self.uishow.show()
 
+    def Optentrymanagepage(self):
+        self.uishow = optEntrymanagepage()
+        self.uishow.show()
+
     # Tech Auto Analyis Page
     # ...............................................................................
     # EA Tech Auto Analyis Page
@@ -920,13 +925,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         return TechValue.get_tech_range_perm()
 ##########################
 
+    def setterEntryRangeValue(self, text):
+        TechValue.set_entry_range_perm(text)
+
+    def getterEntryRangeValue(self):
+        return TechValue.get_entry_range_perm()
+###########################
     def clear_db_perm(self):
+        self.setterEntryRangeValue({})
         self.setterEntryRangeTechValue({})
         self.setterEntryTechValue({})
         self.setterTechValue({})
         self.setterModeParamlValue(None)
         self.setterModelValue({})
-        print("Reset Perm Value")
+        print(f"Reset Perm Value")
 
 
 if __name__ == "__main__":

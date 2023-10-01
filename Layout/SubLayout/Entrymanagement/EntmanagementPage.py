@@ -31,6 +31,7 @@ class Entrymanagepage(QDialog, Ui_EntryManagement):
         try:
             if (self.clearwidget() == True):
                 self.setterTechValue({})
+                self.setterEntryTechValue({})
                 self.ui.EntrytoollistWidget.clear()
                 self.ui.EntrytoollistWidget.clearSelection()
                 self.ui.EntrytoollistWidget.setCurrentItem(None)
@@ -135,3 +136,9 @@ class Entrymanagepage(QDialog, Ui_EntryManagement):
 
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
+
+    def setterEntryRangeTechValue(self, text):
+        TechValue.set_tech_range_perm(text)
+
+    def getterEntryRangeTechValue(self):
+        return TechValue.get_tech_range_perm()

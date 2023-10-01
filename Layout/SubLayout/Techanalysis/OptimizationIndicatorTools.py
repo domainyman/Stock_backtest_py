@@ -19,18 +19,26 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
     def mulitbaserange(self, textname, textperm):
         if (textperm == 'matype'):
             self.baseoption = {textname: {textperm: {
-                'First': '0', 'Last': '8', 'Step': '1'}}}
+                'First': 0, 'Last': 8, 'Step': 1}}}
         elif (textperm == 'timeperiod'):
             self.baseoption = {textname: {textperm: {
-                'First': '1', 'Last': '100', 'Step': '25'}}}
+                'First': 1, 'Last': 100, 'Step': 25}}}
         else:
             self.baseoption = {textname: {textperm: {
-                'First': '0', 'Last': '0', 'Step': '0'}}}
+                'First': 0, 'Last': 0, 'Step': 0}}}
         return self.baseoption
 
     def baserange(self, textname):
         self.baseoption = {textname: {
-            'First': '1', 'Last': '100', 'Step': '25'}}
+            'First': 1, 'Last': 100, 'Step': 25}}
+        return self.baseoption
+
+    def mulitentrybaserange(self, textname, textperm):
+        textpermlow = textperm.lower()
+        if isinstance(textperm, (int, float)):
+            self.baseoption = {textname: {textperm: {'First': 1, 'Last': 100, 'Step': 25}}}
+        else:
+            self.baseoption = {textname: {textperm: {'True', 'False','Both Test'}}}
         return self.baseoption
 
     def toolvalueseyup(self, textmain, textname):
@@ -39,7 +47,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             self.data = tech_dict[textmain][textname]
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def checktoolperm_name(self, text):
@@ -51,7 +59,17 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                 self.list.append(permvalue)
         else:
             self.list.append(text)
-        print(self.list)
+        return self.list
+    
+    def checkenterperm_name(self,text):
+        self.list = []
+        self.tech_tool_key = self.getterEntryTechValue()
+        if (self.check_dict_contains_dict(self.tech_tool_key, text) == True):
+            self.dict_key_value = self.tech_tool_key[text].keys()
+            for permvalue in self.dict_key_value:
+                self.list.append(permvalue)
+        else:
+            self.list.append(text)
         return self.list
 
     def setuptech(self):
@@ -165,6 +183,10 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             self.text = self.ui.techindicatorstool_combo.currentText()
             if (self.listcheckrepeat(self.text) == False):
                 self.insertbaseparam(self.text)
+                print(self.getterTechValue())
+                print(self.getterEntryTechValue())
+                print(self.getterEntryRangeTechValue())
+                print(self.getterEntryRangeValue())
                 self.ui.toollistWidget.addItem(self.text)
             else:
                 QMessageBox.warning(None, 'Select Repeat',
@@ -205,7 +227,22 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                 self.range_dict = self.getterEntryRangeTechValue()
                 self.range_dict.update(self.basecase)
                 self.setterEntryRangeTechValue(self.range_dict)
-
+            
+            self.entrylist = self.checkenterperm_name(text)
+            if (len(self.entrylist) > 1):
+                for perm in self.entrylist:
+                    self.entrybaserange = self.mulitentrybaserange(text, perm)
+                    self.entryrange_dict = self.getterEntryRangeValue()
+                    if all(key in self.entryrange_dict for key in self.entrybaserange):
+                        self.keyentryvalue = self.entrybaserange[text]
+                        self.entryrange_dict[text].update(self.keyentryvalue)
+                        self.setterEntryRangeValue(self.entryrange_dict)
+                    else:
+                        self.entryrange_dict.update(self.entrybaserange)
+                        self.setterEntryRangeValue(self.entryrange_dict)               
+            else:
+                pass
+                    
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))
@@ -215,6 +252,8 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             if (self.clearwidget() == True):
                 self.setterTechValue({})
                 self.setterEntryTechValue({})
+                self.setterEntryRangeTechValue({})
+                self.setterEntryRangeValue({})
                 self.ui.toollistWidget.clear()
                 self.ui.toollistWidget.clearSelection()
                 self.ui.toollistWidget.setCurrentItem(None)
@@ -511,6 +550,12 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
 
     def getterEntryRangeTechValue(self):
         return TechValue.get_tech_range_perm()
+
+    def setterEntryRangeValue(self, text):
+        TechValue.set_entry_range_perm(text)
+
+    def getterEntryRangeValue(self):
+        return TechValue.get_entry_range_perm()
 
     def clearwidget(self):
         layout = self.ui.groupverticalLayout  # 要清除的 QVBoxLayout
