@@ -36,7 +36,7 @@ class kama():
         self.sellsignalcb_4_5 = QComboBox()
 
     def base(self):
-        return {'KAMA': {'Parameters_1': '10', 'Parameters_2': '20', 'Parameters_3': '50', 'Parameters_4': '100', 'Parameters_5': '150'}}
+        return {'KAMA': {'Parameters_1': 10, 'Parameters_2': 20, 'Parameters_3': 50, 'Parameters_4': 100, 'Parameters_5': 150}}
 
     def entry_exit_base(self):
         self.entryprofo = {'KAMA': {'Parameters_1 - Parameters_2': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
@@ -211,7 +211,7 @@ class kama():
             self.data = tech_dict['KAMA']['Parameters_1']
             return self.data
         else:
-            self.datadef = '10'
+            self.datadef = 10
             return self.datadef
 
     def Parameters_2setup(self):
@@ -220,7 +220,7 @@ class kama():
             self.data = tech_dict['KAMA']['Parameters_2']
             return self.data
         else:
-            self.datadef = '20'
+            self.datadef = 20
             return self.datadef
 
     def Parameters_3setup(self):
@@ -229,7 +229,7 @@ class kama():
             self.data = tech_dict['KAMA']['Parameters_3']
             return self.data
         else:
-            self.datadef = '50'
+            self.datadef = 50
             return self.datadef
 
     def Parameters_4setup(self):
@@ -238,7 +238,7 @@ class kama():
             self.data = tech_dict['KAMA']['Parameters_4']
             return self.data
         else:
-            self.datadef = '100'
+            self.datadef = 100
             return self.datadef
 
     def Parameters_5setup(self):
@@ -247,7 +247,7 @@ class kama():
             self.data = tech_dict['KAMA']['Parameters_5']
             return self.data
         else:
-            self.datadef = '150'
+            self.datadef = 150
             return self.datadef
 
     def widgetedit(self):

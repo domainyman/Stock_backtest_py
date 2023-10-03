@@ -20,10 +20,10 @@ class ultosc():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'ULTOSC': {'timeperiod1': '7', 'timeperiod2': '14', 'timeperiod3': '28'}}
+        return {'ULTOSC': {'timeperiod1': 7, 'timeperiod2': 14, 'timeperiod3': 28}}
 
     def entry_exit_base(self):
-        self.entryprofo = {'ULTOSC': {'HIGH': '70', 'LOW': '30'}}
+        self.entryprofo = {'ULTOSC': {'HIGH': 70, 'LOW': 30}}
         return self.entryprofo
 
     def Check_Entry(self, testitem):
@@ -50,7 +50,7 @@ class ultosc():
             self.data = tech_dict['ULTOSC']['timeperiod1']
             return self.data
         else:
-            self.datadef = '7'
+            self.datadef = 7
             return self.datadef
 
     def timeperiod2setup(self):
@@ -59,7 +59,7 @@ class ultosc():
             self.data = tech_dict['ULTOSC']['timeperiod2']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
 
     def timeperiod3setup(self):
@@ -68,7 +68,7 @@ class ultosc():
             self.data = tech_dict['ULTOSC']['timeperiod3']
             return self.data
         else:
-            self.datadef = '28'
+            self.datadef = 28
             return self.datadef
         
     def highsetup(self):
@@ -77,7 +77,7 @@ class ultosc():
             self.data = tech_dict['ULTOSC']['HIGH']
             return self.data
         else:
-            self.datadef = '70'
+            self.datadef = 70
             return self.datadef
 
     def lowsetup(self):
@@ -181,7 +181,7 @@ class ultosc():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -191,7 +191,7 @@ class ultosc():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

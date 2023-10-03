@@ -16,7 +16,7 @@ class ht_trendline():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'HT_TRENDLINE': '30'}
+        return {'HT_TRENDLINE': 30}
 
     def entry_exit_base(self):
         self.entryprofo = {'HT_TRENDLINE': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
@@ -54,7 +54,7 @@ class ht_trendline():
             self.data = tech_dict['HT_TRENDLINE']
             return self.data
         else:
-            self.datadef = '30'
+            self.datadef = 30
             return self.datadef
 
     def buysignalsetup(self):

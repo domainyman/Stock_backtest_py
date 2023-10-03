@@ -22,7 +22,7 @@ class stochrsi():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'STOCHRSI': {'timeperiod': '14', 'fastk_period': '5', 'fastd_period': '3', 'fastd_matype': '0'}}
+        return {'STOCHRSI': {'timeperiod': 14, 'fastk_period': 5, 'fastd_period': 3, 'fastd_matype': 0}}
     
     def entry_exit_base(self):
         self.entryprofo = {'STOCHRSI': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
@@ -78,7 +78,7 @@ class stochrsi():
             self.data = tech_dict['STOCHRSI']['timeperiod']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
 
     def fastk_periodsetup(self):
@@ -87,7 +87,7 @@ class stochrsi():
             self.data = tech_dict['STOCHRSI']['fastk_period']
             return self.data
         else:
-            self.datadef = '5'
+            self.datadef = 5
             return self.datadef
 
     def fastd_periodsetup(self):
@@ -96,7 +96,7 @@ class stochrsi():
             self.data = tech_dict['STOCHRSI']['fastd_period']
             return self.data
         else:
-            self.datadef = '3'
+            self.datadef = 3
             return self.datadef
 
     def fastd_matypesetup(self):
@@ -105,7 +105,7 @@ class stochrsi():
             self.data = tech_dict['STOCHRSI']['fastd_matype']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
 
@@ -209,7 +209,7 @@ class stochrsi():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.buylabel = QLabel('High :')
+        self.buylabel = QLabel('GOLDEN CROSS :')
         self.buylabel.setMinimumSize(QSize(150, 25))
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
@@ -219,7 +219,7 @@ class stochrsi():
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.selllabel = QLabel('Low :')
+        self.selllabel = QLabel('Death Cross :')
         self.selllabel.setMinimumSize(QSize(150, 25))
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(

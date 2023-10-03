@@ -14,7 +14,7 @@ class ma():
         self.matypelineedit = QLineEdit()
 
     def base(self):
-        return {'MA': {'timeperiod': '30', 'matype': '0'}}
+        return {'MA': {'timeperiod': 30, 'matype': 0}}
     
     def entry_exit_base(self):
         pass
@@ -33,7 +33,7 @@ class ma():
             self.data = tech_dict['MA']['timeperiod']
             return self.data
         else:
-            self.datadef = '30'
+            self.datadef = 30
             return self.datadef
 
     def matypesetup(self):
@@ -42,7 +42,7 @@ class ma():
             self.data = tech_dict['MA']['matype']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def widgetedit(self):

@@ -20,10 +20,10 @@ class apo():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'APO': {'fastperiod': '12', 'slowperiod': '26', 'matype': '0'}}
+        return {'APO': {'fastperiod': 12, 'slowperiod': 26, 'matype': 0}}
 
     def entry_exit_base(self):
-        self.entryprofo = {'ADXR': {'HIGH': '5', 'LOW': '-5'}}
+        self.entryprofo = {'ADXR': {'HIGH': 5, 'LOW': -5}}
         return self.entryprofo
 
     def fastperiodsetup(self):
@@ -32,7 +32,7 @@ class apo():
             self.data = tech_dict['APO']['fastperiod']
             return self.data
         else:
-            self.datadef = '12'
+            self.datadef = 12
             return self.datadef
 
     def slowperiodsetup(self):
@@ -41,7 +41,7 @@ class apo():
             self.data = tech_dict['APO']['slowperiod']
             return self.data
         else:
-            self.datadef = '26'
+            self.datadef = 26
             return self.datadef
 
     def matypesetup(self):
@@ -50,7 +50,7 @@ class apo():
             self.data = tech_dict['APO']['matype']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
         
     def highsetup(self):
@@ -59,7 +59,7 @@ class apo():
             self.data = tech_dict['APO']['HIGH']
             return self.data
         else:
-            self.datadef = '5'
+            self.datadef = 5
             return self.datadef
 
     def lowsetup(self):
@@ -68,7 +68,7 @@ class apo():
             self.data = tech_dict['APO']['LOW']
             return self.data
         else:
-            self.datadef = '-5'
+            self.datadef = -5
             return self.datadef
 
     def widgetedit(self):
@@ -161,7 +161,7 @@ class apo():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -171,7 +171,7 @@ class apo():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

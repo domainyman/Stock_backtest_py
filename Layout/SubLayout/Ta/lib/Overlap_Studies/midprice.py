@@ -17,7 +17,7 @@ class midprice():
 
 
     def base(self):
-        return {'MIDPRICE': '14'}
+        return {'MIDPRICE': 14}
 
     def entry_exit_base(self):
         self.entryprofo = {'MIDPRICE': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
@@ -59,7 +59,7 @@ class midprice():
             self.data = tech_dict['MIDPRICE']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
         
     def buysignalsetup(self):

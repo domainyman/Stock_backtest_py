@@ -34,8 +34,8 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         return self.baseoption
 
     def mulitentrybaserange(self, textname, textperm):
-        textpermlow = textperm.lower()
-        if isinstance(textperm, (int, float)):
+        self.dict_key_value = self.getterEntryTechValue()[textname][textperm]
+        if isinstance(self.dict_key_value, (int, float)):
             self.baseoption = {textname: {textperm: {'First': 1, 'Last': 100, 'Step': 25}}}
         else:
             self.baseoption = {textname: {textperm: {'True', 'False','Both Test'}}}
@@ -314,7 +314,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             self.__dict__[textmain + 'mainlabel'].setStyleSheet(
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             self.__dict__[textmain +
-                          'dfvalue'] = QLabel('Parameter : ' + self.techvalue)
+                          'dfvalue'] = QLabel('Parameter : ' + str(self.techvalue))
             self.__dict__[textmain +
                           'dfvalue'].setMinimumSize(QSize(100, 25))
             self.__dict__[
@@ -412,7 +412,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             self.__dict__[textmain + textname + 'mainlabel'].setStyleSheet(
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             self.__dict__[textmain + textname +
-                          'dfvalue'] = QLabel('Parameter : ' + self.techvalue)
+                          'dfvalue'] = QLabel('Parameter : ' + str(self.techvalue))
             self.__dict__[textmain + textname +
                           'dfvalue'].setMinimumSize(QSize(100, 25))
             self.__dict__[textmain + textname +

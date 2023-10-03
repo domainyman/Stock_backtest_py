@@ -36,7 +36,7 @@ class tema():
         self.sellsignalcb_4_5 = QComboBox()
 
     def base(self):
-        return {'TEMA': {'Parameters_1': '10', 'Parameters_2': '20', 'Parameters_3': '50', 'Parameters_4': '100', 'Parameters_5': '150'}}
+        return {'TEMA': {'Parameters_1': 10, 'Parameters_2': 20, 'Parameters_3': 50, 'Parameters_4': 100, 'Parameters_5': 150}}
 
     def entry_exit_base(self):
         self.entryprofo = {'TEMA': {'Parameters_1 - Parameters_2': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
@@ -139,7 +139,7 @@ class tema():
             self.data = tech_dict['TEMA']['Parameters_1']
             return self.data
         else:
-            self.datadef = '10'
+            self.datadef = 10
             return self.datadef
 
     def Parameters_2setup(self):
@@ -148,7 +148,7 @@ class tema():
             self.data = tech_dict['TEMA']['Parameters_2']
             return self.data
         else:
-            self.datadef = '20'
+            self.datadef = 20
             return self.datadef
 
     def Parameters_3setup(self):
@@ -157,7 +157,7 @@ class tema():
             self.data = tech_dict['TEMA']['Parameters_3']
             return self.data
         else:
-            self.datadef = '50'
+            self.datadef = 50
             return self.datadef
 
     def Parameters_4setup(self):
@@ -166,7 +166,7 @@ class tema():
             self.data = tech_dict['TEMA']['Parameters_4']
             return self.data
         else:
-            self.datadef = '100'
+            self.datadef = 100
             return self.datadef
 
     def Parameters_5setup(self):
@@ -175,7 +175,7 @@ class tema():
             self.data = tech_dict['TEMA']['Parameters_5']
             return self.data
         else:
-            self.datadef = '150'
+            self.datadef = 150
             return self.datadef
 
     def buysignalsetup_1_2(self):

@@ -20,7 +20,7 @@ class macd():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'MACD': {'fastperiod': '12', 'slowperiod': '26', 'signalperiod': '9'}}
+        return {'MACD': {'fastperiod': 12, 'slowperiod': 26, 'signalperiod': 9}}
 
     def entry_exit_base(self):
         self.entryprofo = {
@@ -33,7 +33,7 @@ class macd():
             self.data = tech_dict['MACD']['fastperiod']
             return self.data
         else:
-            self.datadef = '12'
+            self.datadef = 12
             return self.datadef
 
     def slowperiodsetup(self):
@@ -42,7 +42,7 @@ class macd():
             self.data = tech_dict['MACD']['slowperiod']
             return self.data
         else:
-            self.datadef = '26'
+            self.datadef = 26
             return self.datadef
 
     def signalperiodsetup(self):
@@ -51,7 +51,7 @@ class macd():
             self.data = tech_dict['MACD']['signalperiod']
             return self.data
         else:
-            self.datadef = '9'
+            self.datadef = 9
             return self.datadef
 
     def buysignalsetup(self):
@@ -203,7 +203,7 @@ class macd():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.buylabel = QLabel('High :')
+        self.buylabel = QLabel('GOLDEN CROSS :')
         self.buylabel.setMinimumSize(QSize(150, 25))
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
@@ -213,7 +213,7 @@ class macd():
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.selllabel = QLabel('Low :')
+        self.selllabel = QLabel('Death Cross :')
         self.selllabel.setMinimumSize(QSize(150, 25))
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(

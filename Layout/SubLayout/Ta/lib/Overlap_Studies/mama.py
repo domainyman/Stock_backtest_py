@@ -18,7 +18,7 @@ class mama():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'MAMA': {'fastlimit': '0.5', 'slowlimit': '0.05'}}
+        return {'MAMA': {'fastlimit': 0.5, 'slowlimit': 0.05}}
 
     def entry_exit_base(self):
         self.entryprofo = {'MAMA': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
@@ -74,7 +74,7 @@ class mama():
             self.data = tech_dict['MAMA']['fastlimit']
             return self.data
         else:
-            self.datadef = '0.5'
+            self.datadef = 0.5
             return self.datadef
 
     def slowlimitsetup(self):
@@ -83,7 +83,7 @@ class mama():
             self.data = tech_dict['MAMA']['slowlimit']
             return self.data
         else:
-            self.datadef = '0.05'
+            self.datadef = 0.05
             return self.datadef
 
     def widgetedit(self):
@@ -162,7 +162,7 @@ class mama():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.buylabel = QLabel('High :')
+        self.buylabel = QLabel('GOLDEN CROSS :')
         self.buylabel.setMinimumSize(QSize(150, 25))
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
@@ -172,7 +172,7 @@ class mama():
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.selllabel = QLabel('Low :')
+        self.selllabel = QLabel('Death Cross :')
         self.selllabel.setMinimumSize(QSize(150, 25))
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(

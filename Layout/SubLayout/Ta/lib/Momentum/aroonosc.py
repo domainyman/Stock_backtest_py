@@ -19,10 +19,10 @@ class aroonosc():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'AROONOSC': '14'}
+        return {'AROONOSC': 14}
 
     def entry_exit_base(self):
-        self.entryprofo = {'AROONOSC': {'HIGH': '100', 'LOW': '-100'}}
+        self.entryprofo = {'AROONOSC': {'HIGH': 100, 'LOW': -100}}
         return self.entryprofo
 
     def setup(self):
@@ -31,7 +31,7 @@ class aroonosc():
             self.data = tech_dict['AROONOSC']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
 
     def highsetup(self):
@@ -40,7 +40,7 @@ class aroonosc():
             self.data = tech_dict['AROONOSC']['HIGH']
             return self.data
         else:
-            self.datadef = '100'
+            self.datadef = 100
             return self.datadef
 
     def lowsetup(self):
@@ -49,7 +49,7 @@ class aroonosc():
             self.data = tech_dict['AROONOSC']['LOW']
             return self.data
         else:
-            self.datadef = '-100'
+            self.datadef = -100
             return self.datadef
 
     def Check_Entry(self, testitem):
@@ -132,7 +132,7 @@ class aroonosc():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -142,7 +142,7 @@ class aroonosc():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

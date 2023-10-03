@@ -16,10 +16,10 @@ class rocr():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'ROCR': '10'}
+        return {'ROCR': 10}
 
     def entry_exit_base(self):
-        self.entryprofo = {'ROCR': {'HIGH': '2', 'LOW': '0'}}
+        self.entryprofo = {'ROCR': {'HIGH': 2, 'LOW': 0}}
         return self.entryprofo
     
     def Check_Entry(self, testitem):
@@ -46,7 +46,7 @@ class rocr():
             self.data = tech_dict['ROCR']
             return self.data
         else:
-            self.datadef = '10'
+            self.datadef = 10
             return self.datadef
 
     def highsetup(self):
@@ -55,7 +55,7 @@ class rocr():
             self.data = tech_dict['ROCR']['HIGH']
             return self.data
         else:
-            self.datadef = '2'
+            self.datadef = 2
             return self.datadef
 
     def lowsetup(self):
@@ -64,7 +64,7 @@ class rocr():
             self.data = tech_dict['ROCR']['LOW']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def widgetedit(self):
@@ -129,7 +129,7 @@ class rocr():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -139,7 +139,7 @@ class rocr():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

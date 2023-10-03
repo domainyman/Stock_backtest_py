@@ -115,10 +115,9 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
         if (self.check_dict_contains_dict(self.tech_tool_key, text) == True):
             self.dict_key_value = self.tech_tool_key[text].keys()
             for permvalue in self.dict_key_value:
-                self.dict = self.check_dict_contains_true(
+                self.dictbool = self.check_dict_contains_true(
                     self.tech_tool_key, text, permvalue)
-                if (self.dict == True):
-                    print("***************************")
+                if (self.dictbool == True):
                     self.returnwidget = self.createboolwidget_setup(
                         text, textname=permvalue)
                     self.ui.EntrygroupverticalLayout.addLayout(
@@ -141,7 +140,7 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
 
     def check_dict_contains_true(self, your_dict, text, permvalue):
         values = your_dict[text][permvalue]
-        if (values == "True") or (values == "False"):
+        if (values == 'True') or (values == 'False'):
             return True
         else:
             return False
@@ -162,7 +161,7 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
             self.__dict__[textmain + textname + 'mainlabel'].setStyleSheet(
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             self.__dict__[textmain + textname +
-                          'dfvalue'] = QLabel('Parameter : ' + self.techvalue)
+                          'dfvalue'] = QLabel('Parameter : ' + str(self.techvalue))
             self.__dict__[textmain + textname +
                           'dfvalue'].setMinimumSize(QSize(100, 25))
             self.__dict__[textmain + textname +
@@ -221,7 +220,7 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
             self.__dict__[textmain + 'mainlabel'].setStyleSheet(
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             self.__dict__[textmain +
-                          'dfvalue'] = QLabel('Parameter : ' + self.techvalue)
+                          'dfvalue'] = QLabel('Parameter : ' + str(self.techvalue))
             self.__dict__[textmain +
                           'dfvalue'].setMinimumSize(QSize(100, 25))
             self.__dict__[
@@ -318,7 +317,7 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
             self.__dict__[textmain + textname + 'mainlabel'].setStyleSheet(
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             self.__dict__[textmain + textname +
-                          'dfvalue'] = QLabel('Parameter : ' + self.techvalue)
+                          'dfvalue'] = QLabel('Parameter : ' + str(self.techvalue))
             self.__dict__[textmain + textname +
                           'dfvalue'].setMinimumSize(QSize(100, 25))
             self.__dict__[textmain + textname +

@@ -16,10 +16,10 @@ class adx():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'ADX': '14'}
+        return {'ADX': 14}
 
     def entry_exit_base(self):
-        self.entryprofo = {'ADX': {'HIGH': '30', 'LOW': '15'}}
+        self.entryprofo = {'ADX': {'HIGH': 30, 'LOW': 15}}
         return self.entryprofo
 
     def setup(self):
@@ -28,7 +28,7 @@ class adx():
             self.data = tech_dict['ADX']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
         
     def highsetup(self):
@@ -37,7 +37,7 @@ class adx():
             self.data = tech_dict['ADX']['HIGH']
             return self.data
         else:
-            self.datadef = '30'
+            self.datadef = 30
             return self.datadef
 
     def lowsetup(self):
@@ -46,7 +46,7 @@ class adx():
             self.data = tech_dict['ADX']['LOW']
             return self.data
         else:
-            self.datadef = '15'
+            self.datadef = 15
             return self.datadef
 
     def Check_Entry(self, testitem):
@@ -128,7 +128,7 @@ class adx():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -138,7 +138,7 @@ class adx():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

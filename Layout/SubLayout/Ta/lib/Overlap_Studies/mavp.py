@@ -24,10 +24,10 @@ class mavp():
 
 
     def base(self):
-        return {'MAVP': {'periods': '10', 'minperiod': '2', 'maxperiod': '30', 'matype': '0'}}
+        return {'MAVP': {'periods': 10, 'minperiod': 2, 'maxperiod': 30, 'matype': 0}}
     
     def entry_exit_base(self):
-        self.entryprofo = {'MAVP': {'HIGH': '70', 'LOW': '30'}}
+        self.entryprofo = {'MAVP': {'HIGH': 70, 'LOW': 30}}
         return self.entryprofo
     
     def Check_Entry(self, testitem):
@@ -54,7 +54,7 @@ class mavp():
             self.data = tech_dict['MAVP']['periods']
             return self.data
         else:
-            self.datadef = '10'
+            self.datadef = 10
             return self.datadef
 
     def minperiodsetup(self):
@@ -63,7 +63,7 @@ class mavp():
             self.data = tech_dict['MAVP']['minperiod']
             return self.data
         else:
-            self.datadef = '2'
+            self.datadef = 2
             return self.datadef
 
     def maxperiodsetup(self):
@@ -72,7 +72,7 @@ class mavp():
             self.data = tech_dict['MAVP']['maxperiod']
             return self.data
         else:
-            self.datadef = '30'
+            self.datadef = 30
             return self.datadef
 
     def matypesetup(self):
@@ -81,7 +81,7 @@ class mavp():
             self.data = tech_dict['MAVP']['matype']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
         
     def highsetup(self):
@@ -90,7 +90,7 @@ class mavp():
             self.data = tech_dict['MAVP']['HIGH']
             return self.data
         else:
-            self.datadef = '70'
+            self.datadef = 70
             return self.datadef
 
     def lowsetup(self):
@@ -99,7 +99,7 @@ class mavp():
             self.data = tech_dict['MAVP']['LOW']
             return self.data
         else:
-            self.datadef = '30'
+            self.datadef = 30
             return self.datadef
 
     def widgetedit(self):
@@ -209,7 +209,7 @@ class mavp():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -219,7 +219,7 @@ class mavp():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

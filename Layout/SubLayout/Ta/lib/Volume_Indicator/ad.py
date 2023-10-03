@@ -16,7 +16,7 @@ class ad():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'AD': '14'}
+        return {'AD': 14}
 
     def entry_exit_base(self):
         self.entryprofo = {'AD': {'Bottom Divergence': 'True', 'Top Divergence': 'True'}}
@@ -93,7 +93,7 @@ class ad():
             self.data = tech_dict['AD']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
 
     def buysignalsetup(self):

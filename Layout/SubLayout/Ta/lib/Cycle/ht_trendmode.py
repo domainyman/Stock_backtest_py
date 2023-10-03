@@ -16,10 +16,10 @@ class ht_trendmode():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'HT_TRENDMODE': '200'}
+        return {'HT_TRENDMODE': 200}
 
     def entry_exit_base(self):
-        self.entryprofo = {'HT_TRENDMODE': {'HIGH': '1', 'LOW': '0'}}
+        self.entryprofo = {'HT_TRENDMODE': {'HIGH': 1, 'LOW': 0}}
         return self.entryprofo
 
     def setup(self):
@@ -28,7 +28,7 @@ class ht_trendmode():
             self.data = tech_dict['HT_TRENDMODE']
             return self.data
         else:
-            self.datadef = '200'
+            self.datadef = 200
             return self.datadef
 
     def highsetup(self):
@@ -37,7 +37,7 @@ class ht_trendmode():
             self.data = tech_dict['HT_TRENDMODE']['HIGH']
             return self.data
         else:
-            self.datadef = '1'
+            self.datadef = 1
             return self.datadef
 
     def lowsetup(self):
@@ -46,7 +46,7 @@ class ht_trendmode():
             self.data = tech_dict['HT_TRENDMODE']['LOW']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def Check_Entry(self, testitem):
@@ -129,7 +129,7 @@ class ht_trendmode():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -139,7 +139,7 @@ class ht_trendmode():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

@@ -16,7 +16,7 @@ class midpoint():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'MIDPOINT': '14'}
+        return {'MIDPOINT': 14}
 
     def entry_exit_base(self):
         self.entryprofo = {'MIDPOINT': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
@@ -58,7 +58,7 @@ class midpoint():
             self.data = tech_dict['MIDPOINT']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
 
     def buysignalsetup(self):

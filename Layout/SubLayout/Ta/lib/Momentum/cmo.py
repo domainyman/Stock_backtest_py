@@ -16,10 +16,10 @@ class cmo():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'CMO': '14'}
+        return {'CMO': 14}
     
     def entry_exit_base(self):
-        self.entryprofo = {'CMO': {'HIGH': '50', 'LOW': '-50'}}
+        self.entryprofo = {'CMO': {'HIGH': 50, 'LOW': -50}}
         return self.entryprofo
 
     def Check_Entry(self, testitem):
@@ -46,7 +46,7 @@ class cmo():
             self.data = tech_dict['CMO']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
     
 
@@ -56,7 +56,7 @@ class cmo():
             self.data = tech_dict['CMO']['HIGH']
             return self.data
         else:
-            self.datadef = '50'
+            self.datadef = 50
             return self.datadef
 
     def lowsetup(self):
@@ -65,7 +65,7 @@ class cmo():
             self.data = tech_dict['CMO']['LOW']
             return self.data
         else:
-            self.datadef = '-50'
+            self.datadef = -50
             return self.datadef
 
     def widgetedit(self):
@@ -130,7 +130,7 @@ class cmo():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -140,7 +140,7 @@ class cmo():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

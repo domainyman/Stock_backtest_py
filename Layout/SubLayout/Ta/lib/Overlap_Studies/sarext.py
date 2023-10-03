@@ -30,8 +30,8 @@ class sarext():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'SAREXT': {'startvalue': '0', 'offsetonreverse': '0', 'accelerationinitlong': '0.02', 'accelerationlong': '0.02',
-                            'accelerationmaxlong': '0.2', 'accelerationinitshort': '0.02', 'accelerationshort': '0.02', 'accelerationmaxshort': '0.2'}}
+        return {'SAREXT': {'startvalue': 0, 'offsetonreverse': 0, 'accelerationinitlong': 0.02, 'accelerationlong': 0.02,
+                            'accelerationmaxlong': 0.2, 'accelerationinitshort': 0.02, 'accelerationshort': 0.02, 'accelerationmaxshort': 0.2}}
     
     def entry_exit_base(self):
         self.entryprofo = {'SAREXT': {'HIGH': '100', 'LOW': '-100'}}
@@ -61,7 +61,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['startvalue']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def offsetonreversesetup(self):
@@ -70,7 +70,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['offsetonreverse']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def accelerationinitlongsetup(self):
@@ -79,7 +79,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['accelerationinitlong']
             return self.data
         else:
-            self.datadef = '0.02'
+            self.datadef = 0.02
             return self.datadef
 
     def accelerationlongsetup(self):
@@ -88,7 +88,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['accelerationlong']
             return self.data
         else:
-            self.datadef = '0.02'
+            self.datadef = 0.02
             return self.datadef
 
     def accelerationmaxlongsetup(self):
@@ -97,7 +97,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['accelerationmaxlong']
             return self.data
         else:
-            self.datadef = '0.2'
+            self.datadef = 0.2
             return self.datadef
 
     def accelerationinitshortsetup(self):
@@ -106,7 +106,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['accelerationinitshort']
             return self.data
         else:
-            self.datadef = '0.02'
+            self.datadef = 0.02
             return self.datadef
 
     def accelerationshortsetup(self):
@@ -115,7 +115,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['accelerationshort']
             return self.data
         else:
-            self.datadef = '0.02'
+            self.datadef = 0.02
             return self.datadef
 
     def accelerationmaxshortsetup(self):
@@ -124,7 +124,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['accelerationmaxshort']
             return self.data
         else:
-            self.datadef = '0.2'
+            self.datadef = 0.2
             return self.datadef
         
     def highsetup(self):
@@ -133,7 +133,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['HIGH']
             return self.data
         else:
-            self.datadef = '100'
+            self.datadef = 100
             return self.datadef
 
     def lowsetup(self):
@@ -142,7 +142,7 @@ class sarext():
             self.data = tech_dict['SAREXT']['LOW']
             return self.data
         else:
-            self.datadef = '-100'
+            self.datadef = -100
             return self.datadef
 
     def widgetedit(self):
@@ -311,7 +311,7 @@ class sarext():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -321,7 +321,7 @@ class sarext():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

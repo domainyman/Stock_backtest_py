@@ -16,10 +16,10 @@ class cci():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'CCI': '14'}
+        return {'CCI': 14}
 
     def entry_exit_base(self):
-        self.entryprofo = {'CCI': {'HIGH': '100', 'LOW': '-100'}}
+        self.entryprofo = {'CCI': {'HIGH': 100, 'LOW': -100}}
         return self.entryprofo
     
     def Check_Entry(self, testitem):
@@ -46,7 +46,7 @@ class cci():
             self.data = tech_dict['CCI']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
 
     def highsetup(self):
@@ -55,7 +55,7 @@ class cci():
             self.data = tech_dict['CCI']['HIGH']
             return self.data
         else:
-            self.datadef = '100'
+            self.datadef = 100
             return self.datadef
 
     def lowsetup(self):
@@ -64,7 +64,7 @@ class cci():
             self.data = tech_dict['CCI']['LOW']
             return self.data
         else:
-            self.datadef = '-100'
+            self.datadef = -100
             return self.datadef
 
     def widgetedit(self):
@@ -130,7 +130,7 @@ class cci():
 
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -140,7 +140,7 @@ class cci():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

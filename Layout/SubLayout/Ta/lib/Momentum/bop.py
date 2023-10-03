@@ -16,10 +16,10 @@ class bop():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'BOP': '14'}
+        return {'BOP': 14}
     
     def entry_exit_base(self):
-        self.entryprofo = {'BOP': {'HIGH': '1', 'LOW': '-1'}}
+        self.entryprofo = {'BOP': {'HIGH': 1, 'LOW': -1}}
         return self.entryprofo
 
     def setup(self):
@@ -28,7 +28,7 @@ class bop():
             self.data = tech_dict['BOP']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
 
     def highsetup(self):
@@ -37,7 +37,7 @@ class bop():
             self.data = tech_dict['BOP']['HIGH']
             return self.data
         else:
-            self.datadef = '1'
+            self.datadef = 1
             return self.datadef
 
     def lowsetup(self):
@@ -46,7 +46,7 @@ class bop():
             self.data = tech_dict['BOP']['LOW']
             return self.data
         else:
-            self.datadef = '-1'
+            self.datadef = -1
             return self.datadef
 
     def Check_Entry(self, testitem):

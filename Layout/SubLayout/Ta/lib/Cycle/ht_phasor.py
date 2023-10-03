@@ -16,7 +16,7 @@ class ht_phasor():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'HT_PHASOR': '60'}
+        return {'HT_PHASOR': 60}
     
     def entry_exit_base(self):
         self.entryprofo = {'HT_PHASOR': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
@@ -28,7 +28,7 @@ class ht_phasor():
             self.data = tech_dict['HT_PHASOR']
             return self.data
         else:
-            self.datadef = '60'
+            self.datadef = 60
             return self.datadef
 
     def buysignalsetup(self):
@@ -139,7 +139,7 @@ class ht_phasor():
 
 
     def entrywidgetedit(self):
-        self.buylabel = QLabel('High :')
+        self.buylabel = QLabel('GOLDEN CROSS :')
         self.buylabel.setMinimumSize(QSize(150, 25))
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
@@ -149,7 +149,7 @@ class ht_phasor():
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.selllabel = QLabel('Low :')
+        self.selllabel = QLabel('Death Cross :')
         self.selllabel.setMinimumSize(QSize(150, 25))
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(

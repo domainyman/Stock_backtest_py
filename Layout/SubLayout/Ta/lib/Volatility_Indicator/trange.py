@@ -16,10 +16,10 @@ class trange():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'TRANGE': '14'}
+        return {'TRANGE': 14}
     
     def entry_exit_base(self):
-        self.entryprofo = {'TRANGE': {'HIGH': '10', 'LOW': '5'}}
+        self.entryprofo = {'TRANGE': {'HIGH': 10, 'LOW': 5}}
         return self.entryprofo
 
     def Check_Entry(self, testitem):
@@ -46,7 +46,7 @@ class trange():
             self.data = tech_dict['TRANGE']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
         
     def highsetup(self):
@@ -55,7 +55,7 @@ class trange():
             self.data = tech_dict['TRANGE']['HIGH']
             return self.data
         else:
-            self.datadef = '10'
+            self.datadef = 10
             return self.datadef
 
     def lowsetup(self):
@@ -64,7 +64,7 @@ class trange():
             self.data = tech_dict['TRANGE']['LOW']
             return self.data
         else:
-            self.datadef = '5'
+            self.datadef = 5
             return self.datadef
 
     def widgetedit(self):
@@ -129,7 +129,7 @@ class trange():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -139,7 +139,7 @@ class trange():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

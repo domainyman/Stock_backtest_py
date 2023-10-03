@@ -18,7 +18,7 @@ class sar():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'SAR': {'acceleration': '0.02', 'maximum': '0.2'}}
+        return {'SAR': {'acceleration': 0.02, 'maximum': 0.2}}
 
     def entry_exit_base(self):
         self.entryprofo = {'SAR': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
@@ -56,7 +56,7 @@ class sar():
             self.data = tech_dict['SAR']['acceleration']
             return self.data
         else:
-            self.datadef = '0.02'
+            self.datadef = 0.02
             return self.datadef
 
     def maximumsetup(self):
@@ -65,7 +65,7 @@ class sar():
             self.data = tech_dict['SAR']['maximum']
             return self.data
         else:
-            self.datadef = '0.2'
+            self.datadef = 0.2
             return self.datadef
 
     def buysignalsetup(self):

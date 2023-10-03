@@ -24,10 +24,10 @@ class kdj():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        return {'KDJ': {'fastk_period': '5', 'slowk_period': '3', 'slowk_matype': '0', 'slowd_period': '3', 'slowd_matype': '0'}}
+        return {'KDJ': {'fastk_period': 5, 'slowk_period': 3, 'slowk_matype': 0, 'slowd_period': 3, 'slowd_matype': 0}}
 
     def entry_exit_base(self):
-        self.entryprofo = {'KDJ': {'HIGH': '90', 'LOW': '10'}}
+        self.entryprofo = {'KDJ': {'HIGH': 90, 'LOW': 10}}
         return self.entryprofo
 
     def Check_Entry(self, testitem):
@@ -54,7 +54,7 @@ class kdj():
             self.data = tech_dict['KDJ']['fastk_period']
             return self.data
         else:
-            self.datadef = '5'
+            self.datadef = 5
             return self.datadef
 
     def slowk_periodsetup(self):
@@ -63,7 +63,7 @@ class kdj():
             self.data = tech_dict['KDJ']['slowk_period']
             return self.data
         else:
-            self.datadef = '3'
+            self.datadef = 3
             return self.datadef
 
     def slowk_matypesetup(self):
@@ -72,7 +72,7 @@ class kdj():
             self.data = tech_dict['KDJ']['slowk_matype']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def slowd_periodsetup(self):
@@ -81,7 +81,7 @@ class kdj():
             self.data = tech_dict['KDJ']['slowd_period']
             return self.data
         else:
-            self.datadef = '3'
+            self.datadef = 3
             return self.datadef
 
     def slowd_matypesetup(self):
@@ -90,7 +90,7 @@ class kdj():
             self.data = tech_dict['KDJ']['slowd_matype']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
         
     def highsetup(self):
@@ -99,7 +99,7 @@ class kdj():
             self.data = tech_dict['KDJ']['HIGH']
             return self.data
         else:
-            self.datadef = '90'
+            self.datadef = 90
             return self.datadef
 
     def lowsetup(self):
@@ -108,7 +108,7 @@ class kdj():
             self.data = tech_dict['KDJ']['LOW']
             return self.data
         else:
-            self.datadef = '10'
+            self.datadef = 10
             return self.datadef
 
     def widgetedit(self):
@@ -226,7 +226,7 @@ class kdj():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -236,7 +236,7 @@ class kdj():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

@@ -20,7 +20,7 @@ class stochf():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'STOCHF': {'fastk_period': '5', 'fastd_period': '3', 'fastd_matype': '0'}}
+        return {'STOCHF': {'fastk_period': 5, 'fastd_period': 3, 'fastd_matype': 0}}
 
     def entry_exit_base(self):
         self.entryprofo = {'STOCHF': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
@@ -58,7 +58,7 @@ class stochf():
             self.data = tech_dict['STOCHF']['fastk_period']
             return self.data
         else:
-            self.datadef = '5'
+            self.datadef = 5
             return self.datadef
 
     def fastd_periodsetup(self):
@@ -67,7 +67,7 @@ class stochf():
             self.data = tech_dict['STOCHF']['fastd_period']
             return self.data
         else:
-            self.datadef = '3'
+            self.datadef = 3
             return self.datadef
 
     def fastd_matypesetup(self):
@@ -76,7 +76,7 @@ class stochf():
             self.data = tech_dict['STOCHF']['fastd_matype']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def buysignalsetup(self):
@@ -189,7 +189,7 @@ class stochf():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.buylabel = QLabel('High :')
+        self.buylabel = QLabel('GOLDEN CROSS :')
         self.buylabel.setMinimumSize(QSize(150, 25))
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
@@ -199,7 +199,7 @@ class stochf():
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.selllabel = QLabel('Low :')
+        self.selllabel = QLabel('Death Cross :')
         self.selllabel.setMinimumSize(QSize(150, 25))
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(

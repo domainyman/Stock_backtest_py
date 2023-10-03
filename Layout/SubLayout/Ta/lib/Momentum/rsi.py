@@ -16,11 +16,11 @@ class rsi():
         self.EntryLowlineedit = QLineEdit()
 
     def base(self):
-        self.baseprofo = {'RSI': '14'}
+        self.baseprofo = {'RSI': 14}
         return self.baseprofo
 
     def entry_exit_base(self):
-        self.entryprofo = {'RSI': {'HIGH': '70', 'LOW': '30'}}
+        self.entryprofo = {'RSI': {'HIGH': 70, 'LOW': 30}}
         return self.entryprofo
 
     def Check_Entry(self, testitem):
@@ -47,7 +47,7 @@ class rsi():
             self.data = tech_dict['RSI']
             return self.data
         else:
-            self.datadef = '14'
+            self.datadef = 14
             return self.datadef
 
     def highsetup(self):
@@ -56,7 +56,7 @@ class rsi():
             self.data = tech_dict['RSI']['HIGH']
             return self.data
         else:
-            self.datadef = '70'
+            self.datadef = 70
             return self.datadef
 
     def lowsetup(self):
@@ -65,7 +65,7 @@ class rsi():
             self.data = tech_dict['RSI']['LOW']
             return self.data
         else:
-            self.datadef = '30'
+            self.datadef = 30
             return self.datadef
 
     def widgetedit(self):
@@ -136,7 +136,7 @@ class rsi():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('High :')
+        self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -146,7 +146,7 @@ class rsi():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('Low :')
+        self.Lowlabel = QLabel('LOW :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

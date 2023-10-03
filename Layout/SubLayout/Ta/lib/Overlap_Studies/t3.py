@@ -51,11 +51,11 @@ class t3():
         self.sellsignalcb_4_5 = QComboBox()
 
     def base(self):
-        return {'T3': {'parameter_1timeperiod': '5', 'parameter_1vfactor': '0',
-                       'parameter_2timeperiod': '20', 'parameter_2vfactor': '0',
-                       'parameter_3timeperiod': '50', 'parameter_3vfactor': '0',
-                       'parameter_4timeperiod': '100', 'parameter_4vfactor': '0',
-                       'parameter_5timeperiod': '150', 'parameter_5vfactor': '0', }}
+        return {'T3': {'parameter_1timeperiod': 5, 'parameter_1vfactor': 0,
+                       'parameter_2timeperiod': 20, 'parameter_2vfactor': 0,
+                       'parameter_3timeperiod': 50, 'parameter_3vfactor': 0,
+                       'parameter_4timeperiod': 100, 'parameter_4vfactor': 0,
+                       'parameter_5timeperiod': 150, 'parameter_5vfactor': 0 }}
 
     def entry_exit_base(self):
         self.entryprofo = {'T3': {'Parameters_1 - Parameters_2': {'Golden Cross': 'True', 'Death Cross': 'True'},
@@ -158,7 +158,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_1timeperiod']
             return self.data
         else:
-            self.datadef = '5'
+            self.datadef = 5
             return self.datadef
 
     def parameter_1vfactorsetup(self):
@@ -167,7 +167,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_1vfactor']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def parameter_2timeperiodsetup(self):
@@ -176,7 +176,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_2timeperiod']
             return self.data
         else:
-            self.datadef = '20'
+            self.datadef = 20
             return self.datadef
 
     def parameter_2vfactorsetup(self):
@@ -185,7 +185,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_2vfactor']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def parameter_3timeperiodsetup(self):
@@ -194,7 +194,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_3timeperiod']
             return self.data
         else:
-            self.datadef = '50'
+            self.datadef = 50
             return self.datadef
 
     def parameter_3vfactorsetup(self):
@@ -203,7 +203,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_3vfactor']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def parameter_4timeperiodsetup(self):
@@ -212,7 +212,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_4timeperiod']
             return self.data
         else:
-            self.datadef = '100'
+            self.datadef = 100
             return self.datadef
 
     def parameter_4vfactorsetup(self):
@@ -221,7 +221,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_4vfactor']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def parameter_5timeperiodsetup(self):
@@ -230,7 +230,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_5timeperiod']
             return self.data
         else:
-            self.datadef = '150'
+            self.datadef = 150
             return self.datadef
 
     def parameter_5vfactorsetup(self):
@@ -239,7 +239,7 @@ class t3():
             self.data = tech_dict['T3']['parameter_5vfactor']
             return self.data
         else:
-            self.datadef = '0'
+            self.datadef = 0
             return self.datadef
 
     def buysignalsetup_1_2(self):

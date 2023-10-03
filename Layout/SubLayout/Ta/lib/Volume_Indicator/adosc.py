@@ -19,7 +19,7 @@ class adosc():
         self.sellsignalcb = QComboBox()
 
     def base(self):
-        return {'ADOSC': {'fastperiod': '3', 'slowperiod': '10'}}
+        return {'ADOSC': {'fastperiod': 3, 'slowperiod': 10}}
 
     def entry_exit_base(self):
         self.entryprofo = {
@@ -124,7 +124,7 @@ class adosc():
             self.data = tech_dict['ADOSC']['fastperiod']
             return self.data
         else:
-            self.datadef = '3'
+            self.datadef = 3
             return self.datadef
 
     def slowperiodsetup(self):
@@ -133,7 +133,7 @@ class adosc():
             self.data = tech_dict['ADOSC']['slowperiod']
             return self.data
         else:
-            self.datadef = '10'
+            self.datadef = 10
             return self.datadef
 
     def widgetedit(self):
