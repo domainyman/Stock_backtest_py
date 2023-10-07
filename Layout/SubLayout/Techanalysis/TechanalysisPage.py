@@ -67,10 +67,12 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
             if (self.item in self.dict):
                 del self.dict[self.item]
             self.setterTechValue(self.dict)
+
             self.Entrydict = self.getterEntryTechValue()
             if (self.item in self.Entrydict):
                 del self.Entrydict[self.item]
             self.setterEntryTechValue(self.Entrydict)
+            
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))

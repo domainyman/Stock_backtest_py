@@ -16,27 +16,27 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         self.ui.setupUi(self)
         self.setuptech()
 
-    def mulitbaserange(self, textname, textperm):
+    def mulitbaserange(self, textname, textperm) -> dict:
         if (textperm == 'matype'):
             self.baseoption = {textname: {textperm: {
                 'First': 0, 'Last': 8, 'Step': 1}}}
         elif (textperm == 'timeperiod'):
             self.baseoption = {textname: {textperm: {
-                'First': 1, 'Last': 100, 'Step': 25}}}
+                'First': 0, 'Last': 100, 'Step': 25}}}
         else:
             self.baseoption = {textname: {textperm: {
-                'First': 0, 'Last': 0, 'Step': 0}}}
+                'First': 0, 'Last': 100, 'Step': 25}}}
         return self.baseoption
 
-    def baserange(self, textname):
+    def baserange(self, textname) -> dict:
         self.baseoption = {textname: {
-            'First': 1, 'Last': 100, 'Step': 25}}
+            'First': 0, 'Last': 100, 'Step': 25}}
         return self.baseoption
 
     def mulitentrybaserange(self, textname, textperm):
         self.dict_key_value = self.getterEntryTechValue()[textname][textperm]
         if isinstance(self.dict_key_value, (int, float)):
-            self.baseoption = {textname: {textperm: {'First': 1, 'Last': 100, 'Step': 25}}}
+            self.baseoption = {textname: {textperm: {'First': 0, 'Last': 100, 'Step': 25}}}
         else:
             self.baseoption = {textname: {textperm: {'True', 'False','Both Test'}}}
         return self.baseoption
@@ -134,7 +134,12 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             self.rangedict = self.getterEntryRangeTechValue()
             if (self.item in self.rangedict):
                 del self.rangedict[self.item]
-            self.setterEntryRangeTechValue(self.Entrydict)
+            self.setterEntryRangeTechValue(self.rangedict)
+
+            self.rangevaldict = self.getterEntryRangeValue()
+            if (self.item in self.rangevaldict):
+                del self.rangevaldict[self.item]
+            self.setterEntryRangeValue(self.rangevaldict)
 
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
@@ -277,9 +282,6 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         try:
             if (self.clearwidget() == True):
                 self.return_Tech_tool_perm(text)
-                # self.returngroup = talib_list()
-                # self.returnwidget = self.returngroup.groupreturn(text)
-                # self.ui.groupverticalLayout.addLayout(self.returnwidget)
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))

@@ -12,9 +12,12 @@ from Layout.SubLayout.Mmanagement.MmanagementPage import Moneymanagepage
 from Layout.SubLayout.Entrymanagement.OptEntmanagementPage import optEntrymanagepage
 from Layout.SubLayout.Entrymanagement.EntmanagementPage import Entrymanagepage
 from Layout.Method_Class.backtrade import cerebrosetup
+from Layout.Method_Class.optbacktrade import optcerebrosetup
+from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange
 from Layout.SubLayout.Search.SearchSymbol import Tickersearch
 from Global.Value.UniversalValue import GlobalValue
 from Global.Value.TechToolParam import TechValue
+from Global.Value.SegmentationRangeValue import SegmentationRange
 from Global.Value.MoneyManageParam import MoneyValue
 from Layout.SubLayout.Ta.talib_lib import talib_list
 import matplotlib.pyplot as plt
@@ -90,8 +93,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         self.ui.ea_techanalysis_tools_btn.clicked.connect(
             self.OptimizationIndicatorToolspage)
-        self.ui.ea_techanalysis_tools_mmbtn.clicked.connect(self.aamoneymanagepage)
-        self.ui.ea_techanalysis_tools_entriesbtn.clicked.connect(self.Optentrymanagepage)
+        self.ui.ea_techanalysis_tools_mmbtn.clicked.connect(
+            self.aamoneymanagepage)
+        self.ui.ea_techanalysis_tools_entriesbtn.clicked.connect(
+            self.Optentrymanagepage)
 
     def side_meun_btn(self):
         self.ui.Btn_Home.clicked.connect(self.showtkhome)
@@ -849,7 +854,47 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def eatechanalysisenterdetail(self):
         try:
             if (self.eatechanalysisenter() == True):
-                pass
+                if (self.check_date_final() == True):
+                    if(self._muitifrom_ticker() == True):
+                        self.ui.ea_DownLoad_btn.show()
+                    else:
+                        self.ui.ea_DownLoad_btn.hide()
+                else:
+                    QMessageBox.information(
+                        None, 'Input Error', 'Input Error!,Please enter correct information')
+        except BaseException as msg:
+            QMessageBox.warning(None, 'System Error',
+                                'System Error !' + str(msg))
+
+    def _muitifrom_ticker(self):
+        try:
+            type = self.getterModeParamlValue()
+            if (type == "From_Signals()"):
+                self.entrylist = seqmentationrange().separationtech()
+                print(self.entrylist)
+                # optcerebrosetup()
+                # self.calculateinter()
+                # cerebrosetup()
+            return True
+        except BaseException as msg:
+            QMessageBox.warning(None, 'System Error',
+                                'System Error !' + str(msg))
+
+            return False
+
+
+    def check_date_final(self):
+        try:
+            self.rangevalue = self.getterEntryRangeValue()
+            self.rangevaluekey = self.rangevalue.keys()
+            for permkeys in self.rangevaluekey:
+                self.rangekey = self.rangevalue[permkeys].keys()
+                for perm in self.rangekey:
+                    self.rangekeyvalue = self.rangevalue[permkeys][perm]
+                    if (self.rangekeyvalue == {'False', 'True', 'Both Test'}):
+                        return False
+                    else:
+                        return True
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))
@@ -931,6 +976,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def getterEntryRangeValue(self):
         return TechValue.get_entry_range_perm()
 ###########################
+
     def clear_db_perm(self):
         self.setterEntryRangeValue({})
         self.setterEntryRangeTechValue({})

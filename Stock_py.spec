@@ -10,6 +10,7 @@ py_files = [
     'Global\\Value\\UniversalValue.py',
     'Layout\\SubLayout\\BacktestPofo\\BacktestPofoPage.py',
     'Layout\\SubLayout\\Entrymanagement\\EntmanagementPage.py',
+    'Layout\\SubLayout\\Entrymanagement\\OptEntmanagementPage.py'
     'Layout\\SubLayout\\info\\CompanyOfficersPage.py',
     'Layout\\SubLayout\\info\\LongBusSumPage.py',
     'Layout\\SubLayout\\matplotlib\\plt.py',
@@ -80,6 +81,7 @@ py_files = [
     'Layout\\SubLayout\\Techanalysis\\TechanalysisPage.py',
     'Layout\\SubLayout\\Techanalysis\\OptimizationIndicatorTools.py'
     'Layout\\Method_Class\\backtrade.py',
+    'Layout\\Method_Class\\optbacktrade.py'
     'Layout\\Ui_Layout\\Entrymanagement\\Ui_entrymanagement.py',
     'Layout\\Ui_Layout\\Info\\Ui_companyOfficers.py',
     'Layout\\Ui_Layout\\Info\\Ui_longbussum.py',

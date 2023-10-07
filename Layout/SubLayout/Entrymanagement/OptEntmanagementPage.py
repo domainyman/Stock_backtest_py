@@ -103,9 +103,6 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
         try:
             if (self.clearwidget() == True):
                 self.return_Tech_tool_perm(text)
-                # self.returngroup = talib_list()
-                # self.returnwidget = self.returngroup.entryreturn(text)
-                # self.ui.EntrygroupverticalLayout.addLayout(self.returnwidget)
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))
@@ -180,8 +177,15 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                 "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
             self.__dict__[textmain + textname +
                           'booledit'] = QComboBox()
+            self.item = ['','Both Test', 'False', 'True']
             self.__dict__[textmain + textname +
-                          'booledit'].addItems(self.__dict__[textmain + textname + 'boolparameter'])
+                          'booledit'].addItems(self.item)
+            if(self.keyvalue == {'True', 'False', 'Both Test'}):
+                index = self.__dict__[textmain + textname + 'booledit'].findText(str(''))
+                self.__dict__[textmain + textname + 'booledit'].setCurrentIndex(index)
+            else:
+                index = self.__dict__[textmain + textname + 'booledit'].findText(str(self.keyvalue))
+                self.__dict__[textmain + textname + 'booledit'].setCurrentIndex(index)
             self.__dict__[textmain + textname +
                           'booledit'].setMinimumSize(QSize(200, 25))
             self.__dict__[textmain + textname + 'booledit'].setStyleSheet(
@@ -445,24 +449,28 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                                     'Saved Parameter Setting')
 
     def uploadboolvalue(self, textmain, boolname, textname=None):
-        if (textname == None):
-            self.global_dict = self.getterEntryRangeValue()
-            tool_dict = self.bool_dicts(
-                textmain, boolname)
-            self.global_dict.update(tool_dict)
-            self.setterEntryRangeValue(self.global_dict)
-            print(self.getterEntryRangeValue())
-            QMessageBox.information(None, 'Parameter Saved',
-                                    'Saved Parameter Setting')
+        if(boolname == ''):
+            QMessageBox.information(None, 'Input Error',
+                        'Input Can not None')
         else:
-            self.global_dict = self.getterEntryRangeValue()
-            tool_dict = self.bool_dicts(
-                textname, boolname)
-            self.global_dict[textmain].update(tool_dict)
-            self.setterEntryRangeValue(self.global_dict)
-            print(self.getterEntryRangeValue())
-            QMessageBox.information(None, 'Parameter Saved',
-                                    'Saved Parameter Setting')
+            if (textname == None):
+                self.global_dict = self.getterEntryRangeValue()
+                tool_dict = self.bool_dicts(
+                    textmain, boolname)
+                self.global_dict.update(tool_dict)
+                self.setterEntryRangeValue(self.global_dict)
+                print(self.getterEntryRangeValue())
+                QMessageBox.information(None, 'Parameter Saved',
+                                        'Saved Parameter Setting')
+            else:
+                self.global_dict = self.getterEntryRangeValue()
+                tool_dict = self.bool_dicts(
+                    textname, boolname)
+                self.global_dict[textmain].update(tool_dict)
+                self.setterEntryRangeValue(self.global_dict)
+                print(self.getterEntryRangeValue())
+                QMessageBox.information(None, 'Parameter Saved',
+                                        'Saved Parameter Setting')
 
     def listwidgetitem(self):
         return self.ui.EntrytoollistWidget.currentItem().text()
