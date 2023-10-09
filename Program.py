@@ -871,7 +871,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             type = self.getterModeParamlValue()
             if (type == "From_Signals()"):
                 self.entrylist = seqmentationrange().separationtech()
-                print(self.entrylist)
                 # optcerebrosetup()
                 # self.calculateinter()
                 # cerebrosetup()
