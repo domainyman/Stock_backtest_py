@@ -13,26 +13,16 @@ class test:
         try:
             self.matchlist = []
             for tech in self.techrange.keys():
-                self.tech_list_perm = self.process_dict(self.techrange[tech])
-                # print(tech,self.tech_list_perm)
-                # if (self.check_instance(self.tech_list_perm, dict)):
-                #     print("******dict*******")
-                #     self.tech_dictlist_perm_core = self.rebuildlist_to_permlist(
-                #         self.tech_list_perm)
-                #     self.combination = self.combinations_data(
-                #         self.tech_dictlist_perm_core)
-                #     self.rebuild_technames = self.rebuild_techname(
-                #         tech, self.combination)
-                #     self.feild_dict = self.rebuilding_feild_name(
-                #         tech, self.rebuild_technames)
-                #     self.matchlist.append(self.feild_dict)
-            # self.matchlist = self.reset_structure(self.matchlist)
-            # self.combinations = self.combinations_data(self.matchlist)
-            # self.table = self.PrettyTabletest(
-            #     self.field_name(self.matchlist), self.combinations)
-            # print(self.table)
+                self.tech_list_perm = self.process_dict(tech, self.techrange)
+                self.combination = self.combinations_data(self.tech_list_perm)
+                self.rebuild_technames = self.rebuild_techname(tech, self.combination)
+                self.feild_dict = self.rebuilding_feild_name(tech, self.rebuild_technames)
+                self.matchlist.append(self.feild_dict)
+            self.combinations = self.combinations_data(self.matchlist)
+            self.table = self.PrettyTabletest(self.field_name(self.matchlist), self.combinations)
+            print(self.combinations)
             # self.csv_loading(self.table,self.field_name(self.matchlist))
-            return self.matchlist
+            return self.combinations
         except Exception as e:
             print(e)
 
@@ -87,38 +77,32 @@ class test:
                 self.radon.append(self.dictname)
         return self.radon
 
-    def process_dict(self, dictionary) -> list:
-        self.dictionarys = dictionary
+    def process_dict(self, keydict, dictionary) -> list:
+        self.dictionarys = dictionary[keydict]
         self.keys = self.dictionarys.keys()
-        self.rebuildlists = {}
+        self.rebuildlists = []
         for key in self.keys:
-            self.group_option(self.dictionarys[key])
-        #             self.techseqperm = self.seqment_tech_dict(
-        #                 self.dictionarys[key])
-        #             self.techseqperm = self.resetzore_to_one(self.techseqperm)
-        #             self.techseqperm = self.rm_duplicates_list(
-        #                 self.techseqperm)
-        #             self.rebuildlist = self.rebuilding_structure(
-        #                 key, self.techseqperm)
-        #             self.rebuildlists.update(self.rebuildlist)
+            self.rebuildlist = self.group_option(key, self.dictionarys)
+            self.rebuildlists.append(self.rebuildlist)
+        return self.rebuildlists
 
-        #     return self.rebuildlists
-
-        # else:
-        #     self.techseqperm = self.seqment_tech_dict(dictionary)
-        #     self.techseqperm = self.resetzore_to_one(self.techseqperm)
-        #     self.techseqperm = self.rm_duplicates_list(self.techseqperm)
-        #     return self.techseqperm
-
-    def group_option(self, value):
-        self.values = value
+    def group_option(self, key, value):
+        self.values = value[key]
         if (self.values == 'Both Test'):
-            print("TURE")
+            self.techseqpermfinal = [{key: 'True'}, {key: 'False'}]
+        elif (self.values == 'True'):
+            self.techseqpermfinal = [{key: 'True'}]
+        elif (self.values == 'False'):
+            self.techseqpermfinal = [{key: 'False'}]
         elif (list(self.values.keys()) == ['First', 'Last', 'Step']):
             self.techseqperm = self.seqment_tech_dict(self.values)
             self.techseqperm = self.resetzore_to_one(self.techseqperm)
             self.techseqperm = self.rm_duplicates_list(self.techseqperm)
-            print(self.techseqperm)
+            self.techseqpermfinal = []
+            for techseqperm in self.techseqperm:
+                self.items = self.rebuilding_structure(key, techseqperm)
+                self.techseqpermfinal.append(self.items)
+        return self.techseqpermfinal
 
     def check_instance(self, dict, type):
         if (isinstance(dict, type)):

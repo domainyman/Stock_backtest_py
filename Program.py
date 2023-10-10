@@ -13,7 +13,8 @@ from Layout.SubLayout.Entrymanagement.OptEntmanagementPage import optEntrymanage
 from Layout.SubLayout.Entrymanagement.EntmanagementPage import Entrymanagepage
 from Layout.Method_Class.backtrade import cerebrosetup
 from Layout.Method_Class.optbacktrade import optcerebrosetup
-from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange
+from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_inq
+from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_entry
 from Layout.SubLayout.Search.SearchSymbol import Tickersearch
 from Global.Value.UniversalValue import GlobalValue
 from Global.Value.TechToolParam import TechValue
@@ -870,7 +871,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         try:
             type = self.getterModeParamlValue()
             if (type == "From_Signals()"):
-                self.entrylist = seqmentationrange().separationtech()
+                self.inqlist = seqmentationrange_inq().separationtech()
+                self.entrylist = seqmentationrange_entry().separationtech()
+                print(self.inqlist)
+                print(self.entrylist)
                 # optcerebrosetup()
                 # self.calculateinter()
                 # cerebrosetup()
