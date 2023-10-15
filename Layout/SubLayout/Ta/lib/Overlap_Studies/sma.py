@@ -1,5 +1,5 @@
 import talib
-from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox,QComboBox
+from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox, QComboBox
 from PyQt6.QtCore import QSize, Qt
 from Global.Value.TechToolParam import TechValue
 from Global.Value.UniversalValue import GlobalValue
@@ -37,14 +37,14 @@ class sma():
 
     def base(self):
         return {'SMA': {'Parameters_1': 10, 'Parameters_2': 20, 'Parameters_3': 50, 'Parameters_4': 100, 'Parameters_5': 150}}
-    
+
     def entry_exit_base(self):
         self.entryprofo = {'SMA': {'Parameters_1 - Parameters_2': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
-                                    'Parameters_2 - Parameters_3': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
-                                    'Parameters_3 - Parameters_4': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
-                                    'Parameters_4 - Parameters_5': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}}
+                                   'Parameters_2 - Parameters_3': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
+                                   'Parameters_3 - Parameters_4': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'},
+                                   'Parameters_4 - Parameters_5': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}}
         return self.entryprofo
-    
+
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.parameters_1_Parameters_2 = self.tech_dict['SMA'][
@@ -58,37 +58,43 @@ class sma():
         if (self.parameters_1_Parameters_2 == 'False' and self.parameters_2_Parameters_3 == 'False' and self.parameters_3_Parameters_4 == 'False' and self.parameters_4_Parameters_5 == 'False'):
             return True
         elif (self.parameters_1_Parameters_2 == 'True' or self.parameters_2_Parameters_3 == 'True' or self.parameters_3_Parameters_4 == 'True' or self.parameters_4_Parameters_5 == 'True'):
+            self.check_list = []
             if (self.parameters_1_Parameters_2 == 'True'):
                 self.MACDitem = testitem.loc['SMA_parameter_1']
                 self.MACD_SIGNALitem = testitem.loc['SMA_parameter_2']
                 if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_2_Parameters_3 == 'True'):
                 self.MACDitem = testitem.loc['SMA_parameter_2']
                 self.MACD_SIGNALitem = testitem.loc['SMA_parameter_3']
                 if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_3_Parameters_4 == 'True'):
                 self.MACDitem = testitem.loc['SMA_parameter_3']
                 self.MACD_SIGNALitem = testitem.loc['SMA_parameter_4']
                 if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_4_Parameters_5 == 'True'):
                 self.MACDitem = testitem.loc['SMA_parameter_4']
                 self.MACD_SIGNALitem = testitem.loc['SMA_parameter_5']
                 if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
+            if (all(self.check_list)):
+                return True
+            else:
+                return False
+
         else:
             return True
-    
+
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.parameters_1_Parameters_2 = self.tech_dict['SMA'][
@@ -102,34 +108,40 @@ class sma():
         if (self.parameters_1_Parameters_2 == 'False' and self.parameters_2_Parameters_3 == 'False' and self.parameters_3_Parameters_4 == 'False' and self.parameters_4_Parameters_5 == 'False'):
             return True
         elif (self.parameters_1_Parameters_2 == 'True' or self.parameters_2_Parameters_3 == 'True' or self.parameters_3_Parameters_4 == 'True' or self.parameters_4_Parameters_5 == 'True'):
+            self.check_list = []
             if (self.parameters_1_Parameters_2 == 'True'):
                 self.MACDitem = testitem.loc['SMA_parameter_1']
                 self.MACD_SIGNALitem = testitem.loc['SMA_parameter_2']
                 if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_2_Parameters_3 == 'True'):
                 self.MACDitem = testitem.loc['SMA_parameter_2']
                 self.MACD_SIGNALitem = testitem.loc['SMA_parameter_3']
                 if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_3_Parameters_4 == 'True'):
                 self.MACDitem = testitem.loc['SMA_parameter_3']
                 self.MACD_SIGNALitem = testitem.loc['SMA_parameter_4']
                 if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_4_Parameters_5 == 'True'):
                 self.MACDitem = testitem.loc['SMA_parameter_4']
                 self.MACD_SIGNALitem = testitem.loc['SMA_parameter_5']
                 if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
+            if (all(self.check_list)):
+                return True
+            else:
+                return False
+
         else:
             return True
 
@@ -177,7 +189,7 @@ class sma():
         else:
             self.datadef = 150
             return self.datadef
-        
+
     def buysignalsetup_1_2(self):
         tech_dict = self.getterEntryTechValue()
         if 'SMA' in tech_dict:

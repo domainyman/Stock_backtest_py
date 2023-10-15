@@ -33,12 +33,17 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             'First': 0, 'Last': 100, 'Step': 25}}
         return self.baseoption
 
-    def mulitentrybaserange(self, textname, textperm):
+    def mulitentrybaserange(self, textname, textperm, textvalue=None):
         self.dict_key_value = self.getterEntryTechValue()[textname][textperm]
         if isinstance(self.dict_key_value, (int, float)):
-            self.baseoption = {textname: {textperm: {'First': 0, 'Last': 100, 'Step': 25}}}
-        else:
-            self.baseoption = {textname: {textperm: {'True', 'False','Both Test'}}}
+            self.baseoption = {textname: {textperm: {
+                'First': 0, 'Last': 100, 'Step': 25}}}
+        elif isinstance(self.dict_key_value, (dict)):
+            self.baseoption = {textname: {textperm: {
+                textvalue: {'True', 'False', 'Both Test'}}}}
+        elif (self.dict_key_value == 'True') or (self.dict_key_value == 'False'):
+            self.baseoption = {textname: {
+                textperm: {'True', 'False', 'Both Test'}}}
         return self.baseoption
 
     def toolvalueseyup(self, textmain, textname):
@@ -60,8 +65,8 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         else:
             self.list.append(text)
         return self.list
-    
-    def checkenterperm_name(self,text):
+
+    def checkenterperm_name(self, text):
         self.list = []
         self.tech_tool_key = self.getterEntryTechValue()
         if (self.check_dict_contains_dict(self.tech_tool_key, text) == True):
@@ -232,22 +237,35 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                 self.range_dict = self.getterEntryRangeTechValue()
                 self.range_dict.update(self.basecase)
                 self.setterEntryRangeTechValue(self.range_dict)
-            
+
             self.entrylist = self.checkenterperm_name(text)
-            if (len(self.entrylist) > 1):
+            self.entryrange_dict = self.getterEntryRangeValue()
+            self.Entryglobal_dict = self.getterEntryTechValue()
+            if (len(self.entrylist) > 0):
                 for perm in self.entrylist:
-                    self.entrybaserange = self.mulitentrybaserange(text, perm)
-                    self.entryrange_dict = self.getterEntryRangeValue()
-                    if all(key in self.entryrange_dict for key in self.entrybaserange):
-                        self.keyentryvalue = self.entrybaserange[text]
-                        self.entryrange_dict[text].update(self.keyentryvalue)
-                        self.setterEntryRangeValue(self.entryrange_dict)
+                    if (isinstance(self.Entryglobal_dict[text][perm], dict)):
+                        if text not in self.entryrange_dict:
+                            self.entryrange_dict[text] = {}
+                        self.sign_valuekey = self.Entryglobal_dict[text][perm].keys()
+                        for sign_value in self.sign_valuekey:
+                            print(sign_value)
+                            self.keyentryvalue = self.mulitentrybaserange(text, perm, textvalue=sign_value)
+                            if perm not in self.entryrange_dict[text]:
+                                self.entryrange_dict[text][perm] = {}
+                            self.entryrange_dict[text][perm].update(self.keyentryvalue[text][perm])
+                            self.setterEntryRangeValue(self.entryrange_dict)
                     else:
-                        self.entryrange_dict.update(self.entrybaserange)
-                        self.setterEntryRangeValue(self.entryrange_dict)               
-            else:
-                pass
-                    
+                        self.entrybaserange = self.mulitentrybaserange(
+                            text, perm)
+                        if all(key in self.entryrange_dict for key in self.entrybaserange):
+                            self.keyentryvalue = self.entrybaserange[text]
+                            self.entryrange_dict[text].update(
+                                self.keyentryvalue)
+                            self.setterEntryRangeValue(self.entryrange_dict)
+                        else:
+                            self.entryrange_dict.update(self.entrybaserange)
+                            self.setterEntryRangeValue(self.entryrange_dict)
+
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))

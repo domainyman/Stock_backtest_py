@@ -18,11 +18,13 @@ class bt_enter_exit(bt.Strategy):
         current_datetime = self.data.datetime.datetime()
         row = basesetup().df_row(current_datetime, current_close)
         row = row.squeeze()
+        self.entry = basesetup().tran_entry(row)
+        self.exit = basesetup().tran_exit(row)
         if not self.position:  # not in the market
-            if (basesetup().tran_entry(row) == True) & (basesetup().tran_exit(row) == False):
+            if (self.entry == True) & (self.exit == False):
                 self.buy()  # enter long
 
-        elif (basesetup().tran_exit(row) == True) & (basesetup().tran_entry(row) == False):
+        elif (self.exit == True) & (self.entry == False):
             self.close()  # close long position
 
 
@@ -35,12 +37,12 @@ class optcerebrosetup():
         self.cerebro.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio')
         self.loopperm()
         results = self.cerebro.run()
-        portfolio_stats = results[0].analyzers.getbyname('pyfolio')
-        returns, positions, transactions, gross_lev = portfolio_stats.get_pf_items()
-        qs.reports.html(
-            returns, output='Stock Sentiment Report.html', title='Stock Sentiment')
-        webbrowser.open('Stock Sentiment Report.html')
-        self.cerebro.plot()
+        # portfolio_stats = results[0].analyzers.getbyname('pyfolio')
+        # returns, positions, transactions, gross_lev = portfolio_stats.get_pf_items()
+        # qs.reports.html(
+        #     returns, output='Stock Sentiment Report.html', title='Stock Sentiment')
+        # webbrowser.open('Stock Sentiment Report.html')
+        # self.cerebro.plot()
 
     def btfeel(self):
         return bt.feeds.PandasData(dataname=self.gettertoolhistory())

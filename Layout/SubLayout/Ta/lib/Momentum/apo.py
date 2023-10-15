@@ -23,7 +23,7 @@ class apo():
         return {'APO': {'fastperiod': 12, 'slowperiod': 26, 'matype': 0}}
 
     def entry_exit_base(self):
-        self.entryprofo = {'ADXR': {'HIGH': 5, 'LOW': -5}}
+        self.entryprofo = {'APO': {'HIGH': 5, 'LOW': -5}}
         return self.entryprofo
 
     def fastperiodsetup(self):

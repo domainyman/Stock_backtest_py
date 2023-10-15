@@ -58,34 +58,39 @@ class dema():
         if (self.parameters_1_Parameters_2 == 'False' and self.parameters_2_Parameters_3 == 'False' and self.parameters_3_Parameters_4 == 'False' and self.parameters_4_Parameters_5 == 'False'):
             return True
         elif (self.parameters_1_Parameters_2 == 'True' or self.parameters_2_Parameters_3 == 'True' or self.parameters_3_Parameters_4 == 'True' or self.parameters_4_Parameters_5 == 'True'):
+            self.check_list = []
             if (self.parameters_1_Parameters_2 == 'True'):
                 self.MACDitem = testitem.loc['DEMA_parameter_1']
                 self.MACD_SIGNALitem = testitem.loc['DEMA_parameter_2']
                 if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_2_Parameters_3 == 'True'):
                 self.MACDitem = testitem.loc['DEMA_parameter_2']
                 self.MACD_SIGNALitem = testitem.loc['DEMA_parameter_3']
                 if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_3_Parameters_4 == 'True'):
                 self.MACDitem = testitem.loc['DEMA_parameter_3']
                 self.MACD_SIGNALitem = testitem.loc['DEMA_parameter_4']
                 if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_4_Parameters_5 == 'True'):
                 self.MACDitem = testitem.loc['DEMA_parameter_4']
                 self.MACD_SIGNALitem = testitem.loc['DEMA_parameter_5']
                 if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
+            if (all(self.check_list)):
+                return True
+            else:
+                return False
         else:
             return True
 
@@ -102,34 +107,40 @@ class dema():
         if (self.parameters_1_Parameters_2 == 'False' and self.parameters_2_Parameters_3 == 'False' and self.parameters_3_Parameters_4 == 'False' and self.parameters_4_Parameters_5 == 'False'):
             return True
         elif (self.parameters_1_Parameters_2 == 'True' or self.parameters_2_Parameters_3 == 'True' or self.parameters_3_Parameters_4 == 'True' or self.parameters_4_Parameters_5 == 'True'):
+            self.check_list = []
             if (self.parameters_1_Parameters_2 == 'True'):
                 self.MACDitem = testitem.loc['DEMA_parameter_1']
                 self.MACD_SIGNALitem = testitem.loc['DEMA_parameter_2']
                 if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_2_Parameters_3 == 'True'):
                 self.MACDitem = testitem.loc['DEMA_parameter_2']
                 self.MACD_SIGNALitem = testitem.loc['DEMA_parameter_3']
                 if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_3_Parameters_4 == 'True'):
                 self.MACDitem = testitem.loc['DEMA_parameter_3']
                 self.MACD_SIGNALitem = testitem.loc['DEMA_parameter_4']
                 if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
             if (self.parameters_4_Parameters_5 == 'True'):
                 self.MACDitem = testitem.loc['DEMA_parameter_4']
                 self.MACD_SIGNALitem = testitem.loc['DEMA_parameter_5']
                 if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    return True
+                    self.check_list.append(True)
                 else:
-                    return False
+                    self.check_list.append(False)
+
+            if (all(self.check_list)):
+                return True
+            else:
+                return False
         else:
             return True
 

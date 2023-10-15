@@ -30,7 +30,7 @@ class adx():
         else:
             self.datadef = 14
             return self.datadef
-        
+
     def highsetup(self):
         tech_dict = self.getterEntryTechValue()
         if 'ADX' in tech_dict:
@@ -109,7 +109,7 @@ class adx():
 
     def getterTechValue(self):
         return TechValue.get_tech_toolperm_var()
-    
+
     def settertoolhistory(self, text):
         GlobalValue.set_TechTool_history_var(text)
 
@@ -124,7 +124,8 @@ class adx():
 
     def calculate(self):
         self.datadb = self.gettertoolhistory()
-        self.datadb["ADX"] = talib.ADX(self.datadb["High"],self.datadb["Low"],self.datadb["Close"], timeperiod=int(self.parameter))
+        self.datadb["ADX"] = talib.ADX(
+            self.datadb["High"], self.datadb["Low"], self.datadb["Close"], timeperiod=int(self.parameter))
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
@@ -176,4 +177,3 @@ class adx():
         print(self.getterEntryTechValue())
         QMessageBox.information(None, 'Parameter Saved',
                                 'Saved Parameter Setting')
-

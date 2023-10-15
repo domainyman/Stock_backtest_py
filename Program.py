@@ -13,8 +13,7 @@ from Layout.SubLayout.Entrymanagement.OptEntmanagementPage import optEntrymanage
 from Layout.SubLayout.Entrymanagement.EntmanagementPage import Entrymanagepage
 from Layout.Method_Class.backtrade import cerebrosetup
 from Layout.Method_Class.optbacktrade import optcerebrosetup
-from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_inq
-from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_entry
+from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_inq,seqmentationrange_entry,seqmentationrange_conv
 from Layout.SubLayout.Search.SearchSymbol import Tickersearch
 from Global.Value.UniversalValue import GlobalValue
 from Global.Value.TechToolParam import TechValue
@@ -856,7 +855,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         try:
             if (self.eatechanalysisenter() == True):
                 if (self.check_date_final() == True):
-                    if(self._muitifrom_ticker() == True):
+                    if (self._muitifrom_ticker() == True):
                         self.ui.ea_DownLoad_btn.show()
                     else:
                         self.ui.ea_DownLoad_btn.hide()
@@ -869,22 +868,38 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def _muitifrom_ticker(self):
         try:
-            type = self.getterModeParamlValue()
-            if (type == "From_Signals()"):
+            types = self.getterModeParamlValue()
+            if (types == "From_Signals()"):
                 self.inqlist = seqmentationrange_inq().separationtech()
                 self.entrylist = seqmentationrange_entry().separationtech()
-                print(self.inqlist)
-                print(self.entrylist)
-                # optcerebrosetup()
+                self.re_inq_list = self.re_list(self.inqlist)
+                self.re_entry_list = self.re_list(self.entrylist)
+                self.mesh_conv = seqmentationrange_conv().meshgrid_conv([self.re_inq_list, self.re_entry_list])
+                print(self.mesh_conv)
                 # self.calculateinter()
-                # cerebrosetup()
+                # optcerebrosetup()
             return True
         except BaseException as msg:
+            print(msg)
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))
 
             return False
 
+    def converted_final_dict(self,list_dict):
+        self.converted_dict = {}
+        for entry in list_dict:
+            self.converted_dict.update(entry)
+        return self.converted_dict
+    
+    def re_list(self,dict_list):
+        self.ret_list = []
+        for sign_item in dict_list:
+            self.ret_list.append(self.converted_final_dict(sign_item))
+        return self.ret_list
+            
+    def isEqual(self, x):
+        return np.all(np.diff(x) == 0)
 
     def check_date_final(self):
         try:
@@ -892,12 +907,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.rangevaluekey = self.rangevalue.keys()
             for permkeys in self.rangevaluekey:
                 self.rangekey = self.rangevalue[permkeys].keys()
-                for perm in self.rangekey:
+                print(permkeys)
+                for perm in list(self.rangekey):
+                    print(self.rangekey)
+                    print(perm)
                     self.rangekeyvalue = self.rangevalue[permkeys][perm]
                     if (self.rangekeyvalue == {'False', 'True', 'Both Test'}):
                         return False
-                    else:
-                        return True
+            return True
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))

@@ -18,11 +18,13 @@ class bt_enter_exit(bt.Strategy):
         current_datetime = self.data.datetime.datetime()
         row = basesetup().df_row(current_datetime, current_close)
         row = row.squeeze()
+        self.entry = basesetup().tran_entry(row)
+        self.exit = basesetup().tran_exit(row)
         if not self.position:  # not in the market
-            if (basesetup().tran_entry(row) == True) & (basesetup().tran_exit(row) == False):
+            if (self.entry == True) & (self.exit == False):
                 self.buy()  # enter long
 
-        elif (basesetup().tran_exit(row) == True) & (basesetup().tran_entry(row) == False):
+        elif (self.exit == True) & (self.entry == False):
             self.close()  # close long position
 
 
@@ -100,7 +102,6 @@ class basesetup():
             self.entryCheck = self.check_entery_para(
                 param, row)
             self.Checklist.append(self.entryCheck)
-        print(self.Checklist)
         if (all(self.Checklist)):
             return True
         else:

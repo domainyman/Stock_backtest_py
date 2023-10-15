@@ -7,6 +7,18 @@ from prettytable import PrettyTable
 import pandas as pd
 
 
+
+class seqmentationrange_conv():
+    def __init__(self) -> None:
+        pass
+
+    def meshgrid_conv(self,combinations_np):
+        self.combinations_nps = np.array(combinations_np, dtype=object)
+        meshgrid_result = np.meshgrid(*self.combinations_nps)
+        self.combinations = np.array(meshgrid_result).T.reshape(-1, len(self.combinations_nps))
+        return self.combinations
+        
+
 class seqmentationrange_inq():
 
     def __init__(self) -> None:
@@ -17,30 +29,32 @@ class seqmentationrange_inq():
             self.matchlist = []
             for tech in self.techrange.keys():
                 self.tech_list_perm = self.process_dict(self.techrange[tech])
-                if (self.check_instance(self.tech_list_perm, list)):
+                if (self.check_instance(self.tech_list_perm, list) == True):
                     self.tech_list_perm_core = self.rebuilding_structure(
                         tech, self.tech_list_perm)
                     self.signresult = self.dict_building_perm(
                         tech, self.tech_list_perm_core)
                     self.matchlist.append(self.signresult)
-                elif (self.check_instance(self.tech_list_perm, dict)):
+                elif (self.check_instance(self.tech_list_perm, dict) == True):
                     self.tech_dictlist_perm_core = self.rebuildlist_to_permlist(
                         self.tech_list_perm)
                     self.combination = self.combinations_data(
                         self.tech_dictlist_perm_core)
                     self.rebuild_technames = self.rebuild_techname(
                         tech, self.combination)
-                    self.feild_dict = self.rebuilding_feild_name(tech, self.rebuild_technames)
+                    self.feild_dict = self.rebuilding_feild_name(
+                        tech, self.rebuild_technames)
                     self.matchlist.append(self.feild_dict)
             self.combinations = self.combinations_data(self.matchlist)
-            self.table = self.PrettyTabletest(self.field_name(self.matchlist),self.combinations)
+            self.table = self.PrettyTabletest(
+                self.field_name(self.matchlist), self.combinations)
             print(self.table)
-            # self.csv_loading(self.table,self.field_name(self.matchlist))
+            self.csv_loading_tech(self.table,self.field_name(self.matchlist))
             return self.combinations
         except Exception as e:
             print(e)
 
-    def field_name(self,input_list):
+    def field_name(self, input_list):
         return [list(dic[0].keys())[0] for dic in input_list]
 
     def PrettyTabletest(self, field, list_core):
@@ -51,9 +65,9 @@ class seqmentationrange_inq():
             table.add_row(combination)
         return table
 
-    def csv_loading(self, table, field):
+    def csv_loading_tech(self, table, field):
         df = pd.DataFrame(table.__dict__['_rows'], columns=field)
-        df.to_csv('combinations.csv', index=False)
+        df.to_csv('combinations_tech.csv', index=False)
 
     def combinations_data(self, combinations_np):
         self.combinations_nps = np.array(combinations_np, dtype=object)
@@ -97,7 +111,7 @@ class seqmentationrange_inq():
         if (self.check_perm(self.keys) == False):
             self.rebuildlists = {}
             for key in self.keys:
-                if (isinstance(self.dictionarys[key], dict)) and (self.check_perm(self.dictionarys[key]) == True):
+                if (isinstance(self.dictionarys[key], dict) == True) and (self.check_perm(self.dictionarys[key]) == True):
                     self.techseqperm = self.seqment_tech_dict(
                         self.dictionarys[key])
                     self.techseqperm = self.resetzore_to_one(self.techseqperm)
@@ -199,13 +213,16 @@ class seqmentationrange_entry():
             for tech in self.techrange.keys():
                 self.tech_list_perm = self.process_dict(tech, self.techrange)
                 self.combination = self.combinations_data(self.tech_list_perm)
-                self.rebuild_technames = self.rebuild_techname(tech, self.combination)
-                self.feild_dict = self.rebuilding_feild_name(tech, self.rebuild_technames)
+                self.rebuild_technames = self.rebuild_techname(
+                    tech, self.combination)
+                self.feild_dict = self.rebuilding_feild_name(
+                    tech, self.rebuild_technames)
                 self.matchlist.append(self.feild_dict)
             self.combinations = self.combinations_data(self.matchlist)
-            self.table = self.PrettyTabletest(self.field_name(self.matchlist), self.combinations)
-            print(self.combinations)
-            # self.csv_loading(self.table,self.field_name(self.matchlist))
+            self.table = self.PrettyTabletest(
+                self.field_name(self.matchlist), self.combinations)
+            print(self.table)
+            self.csv_loading_entry(self.table,self.field_name(self.matchlist))
             return self.combinations
         except Exception as e:
             print(e)
@@ -221,9 +238,9 @@ class seqmentationrange_entry():
             table.add_row(combination)
         return table
 
-    def csv_loading(self, table, field):
+    def csv_loading_entry(self, table, field):
         df = pd.DataFrame(table.__dict__['_rows'], columns=field)
-        df.to_csv('combinations.csv', index=False)
+        df.to_csv('combinations_entry.csv', index=False)
 
     def combinations_data(self, combinations_np):
         self.combinations_nps = np.array(combinations_np, dtype=object)
@@ -282,11 +299,21 @@ class seqmentationrange_entry():
             self.techseqperm = self.seqment_tech_dict(self.values)
             self.techseqperm = self.resetzore_to_one(self.techseqperm)
             self.techseqperm = self.rm_duplicates_list(self.techseqperm)
-            self.techseqpermfinal = []
-            for techseqperm in self.techseqperm:
-                self.items = self.rebuilding_structure(key, techseqperm)
-                self.techseqpermfinal.append(self.items)
+            self.techseqpermfinal = [self.rebuilding_structure(
+                key, techseqperm) for techseqperm in self.techseqperm]
+        elif (list(self.values.keys()) == ['GOLDEN CROSS', 'Death Cross']):
+            self.techseqperm = self.seqment_techTrue_F_dict(self.values)
+            self.combination = self.combinations_data(self.techseqperm)
+            self.merged_dict = self.merged_dict_data(self.combination)
+            self.techseqpermfinal = [self.rebuilding_structure(
+                key, techseqperm) for techseqperm in self.merged_dict]
         return self.techseqpermfinal
+
+    def merged_dict_data(self, data) -> list:
+        merged_data = []
+        for item in data:
+            merged_data.append({**item[0], **item[1]})
+        return merged_data
 
     def check_instance(self, dict, type):
         if (isinstance(dict, type)):
@@ -317,6 +344,30 @@ class seqmentationrange_entry():
         else:
             self.techlist = range(self.first, self.last, self.step)
             return list(self.techlist)
+
+    def seqment_techTrue_F_dict(self, dicttech) -> list:
+        self.GOLDEN_CROSS = None
+        self.Death_Cross = None
+        self.targetdict = dicttech
+        for perm in list(self.targetdict.keys()):
+            if (perm == "GOLDEN CROSS"):
+                self.GOLDEN_CROSS_item = self.targetdict[perm]
+                if (self.GOLDEN_CROSS_item == 'Both Test'):
+                    self.GOLDEN_CROSS = [{perm: 'True'}, {perm: 'False'}]
+                elif (self.GOLDEN_CROSS_item == 'True'):
+                    self.GOLDEN_CROSS = [{perm: 'True'}]
+                elif (self.GOLDEN_CROSS_item == 'False'):
+                    self.GOLDEN_CROSS = [{perm: 'False'}]
+            elif (perm == "Death Cross"):
+                self.Death_Cross_item = self.targetdict[perm]
+                if (self.Death_Cross_item == 'Both Test'):
+                    self.Death_Cross = [{perm: 'True'}, {perm: 'False'}]
+                elif (self.Death_Cross_item == 'True'):
+                    self.Death_Cross = [{perm: 'True'}]
+                elif (self.Death_Cross_item == 'False'):
+                    self.Death_Cross = [{perm: 'False'}]
+        self.techlist = [self.GOLDEN_CROSS, self.Death_Cross]
+        return self.techlist
 
     def rebuilding_structure(self, key, dict_structure):
         return {key: dict_structure}
@@ -358,3 +409,5 @@ class seqmentationrange_entry():
 
     def getterEntryRangeValue(self):
         return TechValue.get_entry_range_perm()
+
+

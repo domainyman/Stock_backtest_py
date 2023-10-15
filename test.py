@@ -6,8 +6,8 @@ import pandas as pd
 class test:
 
     def __init__(self):
-        self.techrange = {'RSI': {'HIGH': {'First': 0, 'Last': 100, 'Step': 25}, 'LOW': {'First': 0, 'Last': 100, 'Step': 25}},
-                          'MACD': {'GOLDEN CROSS': 'Both Test', 'Death Cross': 'Both Test'}}
+        self.techrange = {'EMA': {'Parameters_1 - Parameters_2': {'GOLDEN CROSS': 'Both Test', 'Death Cross': 'Both Test'}, 'Parameters_2 - Parameters_3': {'GOLDEN CROSS': 'Both Test', 'Death Cross': 'Both Test'},
+                                  'Parameters_3 - Parameters_4': {'GOLDEN CROSS': 'Both Test', 'Death Cross': 'Both Test'}, 'Parameters_4 - Parameters_5': {'GOLDEN CROSS': 'Both Test', 'Death Cross': 'Both Test'}}}
 
     def separationtech(self) -> None:
         try:
@@ -15,12 +15,15 @@ class test:
             for tech in self.techrange.keys():
                 self.tech_list_perm = self.process_dict(tech, self.techrange)
                 self.combination = self.combinations_data(self.tech_list_perm)
-                self.rebuild_technames = self.rebuild_techname(tech, self.combination)
-                self.feild_dict = self.rebuilding_feild_name(tech, self.rebuild_technames)
+                self.rebuild_technames = self.rebuild_techname(
+                    tech, self.combination)
+                self.feild_dict = self.rebuilding_feild_name(
+                    tech, self.rebuild_technames)
                 self.matchlist.append(self.feild_dict)
             self.combinations = self.combinations_data(self.matchlist)
-            self.table = self.PrettyTabletest(self.field_name(self.matchlist), self.combinations)
             print(self.combinations)
+            self.table = self.PrettyTabletest(
+                self.field_name(self.matchlist), self.combinations)
             # self.csv_loading(self.table,self.field_name(self.matchlist))
             return self.combinations
         except Exception as e:
@@ -98,11 +101,21 @@ class test:
             self.techseqperm = self.seqment_tech_dict(self.values)
             self.techseqperm = self.resetzore_to_one(self.techseqperm)
             self.techseqperm = self.rm_duplicates_list(self.techseqperm)
-            self.techseqpermfinal = []
-            for techseqperm in self.techseqperm:
-                self.items = self.rebuilding_structure(key, techseqperm)
-                self.techseqpermfinal.append(self.items)
+            self.techseqpermfinal = [self.rebuilding_structure(
+                key, techseqperm) for techseqperm in self.techseqperm]
+        elif (list(self.values.keys()) == ['GOLDEN CROSS', 'Death Cross']):
+            self.techseqperm = self.seqment_techTrue_F_dict(self.values)
+            self.combination = self.combinations_data(self.techseqperm)
+            self.merged_dict = self.merged_dict_data(self.combination)
+            self.techseqpermfinal = [self.rebuilding_structure(
+                key, techseqperm) for techseqperm in self.merged_dict]
         return self.techseqpermfinal
+
+    def merged_dict_data(self, data) -> list:
+        merged_data = []
+        for item in data:
+            merged_data.append({**item[0], **item[1]})
+        return merged_data
 
     def check_instance(self, dict, type):
         if (isinstance(dict, type)):
@@ -133,6 +146,30 @@ class test:
         else:
             self.techlist = range(self.first, self.last, self.step)
             return list(self.techlist)
+
+    def seqment_techTrue_F_dict(self, dicttech) -> list:
+        self.GOLDEN_CROSS = None
+        self.Death_Cross = None
+        self.targetdict = dicttech
+        for perm in list(self.targetdict.keys()):
+            if (perm == "GOLDEN CROSS"):
+                self.GOLDEN_CROSS_item = self.targetdict[perm]
+                if (self.GOLDEN_CROSS_item == 'Both Test'):
+                    self.GOLDEN_CROSS = [{perm: 'True'}, {perm: 'False'}]
+                elif (self.GOLDEN_CROSS_item == 'True'):
+                    self.GOLDEN_CROSS = [{perm: 'True'}]
+                elif (self.GOLDEN_CROSS_item == 'False'):
+                    self.GOLDEN_CROSS = [{perm: 'False'}]
+            elif (perm == "Death Cross"):
+                self.Death_Cross_item = self.targetdict[perm]
+                if (self.Death_Cross_item == 'Both Test'):
+                    self.Death_Cross = [{perm: 'True'}, {perm: 'False'}]
+                elif (self.Death_Cross_item == 'True'):
+                    self.Death_Cross = [{perm: 'True'}]
+                elif (self.Death_Cross_item == 'False'):
+                    self.Death_Cross = [{perm: 'False'}]
+        self.techlist = [self.GOLDEN_CROSS, self.Death_Cross]
+        return self.techlist
 
     def rebuilding_structure(self, key, dict_structure):
         return {key: dict_structure}
