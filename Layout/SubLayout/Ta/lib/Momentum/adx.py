@@ -128,6 +128,35 @@ class adx():
             self.datadb["High"], self.datadb["Low"], self.datadb["Close"], timeperiod=int(self.parameter))
         self.settertoolhistory(self.datadb)
 
+    def calculate_miu(self, database, parameter):
+        if 'ADX' in parameter:
+            self.parameter = parameter['ADX']
+        else:
+            self.parameter = 14
+
+        self.datadb = database
+        self.datadb["ADX"] = talib.ADX(
+            self.datadb["High"], self.datadb["Low"], self.datadb["Close"], timeperiod=int(self.parameter))
+        return self.datadb
+
+    def Check_Entry_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['ADX']
+        self.entryba = self.tech_dict['ADX']['LOW']
+        if (float(self.item) <= float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def Check_Exit_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['ADX']
+        self.entryba = self.tech_dict['ADX']['HIGH']
+        if (float(self.item) >= float(self.entryba)):
+            return True
+        else:
+            return False
+
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')
         self.highlabel.setMinimumSize(QSize(150, 25))

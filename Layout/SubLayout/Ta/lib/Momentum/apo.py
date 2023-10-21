@@ -52,7 +52,7 @@ class apo():
         else:
             self.datadef = 0
             return self.datadef
-        
+
     def highsetup(self):
         tech_dict = self.getterEntryTechValue()
         if 'APO' in tech_dict:
@@ -70,6 +70,42 @@ class apo():
         else:
             self.datadef = -5
             return self.datadef
+
+    def Check_Entry(self, testitem):
+        self.tech_dict = self.getterEntryTechValue()
+        self.item = testitem.loc['APO']
+        self.entryba = self.tech_dict['APO']['LOW']
+        if (float(self.item) <= float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def Check_Exit(self, testitem):
+        self.tech_dict = self.getterEntryTechValue()
+        self.item = testitem.loc['APO']
+        self.entryba = self.tech_dict['APO']['HIGH']
+        if (float(self.item) >= float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def Check_Entry_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['APO']
+        self.entryba = self.tech_dict['APO']['LOW']
+        if (float(self.item) <= float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def Check_Exit_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['APO']
+        self.entryba = self.tech_dict['APO']['HIGH']
+        if (float(self.item) >= float(self.entryba)):
+            return True
+        else:
+            return False
 
     def widgetedit(self):
         self.Fastperiodlabel = QLabel('Fastperiod :')
@@ -147,7 +183,7 @@ class apo():
 
     def gettertoolhistory(self):
         return GlobalValue.get_TechTool_history_var()
-    
+
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
 
@@ -159,6 +195,20 @@ class apo():
         self.datadb["APO"] = talib.APO(
             self.datadb['Close'], fastperiod=int(self.fastperiod), slowperiod=int(self.slowperiod), matype=int(self.matype))
         self.settertoolhistory(self.datadb)
+
+    def calculate_miu(self, database, parameter):
+        if 'APO' in parameter:
+            self.fastperiod = parameter['APO']['fastperiod']
+            self.slowperiod = parameter['APO']['slowperiod']
+            self.matype = parameter['APO']['matype']
+        else:
+            self.fastperiod = 12
+            self.slowperiod = 26
+            self.matype = 0
+        self.datadb = database
+        self.datadb["APO"] = talib.APO(
+            self.datadb['Close'], fastperiod=int(self.fastperiod), slowperiod=int(self.slowperiod), matype=int(self.matype))
+        return self.datadb
 
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')

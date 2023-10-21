@@ -1,205 +1,65 @@
 import numpy as np
 from prettytable import PrettyTable
 import pandas as pd
+from Ui_File.Ui_test import Ui_test
+from PyQt6.QtWidgets import QDialog, QMessageBox, QMenu,QApplication, QMainWindow, QHeaderView, QFileDialog, QMessageBox,QAbstractItemView
+from PyQt6.QtGui import QStandardItemModel, QStandardItem, QDesktopServices
+from Global.Value.TechToolParam import TechValue
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QAction
+from PyQt6 import QtWidgets
+import sys
 
-
-class test:
+class test(QDialog, Ui_test):
 
     def __init__(self):
-        self.techrange = {'EMA': {'Parameters_1 - Parameters_2': {'GOLDEN CROSS': 'Both Test', 'Death Cross': 'Both Test'}, 'Parameters_2 - Parameters_3': {'GOLDEN CROSS': 'Both Test', 'Death Cross': 'Both Test'},
-                                  'Parameters_3 - Parameters_4': {'GOLDEN CROSS': 'Both Test', 'Death Cross': 'Both Test'}, 'Parameters_4 - Parameters_5': {'GOLDEN CROSS': 'Both Test', 'Death Cross': 'Both Test'}}}
+        super().__init__()
+        self.ui = Ui_test()
+        self.ui.setupUi(self)
+        self.techrange = [{'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 1}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {
+            'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 7}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 80, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 90, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 60, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 1}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 10}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 20}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}, {'TechRange': {'RSI': 14}, 'EntryRange': {'RSI': {'HIGH': 70, 'LOW': 30}}, 'return_item': None, 'positions': None, 'transactions': None, 'gross_lev': None}]
+        self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(self.techrange), self.eatabledata(self.techrange)))
 
-    def separationtech(self) -> None:
-        try:
-            self.matchlist = []
-            for tech in self.techrange.keys():
-                self.tech_list_perm = self.process_dict(tech, self.techrange)
-                self.combination = self.combinations_data(self.tech_list_perm)
-                self.rebuild_technames = self.rebuild_techname(
-                    tech, self.combination)
-                self.feild_dict = self.rebuilding_feild_name(
-                    tech, self.rebuild_technames)
-                self.matchlist.append(self.feild_dict)
-            self.combinations = self.combinations_data(self.matchlist)
-            print(self.combinations)
-            self.table = self.PrettyTabletest(
-                self.field_name(self.matchlist), self.combinations)
-            # self.csv_loading(self.table,self.field_name(self.matchlist))
-            return self.combinations
-        except Exception as e:
-            print(e)
+    def eatableviewsetup(self, model):
+        self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch)
 
-    def field_name(self, input_list):
-        return [list(dic[0].keys())[0] for dic in input_list]
+        self.ui.ea_tableView.horizontalHeader().setStyleSheet(
+            "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
+        self.ui.ea_tableView.verticalHeader().setStyleSheet(
+            "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
+        self.ui.ea_tableView.setStyleSheet(
+            "QTableCornerButton::section{background-color: rgb(40, 40, 40);}")
+        self.ui.ea_tableView.setModel(model)
 
-    def PrettyTabletest(self, field, list_core):
-        field_names = field
-        table = PrettyTable()
-        table.field_names = field_names
-        for combination in list_core:
-            table.add_row(combination)
-        return table
+    def eatableviewModelsetup(self, HeaderLabel, data):
+        self.model = QStandardItemModel()
+        self.model.setHorizontalHeaderLabels(HeaderLabel)
+        for officer in data:
+            tech_range = officer['TechRange']
+            entry_range = officer['EntryRange']
+            self.techrange = QStandardItem(str(tech_range))
+            self.entryrange = QStandardItem(str(entry_range))
+            self.model.appendRow([self.techrange, self.entryrange])
+        return self.model
 
-    def csv_loading(self, table, field):
-        df = pd.DataFrame(table.__dict__['_rows'], columns=field)
-        df.to_csv('combinations.csv', index=False)
+    def eacolumnCount(self):
+        return len(self.eatabledata(self.techrange))
 
-    def combinations_data(self, combinations_np):
-        self.combinations_nps = np.array(combinations_np, dtype=object)
-        combinations = np.array(np.meshgrid(
-            *self.combinations_nps)).T.reshape(-1, len(self.combinations_nps))
-        return combinations
+    def eaheader(self,headler):
+        return headler[0].keys()
 
-    def rebuild_techname(self, perm_name, tech_list) -> list:
-        self.new_list = []
-        self.tech_lists = tech_list.tolist()
-        self.perm_names = perm_name
-        for i in range(len(self.tech_lists)):
-            self.merged_dict = {}
-            for dictionary in self.tech_lists[i]:
-                self.merged_dict.update(dictionary)
-            self.new_list.append(self.merged_dict)
-        return self.new_list
+    def newsheaderRow(self):
+        return len(self.eaheader())
 
-    def rebuildlist_to_permlist(self, tech_dict_perm) -> list:
-        self.radon = []
-        self.tech_dict_perm = tech_dict_perm
-        self.tech_dict_perms = self.tech_dict_perm.keys()
-        for perm in self.tech_dict_perms:
-            self.listperm = self.tech_dict_perm[perm]
-            if (self.listperm == []):
-                self.dictname = []
-                result = self.rebuilding_structure(perm, 0)
-                self.dictname.append(result)
-                self.radon.append(self.dictname)
-            else:
-                self.dictname = []
-                for i in range(len(self.listperm)):
-                    result = self.rebuilding_structure(perm, self.listperm[i])
-                    self.dictname.append(result)
-                self.radon.append(self.dictname)
-        return self.radon
-
-    def process_dict(self, keydict, dictionary) -> list:
-        self.dictionarys = dictionary[keydict]
-        self.keys = self.dictionarys.keys()
-        self.rebuildlists = []
-        for key in self.keys:
-            self.rebuildlist = self.group_option(key, self.dictionarys)
-            self.rebuildlists.append(self.rebuildlist)
-        return self.rebuildlists
-
-    def group_option(self, key, value):
-        self.values = value[key]
-        if (self.values == 'Both Test'):
-            self.techseqpermfinal = [{key: 'True'}, {key: 'False'}]
-        elif (self.values == 'True'):
-            self.techseqpermfinal = [{key: 'True'}]
-        elif (self.values == 'False'):
-            self.techseqpermfinal = [{key: 'False'}]
-        elif (list(self.values.keys()) == ['First', 'Last', 'Step']):
-            self.techseqperm = self.seqment_tech_dict(self.values)
-            self.techseqperm = self.resetzore_to_one(self.techseqperm)
-            self.techseqperm = self.rm_duplicates_list(self.techseqperm)
-            self.techseqpermfinal = [self.rebuilding_structure(
-                key, techseqperm) for techseqperm in self.techseqperm]
-        elif (list(self.values.keys()) == ['GOLDEN CROSS', 'Death Cross']):
-            self.techseqperm = self.seqment_techTrue_F_dict(self.values)
-            self.combination = self.combinations_data(self.techseqperm)
-            self.merged_dict = self.merged_dict_data(self.combination)
-            self.techseqpermfinal = [self.rebuilding_structure(
-                key, techseqperm) for techseqperm in self.merged_dict]
-        return self.techseqpermfinal
-
-    def merged_dict_data(self, data) -> list:
-        merged_data = []
-        for item in data:
-            merged_data.append({**item[0], **item[1]})
-        return merged_data
-
-    def check_instance(self, dict, type):
-        if (isinstance(dict, type)):
-            return True
-        else:
-            return False
-
-    def check_perm(self, dict_list) -> bool:
-        if list(dict_list) == ['First', 'Last', 'Step']:
-            return True
-        else:
-            return False
-
-    def seqment_tech_dict(self, dicttech) -> list:
-        self.first = None
-        self.last = None
-        self.step = None
-        self.targetdict = dicttech
-        for perm in self.targetdict:
-            if (perm == "First"):
-                self.first = dicttech[perm]
-            elif (perm == "Last"):
-                self.last = dicttech[perm]
-            elif (perm == "Step"):
-                self.step = dicttech[perm]
-        if (self.first == 0) and (self.last == 0) and (self.step == 0):
-            return []
-        else:
-            self.techlist = range(self.first, self.last, self.step)
-            return list(self.techlist)
-
-    def seqment_techTrue_F_dict(self, dicttech) -> list:
-        self.GOLDEN_CROSS = None
-        self.Death_Cross = None
-        self.targetdict = dicttech
-        for perm in list(self.targetdict.keys()):
-            if (perm == "GOLDEN CROSS"):
-                self.GOLDEN_CROSS_item = self.targetdict[perm]
-                if (self.GOLDEN_CROSS_item == 'Both Test'):
-                    self.GOLDEN_CROSS = [{perm: 'True'}, {perm: 'False'}]
-                elif (self.GOLDEN_CROSS_item == 'True'):
-                    self.GOLDEN_CROSS = [{perm: 'True'}]
-                elif (self.GOLDEN_CROSS_item == 'False'):
-                    self.GOLDEN_CROSS = [{perm: 'False'}]
-            elif (perm == "Death Cross"):
-                self.Death_Cross_item = self.targetdict[perm]
-                if (self.Death_Cross_item == 'Both Test'):
-                    self.Death_Cross = [{perm: 'True'}, {perm: 'False'}]
-                elif (self.Death_Cross_item == 'True'):
-                    self.Death_Cross = [{perm: 'True'}]
-                elif (self.Death_Cross_item == 'False'):
-                    self.Death_Cross = [{perm: 'False'}]
-        self.techlist = [self.GOLDEN_CROSS, self.Death_Cross]
-        return self.techlist
-
-    def rebuilding_structure(self, key, dict_structure):
-        return {key: dict_structure}
-
-    def dict_building_perm(self, key, list_structure):
-        return sorted([{key: value} for value in list_structure[key]], key=lambda x: x[key])
-
-    def reset_structure(self, reset_list):
-        return [item for sublist in reset_list for item in sublist]
-
-    def rebuilding_sort(self, keys, list_data):
-        return sorted(list_data, key=lambda x: x[keys])
-
-    def rebuilding_feild_name(self, key, dictname):
-        self.dictnames = dictname
-        self.keys = key
-        self.new_list = []
-        for value in self.dictnames:
-            self.new_list.append({self.keys: value})
-        return self.new_list
-
-    def rm_duplicates_list(self, list_dup):
-        return list(set(list_dup))
-
-    def resetzore_to_one(self, list_step) -> list:
-        for i in range(len(list_step)):
-            if list_step[i] == 0:
-                list_step[i] = 1
-        return list_step
+    def eatabledata(self, text):
+        self.eatext = text
+        ea_list = [{'TechRange': officer.get('TechRange'), 'EntryRange': officer.get('EntryRange')} for officer in self.eatext if 'TechRange' in officer and 'EntryRange' in officer]
+        return ea_list
 
 
 if __name__ == "__main__":
-    test().separationtech()
+    app = QApplication(sys.argv)
+    win = test()
+    win.show()
+    sys.exit(app.exec())

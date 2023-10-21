@@ -5,7 +5,6 @@ from Global.Value.TechToolParam import TechValue
 from Global.Value.UniversalValue import GlobalValue
 
 
-
 class ht_sine():
     def __init__(self):
         super().__init__()
@@ -18,7 +17,7 @@ class ht_sine():
 
     def base(self):
         return {'HT_SINE': 60}
-    
+
     def entry_exit_base(self):
         self.entryprofo = {'HT_SINE': {'HIGH': 1, 'LOW': -1}}
         return self.entryprofo
@@ -31,7 +30,7 @@ class ht_sine():
         else:
             self.datadef = 60
             return self.datadef
-        
+
     def highsetup(self):
         tech_dict = self.getterEntryTechValue()
         if 'HT_SINE' in tech_dict:
@@ -125,9 +124,38 @@ class ht_sine():
 
     def calculate(self):
         self.datadb = self.gettertoolhistory()
-        self.datadb["SINE"],self.datadb["LEADSINE"] = talib.HT_SINE(
+        self.datadb["SINE"], self.datadb["LEADSINE"] = talib.HT_SINE(
             self.datadb["Close"])
         self.settertoolhistory(self.datadb)
+
+    def calculate_miu(self, database, parameter):
+        if 'HT_SINE' in parameter:
+            self.data = parameter['HT_SINE']
+        else:
+            self.data = 60
+
+        self.datadb = database
+        self.datadb["SINE"], self.datadb["LEADSINE"] = talib.HT_SINE(
+            self.datadb["Close"])
+        return self.datadb
+
+    def Check_Entry_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['SINE']
+        self.entryba = self.tech_dict['HT_SINE']['LOW']
+        if (float(self.item) <= float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def Check_Exit_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['SINE']
+        self.entryba = self.tech_dict['HT_SINE']['HIGH']
+        if (float(self.item) >= float(self.entryba)):
+            return True
+        else:
+            return False
 
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')

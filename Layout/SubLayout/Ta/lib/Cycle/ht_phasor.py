@@ -1,5 +1,5 @@
 import talib
-from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox,QComboBox
+from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox, QComboBox
 from PyQt6.QtCore import QSize, Qt
 from Global.Value.TechToolParam import TechValue
 from Global.Value.UniversalValue import GlobalValue
@@ -10,16 +10,17 @@ class ht_phasor():
         super().__init__()
         self.parameter = self.setup()
         self.buysignal = self.buysignalsetup()
-        self.sellsignal = self.sellsignalsetup()     
+        self.sellsignal = self.sellsignalsetup()
         self.lineedit = QLineEdit()
         self.buysignalcb = QComboBox()
         self.sellsignalcb = QComboBox()
 
     def base(self):
         return {'HT_PHASOR': 60}
-    
+
     def entry_exit_base(self):
-        self.entryprofo = {'HT_PHASOR': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
+        self.entryprofo = {'HT_PHASOR': {
+            'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
         return self.entryprofo
 
     def setup(self):
@@ -60,7 +61,7 @@ class ht_phasor():
             else:
                 return False
         else:
-                return True
+            return True
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
@@ -71,10 +72,9 @@ class ht_phasor():
             if float(self.HT_PHASORitem) <= float(self.HT_PHASOR_QUADRATUREitem):
                 return True
             else:
-                    return False
+                return False
         else:
             return True
-
 
     def widgetedit(self):
         self.label = QLabel('Parameter :')
@@ -124,7 +124,7 @@ class ht_phasor():
 
     def gettertoolhistory(self):
         return GlobalValue.get_TechTool_history_var()
-    
+
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
 
@@ -133,10 +133,46 @@ class ht_phasor():
 
     def calculate(self):
         self.datadb = self.gettertoolhistory()
-        self.datadb["HT_PHASOR_INHPASE"],self.datadb["HT_PHASOR_QUADRATURE"] = talib.HT_PHASOR(
+        self.datadb["HT_PHASOR_INHPASE"], self.datadb["HT_PHASOR_QUADRATURE"] = talib.HT_PHASOR(
             self.datadb["Close"])
         self.settertoolhistory(self.datadb)
 
+    def calculate_miu(self, database, parameter):
+        if 'HT_PHASOR' in parameter:
+            self.data = parameter['HT_PHASOR']
+        else:
+            self.data = 60
+
+        self.datadb = database
+        self.datadb["HT_PHASOR_INHPASE"], self.datadb["HT_PHASOR_QUADRATURE"] = talib.HT_PHASOR(
+            self.datadb["Close"])
+        return self.datadb
+
+    def Check_Entry_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.entryba = self.tech_dict['HT_PHASOR']['GOLDEN CROSS']
+        if (self.entryba == 'True'):
+            self.HT_PHASORitem = testitem.loc['HT_PHASOR_INHPASE']
+            self.HT_PHASOR_QUADRATUREitem = testitem.loc['HT_PHASOR_QUADRATURE']
+            if float(self.HT_PHASORitem) >= float(self.HT_PHASOR_QUADRATUREitem):
+                return True
+            else:
+                return False
+        else:
+            return True
+
+    def Check_Exit_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.exitba = self.tech_dict['HT_PHASOR']['Death Cross']
+        if (self.exitba == 'True'):
+            self.HT_PHASORitem = testitem.loc['HT_PHASOR_INHPASE']
+            self.HT_PHASOR_QUADRATUREitem = testitem.loc['HT_PHASOR_QUADRATURE']
+            if float(self.HT_PHASORitem) <= float(self.HT_PHASOR_QUADRATUREitem):
+                return True
+            else:
+                return False
+        else:
+            return True
 
     def entrywidgetedit(self):
         self.buylabel = QLabel('GOLDEN CROSS :')
@@ -144,7 +180,7 @@ class ht_phasor():
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.buysignalcb.addItems(['True','False'])
+        self.buysignalcb.addItems(['True', 'False'])
         self.buysignalcb.setCurrentText(str(self.buysignal))
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
@@ -154,7 +190,7 @@ class ht_phasor():
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.sellsignalcb.addItems(['True','False'])
+        self.sellsignalcb.addItems(['True', 'False'])
         self.sellsignalcb.setCurrentText(str(self.sellsignal))
         self.sellsignalcb.setMinimumSize(QSize(200, 25))
         self.sellsignalcb.setStyleSheet(

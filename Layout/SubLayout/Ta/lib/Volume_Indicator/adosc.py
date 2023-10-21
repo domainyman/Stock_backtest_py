@@ -79,7 +79,7 @@ class adosc():
     def Check_RELAT(self, relclose, newclose, relad, newad):
         self.relclose = relclose
         self.relad = relad
-        
+
         if (self.relad != [] and self.relclose != []):
 
             if (self.CheckMathis(newad) == "0" and self.CheckMathis(self.relad[0]) == "1"):

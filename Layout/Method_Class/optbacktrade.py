@@ -37,12 +37,34 @@ class optcerebrosetup():
         self.cerebro.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio')
         self.loopperm()
         results = self.cerebro.run()
-        # portfolio_stats = results[0].analyzers.getbyname('pyfolio')
-        # returns, positions, transactions, gross_lev = portfolio_stats.get_pf_items()
+        portfolio_stats = results[0].analyzers.getbyname('pyfolio')
+        self.returns, self.positions, self.transactions, self.gross_lev = portfolio_stats.get_pf_items()
+        self.return_prof = qs.stats.avg_return(self.returns)
+        self.return_cagr = qs.stats.cagr(self.returns)
+        self.return_sharpe_ratio = qs.stats.sharpe(self.returns)
+        self.return_risk_return_ratio = qs.stats.risk_return_ratio(self.returns)
         # qs.reports.html(
         #     returns, output='Stock Sentiment Report.html', title='Stock Sentiment')
         # webbrowser.open('Stock Sentiment Report.html')
         # self.cerebro.plot()
+
+    def opt_file(self):
+        return self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio
+
+    def returns_return_prof(self):
+        return self.return_prof
+
+    def returns_return_cagr(self):
+        return self.return_cagr
+
+    def returns_return_sharpe_ratio(self):
+        return self.return_sharpe_ratio
+
+    def returns_return_risk_return_ratio(self):
+        return self.return_risk_return_ratio
+
+    def returns_file(self):
+        return self.returns, self.positions, self.transactions, self.gross_lev
 
     def btfeel(self):
         return bt.feeds.PandasData(dataname=self.gettertoolhistory())
@@ -102,7 +124,6 @@ class basesetup():
             self.entryCheck = self.check_entery_para(
                 param, row)
             self.Checklist.append(self.entryCheck)
-        print(self.Checklist)
         if (all(self.Checklist)):
             return True
         else:

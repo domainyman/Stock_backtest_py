@@ -97,6 +97,32 @@ class macd():
                 return False
         else:
             return True
+        
+    def Check_Entry_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.entryba = self.tech_dict['MACD']['GOLDEN CROSS']
+        if (self.entryba == 'True'):
+            self.MACDitem = testitem.loc['MACD']
+            self.MACD_SIGNALitem = testitem.loc['MACD_SIGNAL']
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        else:
+            return True
+
+    def Check_Exit_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.exitba = self.tech_dict['MACD']['Death Cross']
+        if (self.exitba == 'True'):
+            self.MACDitem = testitem.loc['MACD']
+            self.MACD_SIGNALitem = testitem.loc['MACD_SIGNAL']
+            if (float(self.MACDitem) < float(self.MACD_SIGNALitem)):
+                return True
+            else:
+                return False
+        else:
+            return True
 
     def get_db_for_entry_exit(self, testitem):
         self.ChecklistClose = []
@@ -201,6 +227,21 @@ class macd():
         self.datadb["MACD"], self.datadb["MACD_SIGNAL"], self.datadb["MACD_HIST"] = talib.MACD(
             self.datadb['Close'], fastperiod=int(self.fastperiod), slowperiod=int(self.slowperiod), signalperiod=int(self.signalperiod))
         self.settertoolhistory(self.datadb)
+
+    def calculate_miu(self, database, parameter):
+        if 'MACD' in parameter:
+            self.fastperiod = parameter['MACD']['fastperiod']
+            self.slowperiod = parameter['MACD']['slowperiod']
+            self.signalperiod = parameter['MACD']['signalperiod']
+        else:
+            self.fastperiod = 12
+            self.slowperiod = 26
+            self.signalperiod = 9
+
+        self.datadb = database
+        self.datadb["MACD"], self.datadb["MACD_SIGNAL"], self.datadb["MACD_HIST"] = talib.MACD(
+            self.datadb['Close'], fastperiod=int(self.fastperiod), slowperiod=int(self.slowperiod), signalperiod=int(self.signalperiod))
+        return self.datadb
 
     def entrywidgetedit(self):
         self.buylabel = QLabel('GOLDEN CROSS :')

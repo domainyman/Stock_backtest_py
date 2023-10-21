@@ -30,6 +30,7 @@ class bt_enter_exit(bt.Strategy):
 
 class cerebrosetup():
     def __init__(self):
+        qs.extend_pandas()
         self.cerebro = bt.Cerebro()
         self.cerebro.adddata(self.btfeel())
         self.cerebro.addstrategy(bt_enter_exit)

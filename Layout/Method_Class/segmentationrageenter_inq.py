@@ -15,7 +15,7 @@ class seqmentationrange_conv():
     def meshgrid_conv(self,combinations_np):
         self.combinations_nps = np.array(combinations_np, dtype=object)
         meshgrid_result = np.meshgrid(*self.combinations_nps)
-        self.combinations = np.array(meshgrid_result).T.reshape(-1, len(self.combinations_nps))
+        self.combinations = np.array(meshgrid_result).T.reshape(-1, len(self.combinations_nps))    
         return self.combinations
         
 
@@ -23,6 +23,7 @@ class seqmentationrange_inq():
 
     def __init__(self) -> None:
         self.techrange = self.getterEntryRangeTechValue()
+        print(self.techrange)
 
     def separationtech(self) -> None:
         try:
@@ -114,7 +115,7 @@ class seqmentationrange_inq():
                 if (isinstance(self.dictionarys[key], dict) == True) and (self.check_perm(self.dictionarys[key]) == True):
                     self.techseqperm = self.seqment_tech_dict(
                         self.dictionarys[key])
-                    self.techseqperm = self.resetzore_to_one(self.techseqperm)
+                    # self.techseqperm = self.resetzore_to_one(self.techseqperm)
                     self.techseqperm = self.rm_duplicates_list(
                         self.techseqperm)
                     self.rebuildlist = self.rebuilding_structure(
@@ -125,7 +126,7 @@ class seqmentationrange_inq():
 
         else:
             self.techseqperm = self.seqment_tech_dict(dictionary)
-            self.techseqperm = self.resetzore_to_one(self.techseqperm)
+            # self.techseqperm = self.resetzore_to_one(self.techseqperm)
             self.techseqperm = self.rm_duplicates_list(self.techseqperm)
             return self.techseqperm
 
@@ -206,6 +207,7 @@ class seqmentationrange_entry():
 
     def __init__(self):
         self.techrange = self.getterEntryRangeValue()
+        print(self.techrange)
 
     def separationtech(self) -> None:
         try:

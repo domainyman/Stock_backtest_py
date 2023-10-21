@@ -12,12 +12,11 @@ class Tickersearch:
     def tickerchecking(self):
         try:
             # 创建 Ticker 对象
+            self.ticker = None
             self.ticker = yf.Ticker(self.texts)
             print('Checking Symbol : ' + self.texts)
-
             # 检查是否可用
-            info = self.ticker.info
-            if info is not None:
+            if self.ticker.history_metadata is not None:
                 print('股票代碼 : ' + self.texts + ' 可用')
                 return True
             else:
@@ -25,8 +24,7 @@ class Tickersearch:
                 QMessageBox.warning(None, 'Error Ticker Symbol', '股票代碼不可用')
                 return False
         except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                    'System Error !' + str(msg))
+            QMessageBox.warning(None, 'System Error', str(msg))
             return False
 
     def tickerinfo(self):
@@ -35,6 +33,7 @@ class Tickersearch:
 
     def tickerhisory(self, kwargs):
         self.ticker = yf.Ticker(self.texts)
+        print(kwargs)
         data = self.ticker.history(**kwargs)
         return data
 

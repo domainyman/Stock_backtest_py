@@ -17,7 +17,7 @@ class ht_dcphase():
 
     def base(self):
         return {'HT_DCPHASE': 60}
-    
+
     def entry_exit_base(self):
         self.entryprofo = {'HT_DCPHASE': {'HIGH': 250, 'LOW': 50}}
         return self.entryprofo
@@ -48,7 +48,7 @@ class ht_dcphase():
         else:
             self.datadef = 50
             return self.datadef
-        
+
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['HT_DCPHASE']
@@ -115,7 +115,7 @@ class ht_dcphase():
 
     def gettertoolhistory(self):
         return GlobalValue.get_TechTool_history_var()
-    
+
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
 
@@ -127,6 +127,35 @@ class ht_dcphase():
         self.datadb["HT_DCPHASE"] = talib.HT_DCPHASE(
             self.datadb["Close"])
         self.settertoolhistory(self.datadb)
+
+    def calculate_miu(self, database, parameter):
+        if 'HT_DCPHASE' in parameter:
+            self.data = parameter['HT_DCPHASE']
+        else:
+            self.data = 60
+
+        self.datadb = database
+        self.datadb["HT_DCPHASE"] = talib.HT_DCPHASE(
+            self.datadb["Close"])
+        return self.datadb
+
+    def Check_Entry_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['HT_DCPHASE']
+        self.entryba = self.tech_dict['HT_DCPHASE']['LOW']
+        if (float(self.item) <= float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def Check_Exit_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['HT_DCPHASE']
+        self.entryba = self.tech_dict['HT_DCPHASE']['HIGH']
+        if (float(self.item) >= float(self.entryba)):
+            return True
+        else:
+            return False
 
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')
@@ -177,4 +206,3 @@ class ht_dcphase():
         print(self.getterEntryTechValue())
         QMessageBox.information(None, 'Parameter Saved',
                                 'Saved Parameter Setting')
-

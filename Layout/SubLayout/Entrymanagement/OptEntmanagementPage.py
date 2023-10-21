@@ -140,22 +140,17 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
 
     def check_dict_contains_true(self, your_dict, text, permvalue):
         values = your_dict[text][permvalue]
-        print(values)
         if (values == 'True') or (values == 'False'):
-            print("Bool")
             return "Bool"
         elif (isinstance(values, int)):
-            print("Int")
             return "Int"
         elif (isinstance(values, dict)):
-            print("Dict")
             return "Dict"
 
     def createdictboolwidget_setup(self, textmain, textname=None, textcontext=None):
         if (textname is not None) and (textcontext is not None):
             self.keyvalue = self.getterEntryRangeValue(
             )[textmain][textname][textcontext]
-            print(textcontext)
             self.techvalue = self.getterEntryTechValue(
             )[textmain][textname][textcontext]
             # main
@@ -507,9 +502,9 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
     def tool_dicts(self, textname, firstname, lastname, stepname):
         self.tool_dict = {}
         self.tool_dict[textname] = {}
-        self.tool_dict[textname]['First'] = firstname
-        self.tool_dict[textname]['Last'] = lastname
-        self.tool_dict[textname]['Step'] = stepname
+        self.tool_dict[textname]['First'] = int(firstname)
+        self.tool_dict[textname]['Last'] = int(lastname)
+        self.tool_dict[textname]['Step'] = int(stepname)
         return self.tool_dict
 
     def bool_dicts(self, textname, boolname):

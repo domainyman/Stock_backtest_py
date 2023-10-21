@@ -173,6 +173,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                 self.newdict.append(item)
             if (text == 'Momentum Indicators'):
                 self.newdict.append("KDJ")
+                # self.newdict.remove("APO")
             elif (text == 'Overlap Studies'):
                 self.newdict.remove('MAVP')
                 self.newdict.remove('MA')
@@ -528,9 +529,9 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
     def tool_dicts(self, textname, firstname, lastname, stepname):
         self.tool_dict = {}
         self.tool_dict[textname] = {}
-        self.tool_dict[textname]['First'] = firstname
-        self.tool_dict[textname]['Last'] = lastname
-        self.tool_dict[textname]['Step'] = stepname
+        self.tool_dict[textname]['First'] = int(firstname)
+        self.tool_dict[textname]['Last'] = int(lastname)
+        self.tool_dict[textname]['Step'] = int(stepname)
         return self.tool_dict
 
     def uploadRangeValue(self, textmain, firstname, lastname, stepname, textname=None):

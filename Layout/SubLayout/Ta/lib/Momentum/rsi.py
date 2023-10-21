@@ -41,6 +41,24 @@ class rsi():
         else:
             return False
 
+    def Check_Entry_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['RSI']
+        self.entryba = self.tech_dict['RSI']['LOW']
+        if (float(self.item) <= float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def Check_Exit_miu(self, testitem, permitem):
+        self.tech_dict = permitem
+        self.item = testitem.loc['RSI']
+        self.entryba = self.tech_dict['RSI']['HIGH']
+        if (float(self.item) >= float(self.entryba)):
+            return True
+        else:
+            return False
+
     def setup(self):
         tech_dict = self.getterTechValue()
         if 'RSI' in tech_dict:
@@ -134,6 +152,16 @@ class rsi():
         self.datadb["RSI"] = talib.RSI(
             self.datadb["Close"], timeperiod=int(self.parameter))
         self.settertoolhistory(self.datadb)
+
+    def calculate_miu(self, database, parameter):
+        if 'RSI' in parameter:
+            self.dataparameter = parameter['RSI']
+        else:
+            self.dataparameter = 14
+        self.datadb = database
+        self.datadb["RSI"] = talib.RSI(
+            self.datadb["Close"], timeperiod=int(self.dataparameter))
+        return self.datadb
 
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')

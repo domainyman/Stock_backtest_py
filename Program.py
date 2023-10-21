@@ -13,7 +13,7 @@ from Layout.SubLayout.Entrymanagement.OptEntmanagementPage import optEntrymanage
 from Layout.SubLayout.Entrymanagement.EntmanagementPage import Entrymanagepage
 from Layout.Method_Class.backtrade import cerebrosetup
 from Layout.Method_Class.optbacktrade import optcerebrosetup
-from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_inq,seqmentationrange_entry,seqmentationrange_conv
+from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_inq, seqmentationrange_entry, seqmentationrange_conv
 from Layout.SubLayout.Search.SearchSymbol import Tickersearch
 from Global.Value.UniversalValue import GlobalValue
 from Global.Value.TechToolParam import TechValue
@@ -132,6 +132,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def showeatechanalysis(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.eatechanalysis_page)
 
+    def showtkerror(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.error_page)
+
     # Base Setting
     # ...............................................................................
     # ///////////////////////////////////////////////////////////////////////////////
@@ -182,7 +185,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             else:
                 self.showtkhome()
         except:
-            self.showtkhome()
+            self.showtkerror()
 
     def tickerinfo(self):
         self.search = Tickersearch(self.gettersymbol())
@@ -233,7 +236,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             else:
                 self.showtkhome()
         except:
-            self.showtkhome()
+            self.showtkerror()
 
     def tickerhistory(self):
         try:
@@ -295,15 +298,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                               '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
         self.interval = self.ui.Interval_combo.currentText()
         if (self.interval == "1m"):
-            self.ui.aa_techPeriod_combo.clear()
-            self.ui.aa_techPeriod_combo.addItems(['Option', '1d', '5d'])
+            self.ui.Period_combo.clear()
+            self.ui.Period_combo.addItems(['Option', '1d', '5d'])
         elif (self.interval == "30m") or (self.interval == "1h"):
-            self.ui.aa_techPeriod_combo.clear()
-            self.ui.aa_techPeriod_combo.addItems(
-                ['Option', '1d', '5d', '1mo', '3mo'])
+            self.ui.Period_combo.clear()
+            self.ui.Period_combo.addItems(
+                ['Option', '1d', '5d', '1mo'])
         else:
-            self.ui.aa_techPeriod_combo.clear()
-            self.ui.aa_techPeriod_combo.addItems(self.valid_periods)
+            self.ui.Period_combo.clear()
+            self.ui.Period_combo.addItems(self.valid_periods)
 
     def historytextmodel(self):
         history_params = {}
@@ -393,7 +396,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             else:
                 self.showtkhome()
         except:
-            self.showtkhome()
+            self.showtkerror()
 
     def newdetail(self):
         self.ui.newsymbol_edit.setText(self.gettersymbol())
@@ -473,7 +476,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             else:
                 self.showtkhome()
         except:
-            self.showtkhome()
+            self.showtkerror()
 
     def techanalysispagesetup(self):
         self.ui.DownLoad_btn.hide()
@@ -501,15 +504,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                               '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
         self.interval = self.ui.techInterval_combo.currentText()
         if (self.interval == "1m"):
-            self.ui.aa_techPeriod_combo.clear()
-            self.ui.aa_techPeriod_combo.addItems(['Option', '1d', '5d'])
+            self.ui.techPeriod_combo.clear()
+            self.ui.techPeriod_combo.addItems(['Option', '1d', '5d'])
         elif (self.interval == "30m") or (self.interval == "1h"):
-            self.ui.aa_techPeriod_combo.clear()
-            self.ui.aa_techPeriod_combo.addItems(
-                ['Option', '1d', '5d', '1mo', '3mo'])
+            self.ui.techPeriod_combo.clear()
+            self.ui.techPeriod_combo.addItems(
+                ['Option', '1d', '5d', '1mo'])
         else:
-            self.ui.aa_techPeriod_combo.clear()
-            self.ui.aa_techPeriod_combo.addItems(self.valid_periods)
+            self.ui.techPeriod_combo.clear()
+            self.ui.techPeriod_combo.addItems(self.valid_periods)
 
     def techtextmodel(self):
         self.tech_params = {}
@@ -646,7 +649,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             else:
                 self.showtkhome()
         except:
-            self.showtkhome()
+            self.showtkerror()
 
     def aatechcomboclear(self):
         self.ui.aa_techPeriod_combo.clear()
@@ -676,7 +679,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         elif (self.interval == "30m") or (self.interval == "1h"):
             self.ui.aa_techPeriod_combo.clear()
             self.ui.aa_techPeriod_combo.addItems(
-                ['Option', '1d', '5d', '1mo', '3mo'])
+                ['Option', '1d', '5d', '1mo'])
         else:
             self.ui.aa_techPeriod_combo.clear()
             self.ui.aa_techPeriod_combo.addItems(self.valid_periods)
@@ -778,7 +781,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             else:
                 self.showtkhome()
         except:
-            self.showtkhome()
+            self.showtkerror()
 
     def eatechcomboclear(self):
         self.ui.ea_techPeriod_combo.clear()
@@ -808,7 +811,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         elif (self.interval == "30m") or (self.interval == "1h"):
             self.ui.ea_techPeriod_combo.clear()
             self.ui.ea_techPeriod_combo.addItems(
-                ['Option', '1d', '5d', '1mo', '3mo'])
+                ['Option', '1d', '5d', '1mo'])
         else:
             self.ui.ea_techPeriod_combo.clear()
             self.ui.ea_techPeriod_combo.addItems(self.valid_periods)
@@ -855,10 +858,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         try:
             if (self.eatechanalysisenter() == True):
                 if (self.check_date_final() == True):
-                    if (self._muitifrom_ticker() == True):
-                        self.ui.ea_DownLoad_btn.show()
-                    else:
-                        self.ui.ea_DownLoad_btn.hide()
+                    self.mesh_cov = self._muitifrom_ticker()
+                    self.anyal_list(self.mesh_conv)
+                    self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(
+                        self.getterret_profo_var()), self.getterret_profo_var()))
                 else:
                     QMessageBox.information(
                         None, 'Input Error', 'Input Error!,Please enter correct information')
@@ -867,37 +870,66 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                                 'System Error !' + str(msg))
 
     def _muitifrom_ticker(self):
-        try:
-            types = self.getterModeParamlValue()
-            if (types == "From_Signals()"):
-                self.inqlist = seqmentationrange_inq().separationtech()
-                self.entrylist = seqmentationrange_entry().separationtech()
-                self.re_inq_list = self.re_list(self.inqlist)
-                self.re_entry_list = self.re_list(self.entrylist)
-                self.mesh_conv = seqmentationrange_conv().meshgrid_conv([self.re_inq_list, self.re_entry_list])
-                print(self.mesh_conv)
-                # self.calculateinter()
-                # optcerebrosetup()
-            return True
-        except BaseException as msg:
-            print(msg)
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        types = self.getterModeParamlValue()
+        if (types == "From_Signals()"):
+            self.inqlist = seqmentationrange_inq().separationtech()
+            self.entrylist = seqmentationrange_entry().separationtech()
+            self.re_inq_list = self.re_list(self.inqlist)
+            self.re_entry_list = self.re_list(self.entrylist)
+            self.mesh_conv = seqmentationrange_conv().meshgrid_conv(
+                [self.re_inq_list, self.re_entry_list])
+        return self.mesh_conv
 
-            return False
+    def anyal_list(self, mesh_conv):
+        self.mesh_conv = mesh_conv
+        for item in self.mesh_conv:
+            self.setterTechValue(item[0])
+            self.setterEntryTechValue(item[1])
+            self.calculateinter()
+            self.opt = optcerebrosetup()
+            self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio = self.opt.opt_file()
+            self.uploading_prof_var(item[0], item[1], self.return_prof, self.return_cagr,
+                                    self.return_sharpe_ratio, self.return_risk_return_ratio)
 
-    def converted_final_dict(self,list_dict):
+    def uploading_prof_var(self, tech, enter, avg_return=None, cagr=None, sharpe_ratio=None, risk_return_ratio=None):
+        self.val = {"TechRange": tech, "EntryRange": enter, "avg_return": avg_return,
+                    "cagr": cagr, "sharpe_ratio": sharpe_ratio, "risk_return_ratio": risk_return_ratio}
+        return self.addret_profo_var(self.val)
+
+    def split_data(self, data, num_splits):
+        self.data_array = np.array(data)
+        data_length = len(self.data_array)
+        self.split_point = data_length // num_splits
+        remaining_elements = data_length % num_splits
+
+        split_arrays = []
+        for i in range(num_splits):
+            start = i * self.split_point
+            end = (i + 1) * self.split_point
+
+            # 将剩余的元素添加到最后一个拆分
+            if i == num_splits - 1:
+                end += remaining_elements
+
+            split_arrays.append(self.data_array[start:end])
+        return split_arrays
+
+    def split_fx(self, data):
+        self.data = data
+        return self.data[0], self.data[1], self.data[2], self.data[3]
+
+    def converted_final_dict(self, list_dict):
         self.converted_dict = {}
         for entry in list_dict:
             self.converted_dict.update(entry)
         return self.converted_dict
-    
-    def re_list(self,dict_list):
+
+    def re_list(self, dict_list):
         self.ret_list = []
         for sign_item in dict_list:
             self.ret_list.append(self.converted_final_dict(sign_item))
         return self.ret_list
-            
+
     def isEqual(self, x):
         return np.all(np.diff(x) == 0)
 
@@ -907,17 +939,83 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.rangevaluekey = self.rangevalue.keys()
             for permkeys in self.rangevaluekey:
                 self.rangekey = self.rangevalue[permkeys].keys()
-                print(permkeys)
                 for perm in list(self.rangekey):
-                    print(self.rangekey)
-                    print(perm)
                     self.rangekeyvalue = self.rangevalue[permkeys][perm]
                     if (self.rangekeyvalue == {'False', 'True', 'Both Test'}):
                         return False
+                    self.threelay = self.rangevalue[permkeys][perm].keys()
+                    for permthreelay in list(self.threelay):
+                        self.rangekeythreelay = self.rangevalue[permkeys][perm][permthreelay]
+                        if (self.rangekeythreelay == {'False', 'True', 'Both Test'}):
+                            return False
             return True
         except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+            QMessageBox.warning(None, 'System Error',str(msg))
+
+    def eatableviewsetup(self, model):
+        self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch)
+        self.ui.ea_tableView.horizontalHeader().setStyleSheet(
+            "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
+        self.ui.ea_tableView.verticalHeader().setStyleSheet(
+            "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
+        self.ui.ea_tableView.setStyleSheet(
+            "QTableCornerButton::section{background-color: rgb(40, 40, 40);}")
+        self.ui.ea_tableView.setModel(model)
+
+    def eatableviewModelsetup(self, HeaderLabel, data):
+        self.model = QStandardItemModel()
+        self.model.setHorizontalHeaderLabels(HeaderLabel)
+        for officer in data:
+            self.techrange = QStandardItem(str(officer['TechRange']))
+            self.entryrange = QStandardItem(str(officer['EntryRange']))
+            self.avg_return = QStandardItem(str(officer['avg_return']))
+            self.cagr = QStandardItem(str(officer['cagr']))
+            self.sharpe_ratio = QStandardItem(str(officer['sharpe_ratio']))
+            self.risk_return_ratio = QStandardItem(
+                str(officer['risk_return_ratio']))
+            self.model.appendRow([self.techrange, self.entryrange, self.avg_return,
+                                 self.cagr, self.sharpe_ratio, self.risk_return_ratio])
+        return self.model
+
+    def eacolumnCount(self):
+        return len(self.eatabledata(self.techrange))
+
+    def eaheader(self, headler):
+        return headler[0].keys()
+
+    def newsheaderRow(self):
+        return len(self.eaheader())
+
+    def eatabledata(self, text):
+        self.eatext = text
+        ea_list = [{'TechRange': officer.get('TechRange'), 'EntryRange': officer.get(
+            'EntryRange')} for officer in self.eatext if 'TechRange' in officer and 'EntryRange' in officer]
+        return ea_list
+    
+    def clear_uiea_tableView(self):
+        self.setterret_profo_var([])
+        self.model = QStandardItemModel()
+        self.model.clear()
+        self.model.setHorizontalHeaderLabels([])
+        self.ui.ea_tableView.setModel(self.model)
+
+    # def ea_tableView_clicked(self):
+    #     self.selected_rows = self.eatable_click()
+    #     print(self.selected_rows)
+    #     self.opt_view(self.selected_rows)
+
+    # def eatable_click(self):
+    #     selected_rows = []
+    #     for index in self.ui.ea_tableView.selectedRows():
+    #         selected_rows.append(index.row())
+    #     return selected_rows
+
+    # def opt_view(self, opt_list):
+    #     self.entry_exit_tran = self.setterEntryTechValue(opt_list[1])
+    #     self.paramlist = self.setterTechValue(opt_list[0])
+    #     self.calculateinter()
+    #     cerebrosetup()
 
 #####################
     def settersymbol(self, text):
@@ -997,6 +1095,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         return TechValue.get_entry_range_perm()
 ###########################
 
+    def setterret_profo_var(self, text):
+        SegmentationRange.set_ret_profo_var(text)
+
+    def getterret_profo_var(self):
+        return SegmentationRange.get_ret_profo_var()
+
+    def addret_profo_var(self, text):
+        SegmentationRange.add_ret_profo_var(text)
+###########################
+
     def clear_db_perm(self):
         self.setterEntryRangeValue({})
         self.setterEntryRangeTechValue({})
@@ -1004,6 +1112,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.setterTechValue({})
         self.setterModeParamlValue(None)
         self.setterModelValue({})
+        self.setterret_profo_var([])
         print(f"Reset Perm Value")
 
 

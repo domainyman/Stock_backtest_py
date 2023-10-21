@@ -100,6 +100,7 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
                 self.newdict.append(item)
             if (text == 'Momentum Indicators'):
                 self.newdict.append("KDJ")
+                # self.newdict.remove("APO")
             elif (text == 'Overlap Studies'):
                 self.newdict.remove('MAVP')
                 self.newdict.remove('MA')
