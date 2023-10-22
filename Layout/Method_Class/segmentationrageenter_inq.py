@@ -299,7 +299,7 @@ class seqmentationrange_entry():
             self.techseqpermfinal = [{key: 'False'}]
         elif (list(self.values.keys()) == ['First', 'Last', 'Step']):
             self.techseqperm = self.seqment_tech_dict(self.values)
-            self.techseqperm = self.resetzore_to_one(self.techseqperm)
+            # self.techseqperm = self.resetzore_to_one(self.techseqperm)
             self.techseqperm = self.rm_duplicates_list(self.techseqperm)
             self.techseqpermfinal = [self.rebuilding_structure(
                 key, techseqperm) for techseqperm in self.techseqperm]

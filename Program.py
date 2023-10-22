@@ -14,7 +14,6 @@ from Layout.SubLayout.Entrymanagement.EntmanagementPage import Entrymanagepage
 from Layout.Method_Class.backtrade import cerebrosetup
 from Layout.Method_Class.optbacktrade import optcerebrosetup
 from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_inq, seqmentationrange_entry, seqmentationrange_conv
-from Layout.Method_Class.series_to_tableview import SeriesPandastotableviewModel
 from Layout.SubLayout.Search.SearchSymbol import Tickersearch
 from Global.Value.UniversalValue import GlobalValue
 from Global.Value.TechToolParam import TechValue
@@ -833,6 +832,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             if (self.gettersymbol() != ""):
                 self.showeatechanalysis()
                 self.clear_db_perm()
+                self.clear_uiea_tableView()
                 self.ea_techanalysispagesetup()
                 self.eatechdetail()
 
@@ -915,7 +915,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def eatechanalysisenterdetail(self):
         try:
             if (self.eatechanalysisenter() == True):
-                if (self.check_date_final() == True):
+                if (self.check_date_final(self.getterEntryRangeValue()) == True):
+                    self.clear_uiea_tableView()
                     self.mesh_cov = self._muitifrom_ticker()
                     self.anyal_list(self.mesh_conv)
                     self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(
@@ -991,28 +992,24 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def isEqual(self, x):
         return np.all(np.diff(x) == 0)
 
-    def check_date_final(self):
+    def check_date_final(self, dictionary):
         try:
-            self.rangevalue = self.getterEntryRangeValue()
-            self.rangevaluekey = self.rangevalue.keys()
-            for permkeys in self.rangevaluekey:
-                self.rangekey = self.rangevalue[permkeys].keys()
-                for perm in list(self.rangekey):
-                    self.rangekeyvalue = self.rangevalue[permkeys][perm]
-                    if (self.rangekeyvalue == {'False', 'True', 'Both Test'}):
+            values = {'False', 'True', 'Both Test'}
+            self.rangevalue = dictionary
+            for key, value in self.rangevalue.items():
+                if isinstance(value, dict):
+                    self.check_date_final(value)
+                elif isinstance(value, set):
+                    if values.issubset(value):
+                        print(f"Key '{key}' contains the values: {values}")
                         return False
-                    self.threelay = self.rangevalue[permkeys][perm].keys()
-                    for permthreelay in list(self.threelay):
-                        self.rangekeythreelay = self.rangevalue[permkeys][perm][permthreelay]
-                        if (self.rangekeythreelay == {'False', 'True', 'Both Test'}):
-                            return False
             return True
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error', str(msg))
 
     def eatableviewsetup(self, model):
         self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(
-            QHeaderView.ResizeMode.Stretch)
+            QHeaderView.ResizeMode.ResizeToContents)
         self.ui.ea_tableView.horizontalHeader().setStyleSheet(
             "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
         self.ui.ea_tableView.verticalHeader().setStyleSheet(

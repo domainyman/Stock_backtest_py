@@ -7,7 +7,7 @@ class Mulpro_Pool:
     def aync_calc(self,data,time):
         pass
 
-if __name__ == "__main__":
+
     mulpro_Pool = Mulpro_Pool("parm")
     data = []
     time = None

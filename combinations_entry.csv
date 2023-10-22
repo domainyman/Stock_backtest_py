@@ -1,5 +1,5 @@
-RSI
-"{'RSI': {'HIGH': 80, 'LOW': 10}}"
-"{'RSI': {'HIGH': 80, 'LOW': 30}}"
-"{'RSI': {'HIGH': 70, 'LOW': 10}}"
-"{'RSI': {'HIGH': 70, 'LOW': 30}}"
+AD
+"{'AD': {'Bottom Divergence': 'True', 'Top Divergence': 'True'}}"
+"{'AD': {'Bottom Divergence': 'True', 'Top Divergence': 'False'}}"
+"{'AD': {'Bottom Divergence': 'False', 'Top Divergence': 'True'}}"
+"{'AD': {'Bottom Divergence': 'False', 'Top Divergence': 'False'}}"

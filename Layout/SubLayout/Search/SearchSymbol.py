@@ -33,7 +33,6 @@ class Tickersearch:
 
     def tickerhisory(self, kwargs):
         self.ticker = yf.Ticker(self.texts)
-        print(kwargs)
         data = self.ticker.history(**kwargs)
         return data
 
