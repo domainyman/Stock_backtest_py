@@ -14,6 +14,7 @@ from Layout.SubLayout.Entrymanagement.EntmanagementPage import Entrymanagepage
 from Layout.Method_Class.backtrade import cerebrosetup
 from Layout.Method_Class.optbacktrade import optcerebrosetup
 from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_inq, seqmentationrange_entry, seqmentationrange_conv
+from Layout.Method_Class.series_to_tableview import SeriesPandastotableviewModel
 from Layout.SubLayout.Search.SearchSymbol import Tickersearch
 from Global.Value.UniversalValue import GlobalValue
 from Global.Value.TechToolParam import TechValue
@@ -643,6 +644,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             if (self.gettersymbol() != ""):
                 self.showaatechanalysis()
                 self.clear_db_perm()
+                self.clear_ui_aa_tableView()
                 self.aa_techanalysispagesetup()
                 self.aatechdetail()
 
@@ -717,7 +719,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             type = self.getterModeParamlValue()
             if (type == "From_Signals()"):
                 self.calculateinter()
-                cerebrosetup()
             return True
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
@@ -729,12 +730,69 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         try:
             if (self.aatechanalysisenter() == True):
                 if (self._from_ticker() == True):
+                    self.clear_ui_aa_tableView()
+                    self.returns, self.positions, self.transactions, self.gross_lev = cerebrosetup().return_pf()
+                    self.aa_table_layout()
+                    self.positions_tableview(self.positions)
+                    self.transactions_tableview(self.transactions)
+
                     self.ui.aa_DownLoad_btn.show()
                 else:
                     self.ui.aa_DownLoad_btn.hide()
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))
+
+    def clear_ui_aa_tableView(self):
+        self.aa_tableview_list = [self.ui.aa_positions_tableview,
+                                  self.ui.aa_transactions_tableview]
+        for item in self.aa_tableview_list:
+            self.model = QStandardItemModel()
+            self.model.clear()
+            self.model.setHorizontalHeaderLabels([])
+            item.setModel(self.model)
+
+    def aa_table_layout(self):
+        self.aa_tableview_list = [self.ui.aa_positions_tableview,
+                                  self.ui.aa_transactions_tableview]
+        for item in self.aa_tableview_list:
+            item.horizontalHeader().setSectionResizeMode(
+                QHeaderView.ResizeMode.Stretch)
+            item.horizontalHeader().setStyleSheet(
+                "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
+            item.verticalHeader().setStyleSheet(
+                "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
+            item.setStyleSheet(
+                "QTableCornerButton::section{background-color: rgb(40, 40, 40);}")
+
+    def positions_tableview(self, positions):
+        positionsmodel = QStandardItemModel()
+        # Add 1 for the index column
+        positionsmodel.setColumnCount(len(positions.columns) + 1)
+        # Include "Index" in the header labels
+        header_labels = ["Index"] + positions.columns.tolist()
+        positionsmodel.setHorizontalHeaderLabels(header_labels)
+
+        for row in range(len(positions)):
+            # Add index value as the first item in each row
+            data = [QStandardItem(str(positions.index[row]))]
+            data += [QStandardItem(str(positions.iloc[row, col]))
+                     for col in range(len(positions.columns))]
+            positionsmodel.appendRow(data)
+        self.ui.aa_positions_tableview.setModel(positionsmodel)
+
+    def transactions_tableview(self, transactions):
+        transactionsmodel = QStandardItemModel()
+        transactionsmodel.setColumnCount(len(transactions.columns) + 1)
+        # Include "Index" in the header labels
+        header_labels = ["Index"] + transactions.columns.tolist()
+        transactionsmodel.setHorizontalHeaderLabels(header_labels)
+        for row in range(len(transactions)):
+            data = [QStandardItem(str(transactions.index[row]))]
+            data += [QStandardItem(str(transactions.iloc[row, col]))
+                     for col in range(len(transactions.columns))]
+            transactionsmodel.appendRow(data)
+        self.ui.aa_transactions_tableview.setModel(transactionsmodel)
 
     def aatechanalysisenter(self):
         self.search = Tickersearch(self.gettersymbol())
@@ -950,7 +1008,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                             return False
             return True
         except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',str(msg))
+            QMessageBox.warning(None, 'System Error', str(msg))
 
     def eatableviewsetup(self, model):
         self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(
@@ -992,7 +1050,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         ea_list = [{'TechRange': officer.get('TechRange'), 'EntryRange': officer.get(
             'EntryRange')} for officer in self.eatext if 'TechRange' in officer and 'EntryRange' in officer]
         return ea_list
-    
+
     def clear_uiea_tableView(self):
         self.setterret_profo_var([])
         self.model = QStandardItemModel()

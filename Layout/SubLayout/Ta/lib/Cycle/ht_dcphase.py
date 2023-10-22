@@ -128,34 +128,7 @@ class ht_dcphase():
             self.datadb["Close"])
         self.settertoolhistory(self.datadb)
 
-    def calculate_miu(self, database, parameter):
-        if 'HT_DCPHASE' in parameter:
-            self.data = parameter['HT_DCPHASE']
-        else:
-            self.data = 60
 
-        self.datadb = database
-        self.datadb["HT_DCPHASE"] = talib.HT_DCPHASE(
-            self.datadb["Close"])
-        return self.datadb
-
-    def Check_Entry_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['HT_DCPHASE']
-        self.entryba = self.tech_dict['HT_DCPHASE']['LOW']
-        if (float(self.item) <= float(self.entryba)):
-            return True
-        else:
-            return False
-
-    def Check_Exit_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['HT_DCPHASE']
-        self.entryba = self.tech_dict['HT_DCPHASE']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
-            return True
-        else:
-            return False
 
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')

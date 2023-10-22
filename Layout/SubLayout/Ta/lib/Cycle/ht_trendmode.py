@@ -128,35 +128,6 @@ class ht_trendmode():
             self.datadb["Close"])
         self.settertoolhistory(self.datadb)
 
-    def calculate_miu(self, database, parameter):
-        if 'HT_TRENDMODE' in parameter:
-            self.data = parameter['HT_TRENDMODE']
-            return self.data
-        else:
-            self.data = 200
-
-        self.datadb = database
-        self.datadb["HT_TRENDMODE"] = talib.HT_TRENDMODE(
-            self.datadb["Close"])
-        return self.datadb
-    
-    def Check_Entry_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['HT_TRENDMODE']
-        self.entryba = self.tech_dict['HT_TRENDMODE']['LOW']
-        if (float(self.item) <= float(self.entryba)):
-            return True
-        else:
-            return False
-
-    def Check_Exit_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['HT_TRENDMODE']
-        self.entryba = self.tech_dict['HT_TRENDMODE']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
-            return True
-        else:
-            return False
 
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')

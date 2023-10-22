@@ -131,20 +131,6 @@ class talib_list():
         layout = self.value.entrywidgetedit()
         return layout
 
-    def ht_dcperiodcalculate_miu(self, database, parameter):
-        self.value = ht_dcperiod()
-        return self.value.calculate_miu(database, parameter)
-
-    def ht_dcperiodcheckentry_miu(self, testitemrow, permitem):
-        self.value = ht_dcperiod()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def ht_dcperiodcheckexit_miu(self, testitem, permitem):
-        self.value = ht_dcperiod()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
-
     """HT_DCPERIOD"""
     """HT_DCPHASE"""
 
@@ -181,20 +167,6 @@ class talib_list():
         layout = self.value.entrywidgetedit()
         return layout
 
-    def ht_dchasecalculate_miu(self, database, parameter):
-        self.value = ht_dcphase()
-        return self.value.calculate_miu(database, parameter)
-
-    def ht_dchasecheckentry_miu(self, testitemrow, permitem):
-        self.value = ht_dcphase()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def ht_dchasecheckexit_miu(self, testitem, permitem):
-        self.value = ht_dcphase()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
-
     """HT_DCPERIOD"""
     """HT_PHASOR"""
 
@@ -230,20 +202,6 @@ class talib_list():
         self.value = ht_phasor()
         layout = self.value.entrywidgetedit()
         return layout
-
-    def ht_phasorcalculate_miu(self, database, parameter):
-        self.value = ht_phasor()
-        return self.value.calculate_miu(database, parameter)
-
-    def ht_phasorcheckentry_miu(self, testitemrow, permitem):
-        self.value = ht_phasor()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def ht_phasorcheckexit_miu(self, testitem, permitem):
-        self.value = ht_phasor()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
 
     """HT_PHASOR"""
 
@@ -282,20 +240,6 @@ class talib_list():
         layout = self.value.entrywidgetedit()
         return layout
 
-    def ht_sinecalculate_miu(self, database, parameter):
-        self.value = ht_sine()
-        return self.value.calculate_miu(database, parameter)
-
-    def ht_sinecheckentry_miu(self, testitemrow, permitem):
-        self.value = ht_sine()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def ht_sinecheckexit_miu(self, testitem, permitem):
-        self.value = ht_sine()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
-
     """HT_SINE"""
     """HT_TRENDMODE"""
 
@@ -331,20 +275,6 @@ class talib_list():
         self.value = ht_trendmode()
         layout = self.value.entrywidgetedit()
         return layout
-    
-    def ht_trendmodecalculate_miu(self, database, parameter):
-        self.value = ht_trendmode()
-        return self.value.calculate_miu(database, parameter)
-    
-    def ht_trendmodecheckentry_miu(self, testitemrow, permitem):
-        self.value = ht_trendmode()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def ht_trendmodecheckexit_miu(self, testitem, permitem):
-        self.value = ht_trendmode()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
 
     """HT_TRENDMODE"""
     """Cycle Indicators"""
@@ -386,19 +316,6 @@ class talib_list():
         layout = self.value.entrywidgetedit()
         return layout
 
-    def adxcalculate_miu(self, database, parameter):
-        self.value = adx()
-        return self.value.calculate_miu(database, parameter)  
-
-    def adxcheckentry_miu(self, testitemrow, permitem):
-        self.value = adx()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def adxcheckexit_miu(self, testitem, permitem):
-        self.value = adx()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
     """ADX"""
     """ADXR"""
 
@@ -435,19 +352,6 @@ class talib_list():
         layout = self.value.entrywidgetedit()
         return layout
 
-    def adxrcalculate_miu(self, database, parameter):
-        self.value = adxr()
-        return self.value.calculate_miu(database, parameter)
-
-    def adxrcheckentry_miu(self, testitemrow, permitem):
-        self.value = adxr()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def adxrcheckexit_miu(self, testitem, permitem):
-        self.value = adxr()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
     """ADXR"""
     """APO"""
 
@@ -484,19 +388,6 @@ class talib_list():
         layout = self.value.entrywidgetedit()
         return layout
 
-    def apocalculate_miu(self, database, parameter):
-        self.value = apo()
-        return self.value.calculate_miu(database, parameter)
-
-    def apocheckentry_miu(self, testitemrow, permitem):
-        self.value = apo()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def apocheckexit_miu(self, testitem, permitem):
-        self.value = apo()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
     """APO"""
     """AROON"""
 
@@ -742,20 +633,6 @@ class talib_list():
         self.value = macd()
         layout = self.value.entrywidgetedit()
         return layout
-
-    def macdcalculate_miu(self, database, parameter):
-        self.value = macd()
-        return self.value.calculate_miu(database, parameter)
-
-    def macdcheckentry_miu(self, testitemrow, permitem):
-        self.value = macd()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def macdcheckexit_miu(self, testitem, permitem):
-        self.value = macd()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
 
     """MACD"""
     """MACDEXT"""
@@ -1010,20 +887,6 @@ class talib_list():
         self.value = rsi()
         layout = self.value.entrywidgetedit()
         return layout
-
-    def rsicheckentry_miu(self, testitemrow, permitem):
-        self.value = rsi()
-        self.en = self.value.Check_Entry_miu(testitemrow, permitem)
-        return self.en
-
-    def rsicalculate_miu(self, database, parameter):
-        self.value = rsi()
-        return self.value.calculate_miu(database, parameter)
-
-    def rsicheckexit_miu(self, testitem, permitem):
-        self.value = rsi()
-        self.en = self.value.Check_Exit_miu(testitem, permitem)
-        return self.en
 
     """RSI"""
     """PLUS_DI"""
@@ -3218,389 +3081,6 @@ class talib_list():
                 self.adosccalculate()
             elif (text == "OBV"):
                 self.obvcalculate()
-        except BaseException as msg:
-            print(str(msg))
-
-    def calculatereturn_miu(self, text, database, parameter):
-        try:
-            if (text == "RSI"):
-                self.newdatabase = self.rsicalculate_miu(database, parameter)
-                return self.newdatabase
-            elif (text == "MACD"):
-                self.newdatabase = self.macdcalculate_miu(database, parameter)
-                return self.newdatabase
-            elif (text == "HT_DCPERIOD"):
-                self.newdatabase = self.ht_dcperiodcalculate_miu(
-                    database, parameter)
-                return self.newdatabase
-            elif (text == "HT_DCPHASE"):
-                self.newdatabase = self.ht_dchasecalculate_miu(
-                    database, parameter)
-                return self.newdatabase
-            elif (text == "HT_PHASOR"):
-                self.newdatabase = self.ht_phasorcalculate_miu(
-                    database, parameter)
-                return self.newdatabase
-            elif (text == "HT_SINE"):
-                self.newdatabase = self.ht_sinecalculate_miu(
-                    database, parameter)
-                return self.newdatabase
-            elif (text == "HT_TRENDMODE"):
-                self.newdatabase = self.ht_trendmodecalculate_miu(database, parameter)
-                return self.newdatabase
-            elif (text == "ADX"):
-                self.newdatabase = self.adxcalculate_miu(database, parameter)
-                return self.newdatabase
-            elif (text == "ADXR"):
-                self.newdatabase = self.adxrcalculate_miu(database, parameter)
-                return self.newdatabase
-            elif (text == "APO"):
-                self.newdatabase = self.apocalculate_miu(database, parameter)
-                return self.newdatabase
-            # elif (text == "AROON"):
-            #     self.arooncalculate_miu()
-            # elif (text == "AROONOSC"):
-            #     self.aroonosccalculate_miu()
-            # elif (text == "BOP"):
-            #     self.bopcalculate_miu()
-            # elif (text == "CCI"):
-            #     self.ccicalculate_miu()
-            # elif (text == "CMO"):
-            #     self.cmocalculate_miu()
-            # elif (text == "DX"):
-            #     self.dxcalculate_miu()
-            # elif (text == "MACDEXT"):
-            #     self.macdextcalculate_miu()
-            # elif (text == "MACDFIX"):
-            #     self.macdfixcalculate_miu()
-            # elif (text == "MFI"):
-            #     self.mficalculate_miu()
-            # elif (text == "MINUS_DI"):
-            #     self.minus_dicalculate_miu()
-            # elif (text == "MINUS_DM"):
-            #     self.minus_dmcalculate_miu()
-            # elif (text == "MOM"):
-            #     self.momcalculate_miu()
-            # elif (text == "PLUS_DI"):
-            #     self.plusdicalculate_miu()
-            # elif (text == "PLUS_DM"):
-            #     self.plusdmcalculate_miu()
-            # elif (text == "PPO"):
-            #     self.ppocalculate_miu()
-            # elif (text == "ROC"):
-            #     self.roccalculate_miu()
-            # elif (text == "ROCP"):
-            #     self.rocpcalculate_miu()
-            # elif (text == "ROCR"):
-            #     self.rocrcalculate_miu()
-            # elif (text == "ROCR100"):
-            #     self.rocr100calculate_miu()
-            # elif (text == "STOCH"):
-            #     self.stochcalculate_miu()
-            # elif (text == "STOCHF"):
-            #     self.stochfcalculate_miu()
-            # elif (text == "STOCHRSI"):
-            #     self.stochrsicalculate_miu()
-            # elif (text == "TRIX"):
-            #     self.trixcalculate_miu()
-            # elif (text == "ULTOSC"):
-            #     self.ultosccalculate_miu()
-            # elif (text == "WILLR"):
-            #     self.willrcalculate_miu()
-            # elif (text == "MAVP"):
-            #     self.mavpcalculate_miu()
-            # elif (text == "BBANDS"):
-            #     self.bbandscalculate_miu()
-            # elif (text == "DEMA"):
-            #     self.demacalculate_miu()
-            # elif (text == "EMA"):
-            #     self.emacalculate_miu()
-            # elif (text == "HT_TRENDLINE"):
-            #     self.ht_trendlinecalculate_miu()
-            # elif (text == "KAMA"):
-            #     self.kamacalculate_miu()
-            # elif (text == "MA"):
-            #     self.macalculate_miu()
-            # elif (text == "MAMA"):
-            #     self.mamacalculate_miu()
-            # elif (text == "MIDPOINT"):
-            #     self.midpointcalculate_miu()
-            # elif (text == "MIDPRICE"):
-            #     self.midpricecalculate_miu()
-            # elif (text == "SAR"):
-            #     self.sarcalculate_miu()
-            # elif (text == "SAREXT"):
-            #     self.sarextcalculate_miu()
-            # elif (text == "SMA"):
-            #     self.smacalculate_miu()
-            # elif (text == "T3"):
-            #     self.t3calculate_miu()
-            # elif (text == "TEMA"):
-            #     self.temacalculate_miu()
-            # elif (text == "TRIMA"):
-            #     self.trimacalculate_miu()
-            # elif (text == "WMA"):
-            #     self.wmacalculate_miu()
-            # elif (text == "KDJ"):
-            #     self.kdjcalculate_miu()
-            # elif (text == "ATR"):
-            #     self.atrcalculate_miu()
-            # elif (text == "NATR"):
-            #     self.natrcalculate_miu()
-            # elif (text == "TRANGE"):
-            #     self.trangecalculate_miu()
-            # elif (text == "AD"):
-            #     self.adcalculate_miu()
-            # elif (text == "ADOSC"):
-            #     self.adosccalculate_miu()
-            # elif (text == "OBV"):
-            #     self.obvcalculate_miu()
-        except BaseException as msg:
-            print(str(msg))
-
-    def entry_turn_miu(self, text, testitemrow, permitem):
-        try:
-            if (text == "RSI"):
-                return self.rsicheckentry_miu(testitemrow, permitem)
-            elif (text == "MACD"):
-                return self.macdcheckentry_miu(testitemrow, permitem)
-            elif (text == "HT_DCPERIOD"):
-                return self.ht_dcperiodcheckentry_miu(testitemrow, permitem)
-            elif (text == "HT_DCPHASE"):
-                return self.ht_dchasecheckentry_miu(testitemrow, permitem)
-            elif (text == "HT_PHASOR"):
-                return self.ht_phasorcheckentry_miu(testitemrow, permitem)
-            elif (text == "HT_SINE"):
-                return self.ht_sinecheckentry_miu(testitemrow, permitem)
-            elif (text == "HT_TRENDMODE"):
-                return self.ht_trendmodecheckentry_miu(testitemrow, permitem)
-            elif (text == "ADX"):
-                return self.adxcheckentry_miu(testitemrow, permitem)
-            elif (text == "ADXR"):
-                return self.adxrcheckentry_miu(testitemrow, permitem)
-            elif (text == "APO"):
-                return self.apocheckentry_miu(testitemrow, permitem)
-            # elif (text == "AROON"):
-            #     return self.arooncheckentry(testitemrow)
-            # elif (text == "AROONOSC"):
-            #     return self.aroonosccheckentry(testitemrow)
-            # elif (text == "BOP"):
-            #     return self.bopcheckentry(testitemrow)
-            # elif (text == "CCI"):
-            #     return self.ccicheckentry(testitemrow)
-            # elif (text == "CMO"):
-            #     return self.cmocheckentry(testitemrow)
-            # elif (text == "DX"):
-            #     return self.dxcheckentry(testitemrow)
-            # elif (text == "MACDEXT"):
-            #     return self.macdextcheckentry(testitemrow)
-            # elif (text == "MACDFIX"):
-            #     return self.macdfixcheckentry(testitemrow)
-            # elif (text == "MFI"):
-            #     return self.mficheckentry(testitemrow)
-            # elif (text == "MINUS_DI"):
-            #     return self.minusdicheckentry(testitemrow)
-            # elif (text == "MINUS_DM"):
-            #     return self.minus_dmcheckentry(testitemrow)
-            # elif (text == "MOM"):
-            #     return self.momcheckentry(testitemrow)
-            # elif (text == "PLUS_DI"):
-            #     return self.plusdicheckentry(testitemrow)
-            # elif (text == "PLUS_DM"):
-            #     return self.plusdmcheckentry(testitemrow)
-            # elif (text == "PPO"):
-            #     return self.ppocheckentry(testitemrow)
-            # elif (text == "ROC"):
-            #     return self.roccheckentry(testitemrow)
-            # elif (text == "ROCP"):
-            #     return self.rocpcheckentry(testitemrow)
-            # elif (text == "ROCR"):
-            #     return self.rocrcheckentry(testitemrow)
-            # elif (text == "ROCR100"):
-            #     return self.rocr100checkentry(testitemrow)
-            # elif (text == "STOCH"):
-            #     return self.stochcheckentry(testitemrow)
-            # elif (text == "STOCHF"):
-            #     return self.stochfcheckentry(testitemrow)
-            # elif (text == "STOCHRSI"):
-            #     return self.stochrsicheckentry(testitemrow)
-            # elif (text == "TRIX"):
-            #     return self.trixcheckentry(testitemrow)
-            # elif (text == "ULTOSC"):
-            #     return self.ultosccheckentry(testitemrow)
-            # elif (text == "WILLR"):
-            #     return self.willrcheckentry(testitemrow)
-            # elif (text == "MAVP"):
-            #     return self.mavpcheckentry(testitemrow)
-            # elif (text == "KDJ"):
-            #     return self.kdjcheckentry(testitemrow)
-            # elif (text == "BBANDS"):
-            #     return self.bbandscheckentry(testitemrow)
-            # elif (text == "DEMA"):
-            #     return self.demacheckentry(testitemrow)
-            # elif (text == "EMA"):
-            #     return self.emacheckentry(testitemrow)
-            # elif (text == "HT_TRENDLINE"):
-            #     return self.ht_trendlinecheckentry(testitemrow)
-            # elif (text == "KAMA"):
-            #     return self.kamacheckentry(testitemrow)
-            # elif (text == "MA"):
-            #     return self.macheckentry(testitemrow)
-            # elif (text == "MAMA"):
-            #     return self.mamacheckentry(testitemrow)
-            # elif (text == "MIDPOINT"):
-            #     return self.midpointcheckentry(testitemrow)
-            # elif (text == "MIDPRICE"):
-            #     return self.midpricecheckentry(testitemrow)
-            # elif (text == "SAR"):
-            #     return self.sarcheckentry(testitemrow)
-            # elif (text == "SAREXT"):
-            #     return self.sarextcheckentry(testitemrow)
-            # elif (text == "SMA"):
-            #     return self.smacheckentry(testitemrow)
-            # elif (text == "T3"):
-            #     return self.t3checkentry(testitemrow)
-            # elif (text == "TEMA"):
-            #     return self.temacheckentry(testitemrow)
-            # elif (text == "TRIMA"):
-            #     return self.trimacheckentry(testitemrow)
-            # elif (text == "WMA"):
-            #     return self.wmacheckentry(testitemrow)
-            # elif (text == "ATR"):
-            #     return self.atrcheckentry(testitemrow)
-            # elif (text == "NATR"):
-            #     return self.natrcheckentry(testitemrow)
-            # elif (text == "TRANGE"):
-            #     return self.trangecheckentry(testitemrow)
-            # elif (text == "OBV"):
-            #     return self.obvcheckentry(testitemrow)
-            # elif (text == "AD"):
-            #     return self.adcheckentry(testitemrow)
-            # elif (text == "ADOSC"):
-            #     return self.adosccheckentry(testitemrow)
-        except BaseException as msg:
-            print(str(msg))
-
-    def exit_turn_miu(self, text, testitem, permitem):
-        try:
-            if (text == "RSI"):
-                return self.rsicheckexit_miu(testitem, permitem)
-            elif (text == "MACD"):
-                return self.macdcheckexit_miu(testitem, permitem)
-            elif (text == "HT_DCPERIOD"):
-                return self.ht_dcperiodcheckexit_miu(testitem, permitem)
-            elif (text == "HT_DCPHASE"):
-                return self.ht_dchasecheckexit_miu(testitem, permitem)
-            elif (text == "HT_PHASOR"):
-                return self.ht_phasorcheckexit_miu(testitem, permitem)
-            elif (text == "HT_SINE"):
-                return self.ht_sinecheckexit_miu(testitem, permitem)
-            elif (text == "HT_TRENDMODE"):
-                return self.ht_trendmodecheckexit_miu(testitem, permitem)
-            elif (text == "ADX"):
-                return self.adxcheckexit_miu(testitem, permitem)
-            elif (text == "ADXR"):
-                return self.adxrcheckexit_miu(testitem, permitem)
-            elif (text == "APO"):
-                return self.apocheckexit_miu(testitem, permitem)
-            # elif (text == "AROON"):
-            #     return self.arooncheckexit(testitem)
-            # elif (text == "AROONOSC"):
-            #     return self.aroonosccheckexit(testitem)
-            # elif (text == "BOP"):
-            #     return self.bopcheckexit(testitem)
-            # elif (text == "CCI"):
-            #     return self.ccicheckexit(testitem)
-            # elif (text == "CMO"):
-            #     return self.cmocheckexit(testitem)
-            # elif (text == "DX"):
-            #     return self.dxcheckexit(testitem)
-            # elif (text == "MACDEXT"):
-            #     return self.macdextcheckexit(testitem)
-            # elif (text == "MACDFIX"):
-            #     return self.macdfixcheckexit(testitem)
-            # elif (text == "MFI"):
-            #     return self.mficheckexit(testitem)
-            # elif (text == "MINUS_DI"):
-            #     return self.minusdicheckexit(testitem)
-            # elif (text == "MINUS_DM"):
-            #     return self.minus_dmcheckexit(testitem)
-            # elif (text == "MOM"):
-            #     return self.momcheckexit(testitem)
-            # elif (text == "PLUS_DI"):
-            #     return self.plusdicheckexit(testitem)
-            # elif (text == "PLUS_DM"):
-            #     return self.plusdmcheckexit(testitem)
-            # elif (text == "PPO"):
-            #     return self.ppocheckexit(testitem)
-            # elif (text == "ROC"):
-            #     return self.roccheckexit(testitem)
-            # elif (text == "ROCP"):
-            #     return self.rocpcheckexit(testitem)
-            # elif (text == "ROCR"):
-            #     return self.rocrcheckexit(testitem)
-            # elif (text == "ROCR100"):
-            #     return self.rocr100checkexit(testitem)
-            # elif (text == "STOCH"):
-            #     return self.stochcheckexit(testitem)
-            # elif (text == "STOCHF"):
-            #     return self.stochfcheckexit(testitem)
-            # elif (text == "STOCHRSI"):
-            #     return self.stochrsicheckexit(testitem)
-            # elif (text == "TRIX"):
-            #     return self.trixcheckexit(testitem)
-            # elif (text == "ULTOSC"):
-            #     return self.ultosccheckexit(testitem)
-            # elif (text == "WILLR"):
-            #     return self.willrcheckexit(testitem)
-            # elif (text == "MAVP"):
-            #     return self.mavpcheckexit(testitem)
-            # elif (text == "KDJ"):
-            #     return self.kdjcheckexit(testitem)
-            # elif (text == "BBANDS"):
-            #     return self.bbandscheckexit(testitem)
-            # elif (text == "DEMA"):
-            #     return self.demacheckexit(testitem)
-            # elif (text == "EMA"):
-            #     return self.emacheckexit(testitem)
-            # elif (text == "HT_TRENDLINE"):
-            #     return self.ht_trendlinecheckexit(testitem)
-            # elif (text == "KAMA"):
-            #     return self.kamacheckexit(testitem)
-            # elif (text == "MA"):
-            #     return self.macheckexit(testitem)
-            # elif (text == "MAMA"):
-            #     return self.mamacheckexit(testitem)
-            # elif (text == "MIDPOINT"):
-            #     return self.midpointcheckexit(testitem)
-            # elif (text == "MIDPRICE"):
-            #     return self.midpricecheckexit(testitem)
-            # elif (text == "SAR"):
-            #     return self.sarcheckexit(testitem)
-            # elif (text == "SAREXT"):
-            #     return self.sarextcheckexit(testitem)
-            # elif (text == "SMA"):
-            #     return self.smacheckexit(testitem)
-            # elif (text == "T3"):
-            #     return self.t3checkexit(testitem)
-            # elif (text == "TEMA"):
-            #     return self.temacheckexit(testitem)
-            # elif (text == "TRIMA"):
-            #     return self.trimacheckexit(testitem)
-            # elif (text == "WMA"):
-            #     return self.wmacheckexit(testitem)
-            # elif (text == "ATR"):
-            #     return self.atrcheckexit(testitem)
-            # elif (text == "NATR"):
-            #     return self.natrcheckexit(testitem)
-            # elif (text == "TRANGE"):
-            #     return self.trangecheckexit(testitem)
-            # elif (text == "OBV"):
-            #     return self.obvcheckexit(testitem)
-            # elif (text == "AD"):
-            #     return self.adcheckexit(testitem)
-            # elif (text == "ADOSC"):
-            #     return self.adosccheckexit(testitem)
         except BaseException as msg:
             print(str(msg))
 

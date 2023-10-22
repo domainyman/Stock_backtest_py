@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1028</width>
-    <height>831</height>
+    <height>829</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -336,7 +336,7 @@ background-color: rgb(25, 69, 85);</string>
           <item>
            <widget class="QStackedWidget" name="stackedWidget">
             <property name="currentIndex">
-             <number>7</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="main_page">
              <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -1217,20 +1217,28 @@ background-color: rgb(25, 69, 85);</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_18">
                    <item>
-                    <layout class="QVBoxLayout" name="aa_CanvasLayout"/>
-                   </item>
-                   <item>
-                    <spacer name="verticalSpacer_4">
-                     <property name="orientation">
-                      <enum>Qt::Vertical</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>20</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                    </spacer>
+                    <layout class="QVBoxLayout" name="aa_CanvasLayout">
+                     <item>
+                      <widget class="QTableView" name="aa_positions_tableview">
+                       <property name="editTriggers">
+                        <set>QAbstractItemView::NoEditTriggers</set>
+                       </property>
+                       <property name="selectionBehavior">
+                        <enum>QAbstractItemView::SelectRows</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QTableView" name="aa_transactions_tableview">
+                       <property name="editTriggers">
+                        <set>QAbstractItemView::NoEditTriggers</set>
+                       </property>
+                       <property name="selectionBehavior">
+                        <enum>QAbstractItemView::SelectRows</enum>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                    <item>
                     <widget class="QPushButton" name="aa_Techenter_btn">

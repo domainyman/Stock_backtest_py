@@ -137,42 +137,6 @@ class ht_phasor():
             self.datadb["Close"])
         self.settertoolhistory(self.datadb)
 
-    def calculate_miu(self, database, parameter):
-        if 'HT_PHASOR' in parameter:
-            self.data = parameter['HT_PHASOR']
-        else:
-            self.data = 60
-
-        self.datadb = database
-        self.datadb["HT_PHASOR_INHPASE"], self.datadb["HT_PHASOR_QUADRATURE"] = talib.HT_PHASOR(
-            self.datadb["Close"])
-        return self.datadb
-
-    def Check_Entry_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.entryba = self.tech_dict['HT_PHASOR']['GOLDEN CROSS']
-        if (self.entryba == 'True'):
-            self.HT_PHASORitem = testitem.loc['HT_PHASOR_INHPASE']
-            self.HT_PHASOR_QUADRATUREitem = testitem.loc['HT_PHASOR_QUADRATURE']
-            if float(self.HT_PHASORitem) >= float(self.HT_PHASOR_QUADRATUREitem):
-                return True
-            else:
-                return False
-        else:
-            return True
-
-    def Check_Exit_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.exitba = self.tech_dict['HT_PHASOR']['Death Cross']
-        if (self.exitba == 'True'):
-            self.HT_PHASORitem = testitem.loc['HT_PHASOR_INHPASE']
-            self.HT_PHASOR_QUADRATUREitem = testitem.loc['HT_PHASOR_QUADRATURE']
-            if float(self.HT_PHASORitem) <= float(self.HT_PHASOR_QUADRATUREitem):
-                return True
-            else:
-                return False
-        else:
-            return True
 
     def entrywidgetedit(self):
         self.buylabel = QLabel('GOLDEN CROSS :')

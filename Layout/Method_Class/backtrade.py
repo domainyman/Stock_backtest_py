@@ -37,13 +37,17 @@ class cerebrosetup():
         self.cerebro.addobserver(bt.observers.DrawDown)
         self.cerebro.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio')
         self.loopperm()
-        results = self.cerebro.run()
-        portfolio_stats = results[0].analyzers.getbyname('pyfolio')
-        returns, positions, transactions, gross_lev = portfolio_stats.get_pf_items()
+        self.results = self.cerebro.run()
+        self.portfolio_stats = self.results[0].analyzers.getbyname('pyfolio')
+        self.returns, self.positions, self.transactions, self.gross_lev = self.portfolio_stats.get_pf_items()
+        self.returns.index = self.returns.index.tz_convert(None)
         qs.reports.html(
-            returns, output='Stock Sentiment Report.html', title='Stock Sentiment')
+            self.returns, output='Stock Sentiment Report.html', title='Stock Sentiment')
         webbrowser.open('Stock Sentiment Report.html')
-        self.cerebro.plot()
+        self.cerebro.plot(style='candlestick')
+        
+    def return_pf(self):
+        return self.returns, self.positions, self.transactions, self.gross_lev
 
     def btfeel(self):
         return bt.feeds.PandasData(dataname=self.gettertoolhistory())

@@ -128,34 +128,6 @@ class ht_dcperiod():
             self.datadb["Close"])
         self.settertoolhistory(self.datadb)
 
-    def calculate_miu(self, database, parameter):
-        if 'HT_DCPERIOD' in parameter:
-            self.data = parameter['HT_DCPERIOD']
-        else:
-            self.datadef = 20
-            
-        self.datadb = database
-        self.datadb["HT_DCPERIOD"] = talib.HT_DCPERIOD(
-            self.datadb["Close"])
-        return self.datadb
-
-    def Check_Entry_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['HT_DCPERIOD']
-        self.entryba = self.tech_dict['HT_DCPERIOD']['LOW']
-        if (float(self.item) <= float(self.entryba)):
-            return True
-        else:
-            return False
-
-    def Check_Exit_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['HT_DCPERIOD']
-        self.entryba = self.tech_dict['HT_DCPERIOD']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
-            return True
-        else:
-            return False
 
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')

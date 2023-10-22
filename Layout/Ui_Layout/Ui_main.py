@@ -13,7 +13,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowModality(QtCore.Qt.WindowModality.NonModal)
-        MainWindow.resize(1028, 831)
+        MainWindow.resize(1028, 829)
         MainWindow.setMinimumSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -521,9 +521,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_18.setObjectName("verticalLayout_18")
         self.aa_CanvasLayout = QtWidgets.QVBoxLayout()
         self.aa_CanvasLayout.setObjectName("aa_CanvasLayout")
+        self.aa_positions_tableview = QtWidgets.QTableView(parent=self.chartwidget_2)
+        self.aa_positions_tableview.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.aa_positions_tableview.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectionBehavior.SelectRows)
+        self.aa_positions_tableview.setObjectName("aa_positions_tableview")
+        self.aa_CanvasLayout.addWidget(self.aa_positions_tableview)
+        self.aa_transactions_tableview = QtWidgets.QTableView(parent=self.chartwidget_2)
+        self.aa_transactions_tableview.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.aa_transactions_tableview.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectionBehavior.SelectRows)
+        self.aa_transactions_tableview.setObjectName("aa_transactions_tableview")
+        self.aa_CanvasLayout.addWidget(self.aa_transactions_tableview)
         self.verticalLayout_18.addLayout(self.aa_CanvasLayout)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.verticalLayout_18.addItem(spacerItem2)
         self.aa_Techenter_btn = QtWidgets.QPushButton(parent=self.chartwidget_2)
         self.aa_Techenter_btn.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(25, 69, 85);")
@@ -1163,8 +1171,8 @@ class Ui_MainWindow(object):
         self.formLayout_2.setWidget(9, QtWidgets.QFormLayout.ItemRole.FieldRole, self.enterprisevalue_edit)
         self.horizontalLayout_3.addLayout(self.formLayout_2)
         self.verticalLayout_7.addLayout(self.horizontalLayout_3)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.verticalLayout_7.addItem(spacerItem3)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem2)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.CompanyOfficers_btn = QtWidgets.QPushButton(parent=self.info_page)
@@ -1186,7 +1194,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(7)
+        self.stackedWidget.setCurrentIndex(4)
         self.Btn_Exit.clicked.connect(MainWindow.close) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

@@ -89,23 +89,6 @@ class apo():
         else:
             return False
 
-    def Check_Entry_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['APO']
-        self.entryba = self.tech_dict['APO']['LOW']
-        if (float(self.item) <= float(self.entryba)):
-            return True
-        else:
-            return False
-
-    def Check_Exit_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['APO']
-        self.entryba = self.tech_dict['APO']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
-            return True
-        else:
-            return False
 
     def widgetedit(self):
         self.Fastperiodlabel = QLabel('Fastperiod :')
@@ -196,19 +179,6 @@ class apo():
             self.datadb['Close'], fastperiod=int(self.fastperiod), slowperiod=int(self.slowperiod), matype=int(self.matype))
         self.settertoolhistory(self.datadb)
 
-    def calculate_miu(self, database, parameter):
-        if 'APO' in parameter:
-            self.fastperiod = parameter['APO']['fastperiod']
-            self.slowperiod = parameter['APO']['slowperiod']
-            self.matype = parameter['APO']['matype']
-        else:
-            self.fastperiod = 12
-            self.slowperiod = 26
-            self.matype = 0
-        self.datadb = database
-        self.datadb["APO"] = talib.APO(
-            self.datadb['Close'], fastperiod=int(self.fastperiod), slowperiod=int(self.slowperiod), matype=int(self.matype))
-        return self.datadb
 
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')

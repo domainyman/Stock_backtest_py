@@ -128,33 +128,7 @@ class adxr():
             self.datadb["High"], self.datadb["Low"], self.datadb["Close"], timeperiod=int(self.parameter))
         self.settertoolhistory(self.datadb)
 
-    def calculate_miu(self, database, parameter):
-        if 'ADXR' in parameter:
-            self.parameter = parameter['ADXR']
-        else:
-            self.parameter = 14
-        self.datadb = database
-        self.datadb["ADXR"] = talib.ADXR(
-            self.datadb["High"], self.datadb["Low"], self.datadb["Close"], timeperiod=int(self.parameter))
-        return self.datadb
 
-    def Check_Entry_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['ADXR']
-        self.entryba = self.tech_dict['ADXR']['LOW']
-        if (float(self.item) <= float(self.entryba)):
-            return True
-        else:
-            return False
-
-    def Check_Exit_miu(self, testitem, permitem):
-        self.tech_dict = permitem
-        self.item = testitem.loc['ADXR']
-        self.entryba = self.tech_dict['ADXR']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
-            return True
-        else:
-            return False
 
     def entrywidgetedit(self):
         self.highlabel = QLabel('HIGH :')
