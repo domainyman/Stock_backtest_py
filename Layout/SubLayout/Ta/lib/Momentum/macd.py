@@ -75,29 +75,34 @@ class macd():
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['MACD']['GOLDEN CROSS']
-        if (self.entryba == 'True'):
-            self.MACDitem = testitem.loc['MACD']
-            self.MACD_SIGNALitem = testitem.loc['MACD_SIGNAL']
+        self.MACDitem = testitem.loc['MACD']
+        self.MACD_SIGNALitem = testitem.loc['MACD_SIGNAL']
+        if (self.entryba == 'True'): 
             if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
             else:
                 return False
-        else:
-            return True
+        elif(self.entryba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['MACD']['Death Cross']
+        self.MACDitem = testitem.loc['MACD']
+        self.MACD_SIGNALitem = testitem.loc['MACD_SIGNAL']
         if (self.exitba == 'True'):
-            self.MACDitem = testitem.loc['MACD']
-            self.MACD_SIGNALitem = testitem.loc['MACD_SIGNAL']
             if (float(self.MACDitem) < float(self.MACD_SIGNALitem)):
                 return True
             else:
                 return False
-        else:
-            return True
-        
+        elif(self.entryba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
     def get_db_for_entry_exit(self, testitem):
         self.ChecklistClose = []

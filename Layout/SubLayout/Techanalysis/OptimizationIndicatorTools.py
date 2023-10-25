@@ -19,7 +19,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
     def mulitbaserange(self, textname, textperm) -> dict:
         if (textperm == 'matype'):
             self.baseoption = {textname: {textperm: {
-                'First': 0, 'Last': 8, 'Step': 1}}}
+                'First': 0, 'Last': 9, 'Step': 1}}}
         elif (textperm == 'timeperiod'):
             self.baseoption = {textname: {textperm: {
                 'First': 0, 'Last': 100, 'Step': 25}}}

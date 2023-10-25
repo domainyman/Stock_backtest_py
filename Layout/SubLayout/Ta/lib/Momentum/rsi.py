@@ -27,7 +27,7 @@ class rsi():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['RSI']
         self.entryba = self.tech_dict['RSI']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -36,7 +36,7 @@ class rsi():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['RSI']
         self.entryba = self.tech_dict['RSI']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

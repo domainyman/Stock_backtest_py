@@ -53,7 +53,7 @@ class bop():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['BOP']
         self.entryba = self.tech_dict['BOP']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -62,7 +62,7 @@ class bop():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['BOP']
         self.entryba = self.tech_dict['BOP']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

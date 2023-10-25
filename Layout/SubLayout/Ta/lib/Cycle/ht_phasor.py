@@ -53,28 +53,34 @@ class ht_phasor():
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['HT_PHASOR']['GOLDEN CROSS']
+        self.HT_PHASORitem = testitem.loc['HT_PHASOR_INHPASE']
+        self.HT_PHASOR_QUADRATUREitem = testitem.loc['HT_PHASOR_QUADRATURE']
         if (self.entryba == 'True'):
-            self.HT_PHASORitem = testitem.loc['HT_PHASOR_INHPASE']
-            self.HT_PHASOR_QUADRATUREitem = testitem.loc['HT_PHASOR_QUADRATURE']
-            if float(self.HT_PHASORitem) >= float(self.HT_PHASOR_QUADRATUREitem):
+            if float(self.HT_PHASORitem) > float(self.HT_PHASOR_QUADRATUREitem):
                 return True
             else:
                 return False
-        else:
-            return True
+        elif (self.entryba == 'False'):
+            if float(self.HT_PHASORitem) < float(self.HT_PHASOR_QUADRATUREitem):
+                return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['HT_PHASOR']['Death Cross']
+        self.HT_PHASORitem = testitem.loc['HT_PHASOR_INHPASE']
+        self.HT_PHASOR_QUADRATUREitem = testitem.loc['HT_PHASOR_QUADRATURE']
         if (self.exitba == 'True'):
-            self.HT_PHASORitem = testitem.loc['HT_PHASOR_INHPASE']
-            self.HT_PHASOR_QUADRATUREitem = testitem.loc['HT_PHASOR_QUADRATURE']
-            if float(self.HT_PHASORitem) <= float(self.HT_PHASOR_QUADRATUREitem):
+            if float(self.HT_PHASORitem) < float(self.HT_PHASOR_QUADRATUREitem):
                 return True
             else:
                 return False
-        else:
-            return True
+        elif (self.entryba == 'False'):
+            if float(self.HT_PHASORitem) > float(self.HT_PHASOR_QUADRATUREitem):
+                return True
+            else:
+                return False
 
     def widgetedit(self):
         self.label = QLabel('Parameter :')

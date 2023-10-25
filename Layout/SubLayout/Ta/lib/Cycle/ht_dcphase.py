@@ -53,7 +53,7 @@ class ht_dcphase():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['HT_DCPHASE']
         self.entryba = self.tech_dict['HT_DCPHASE']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -62,7 +62,7 @@ class ht_dcphase():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['HT_DCPHASE']
         self.entryba = self.tech_dict['HT_DCPHASE']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

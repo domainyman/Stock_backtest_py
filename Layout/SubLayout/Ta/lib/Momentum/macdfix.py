@@ -1,5 +1,5 @@
 import talib
-from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox,QComboBox
+from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox, QComboBox
 from PyQt6.QtCore import QSize, Qt
 from Global.Value.TechToolParam import TechValue
 from Global.Value.UniversalValue import GlobalValue
@@ -10,16 +10,17 @@ class macdfix():
         super().__init__()
         self.parameter = self.setup()
         self.buysignal = self.buysignalsetup()
-        self.sellsignal = self.sellsignalsetup()    
+        self.sellsignal = self.sellsignalsetup()
         self.lineedit = QLineEdit()
         self.buysignalcb = QComboBox()
         self.sellsignalcb = QComboBox()
 
     def base(self):
         return {'MACDFIX': 9}
-    
+
     def entry_exit_base(self):
-        self.entryprofo = {'MACDFIX': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
+        self.entryprofo = {'MACDFIX': {
+            'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
         return self.entryprofo
 
     def setup(self):
@@ -30,7 +31,7 @@ class macdfix():
         else:
             self.datadef = 9
             return self.datadef
-        
+
     def buysignalsetup(self):
         tech_dict = self.getterEntryTechValue()
         if 'MACDFIX' in tech_dict:
@@ -60,7 +61,7 @@ class macdfix():
             else:
                 return False
         else:
-                return True
+            return True
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
@@ -71,7 +72,7 @@ class macdfix():
             if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
             else:
-                    return False
+                return False
         else:
             return True
 
@@ -126,13 +127,13 @@ class macdfix():
 
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
-    
+
     def setterEntryTechValue(self, text):
         TechValue.set_tech_Entry_var(text)
 
     def calculate(self):
         self.datadb = self.gettertoolhistory()
-        self.datadb["MACDFIX"],self.datadb["MACDFIX_SIGNAL"] ,self.datadb["MACDFIX_HIST"]  = talib.MACDFIX(
+        self.datadb["MACDFIX"], self.datadb["MACDFIX_SIGNAL"], self.datadb["MACDFIX_HIST"] = talib.MACDFIX(
             self.datadb["Close"], signalperiod=int(self.parameter))
         self.settertoolhistory(self.datadb)
 
@@ -142,7 +143,7 @@ class macdfix():
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.buysignalcb.addItems(['True','False'])
+        self.buysignalcb.addItems(['True', 'False'])
         self.buysignalcb.setCurrentText(str(self.buysignal))
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
@@ -152,7 +153,7 @@ class macdfix():
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.sellsignalcb.addItems(['True','False'])
+        self.sellsignalcb.addItems(['True', 'False'])
         self.sellsignalcb.setCurrentText(str(self.sellsignal))
         self.sellsignalcb.setMinimumSize(QSize(200, 25))
         self.sellsignalcb.setStyleSheet(
@@ -169,7 +170,7 @@ class macdfix():
         self.layout.addLayout(self.formlayout)
         self.layout.addWidget(self.button)
         return self.layout
-    
+
     def Entry_tool_dicts(self):
         self.tool_dict = {}
         self.tool_dict['MACDFIX'] = {}
