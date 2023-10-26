@@ -31,30 +31,36 @@ class bbands():
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['BBANDS']['BBANDS_UPPERBAND']
+        self.MACDitem = testitem.loc['Close']
+        self.MACD_SIGNALitem = testitem.loc['BBANDS_UPPERBAND']
+        self.entryMIDDLEBAND = testitem.loc['BBANDS_MIDDLEBAND']
         if (self.entryba == 'True'):
-            self.MACDitem = testitem.loc['Close']
-            self.MACD_SIGNALitem = testitem.loc['BBANDS_UPPERBAND']
-            self.entryMIDDLEBAND = testitem.loc['BBANDS_MIDDLEBAND']
-            if (float(self.MACDitem) <= float(self.MACD_SIGNALitem) and float(self.MACDitem) <= float(self.entryMIDDLEBAND)):
+            if (float(self.MACDitem) < float(self.MACD_SIGNALitem) and float(self.MACDitem) < float(self.entryMIDDLEBAND)):
                 return True
             else:
                 return False
-        else:
+        elif(self.entryba == 'False'):
+            if (float(self.MACDitem) > float(self.MACD_SIGNALitem) and float(self.MACDitem) > float(self.entryMIDDLEBAND)):
                 return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['BBANDS']['BBANDS_LOWERBAND']
+        self.MACDitem = testitem.loc['Close']
+        self.MACD_SIGNALitem = testitem.loc['BBANDS_LOWERBAND']
+        self.entryMIDDLEBAND = testitem.loc['BBANDS_MIDDLEBAND']
         if (self.exitba == 'True'):
-            self.MACDitem = testitem.loc['Close']
-            self.MACD_SIGNALitem = testitem.loc['BBANDS_LOWERBAND']
-            self.entryMIDDLEBAND = testitem.loc['BBANDS_MIDDLEBAND']
-            if (float(self.MACDitem) >= float(self.MACD_SIGNALitem) and float(self.MACDitem) >= float(self.entryMIDDLEBAND)):
+            if (float(self.MACDitem) > float(self.MACD_SIGNALitem) and float(self.MACDitem) > float(self.entryMIDDLEBAND)):
                 return True
             else:
-                    return False
-        else:
-            return True
+                return False
+        elif(self.entryba == 'False'):
+            if (float(self.MACDitem) < float(self.MACD_SIGNALitem) and float(self.MACDitem) < float(self.entryMIDDLEBAND)):
+                return True
+            else:
+                return False
 
     def timeperiodsetup(self):
         tech_dict = self.getterTechValue()

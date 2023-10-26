@@ -26,7 +26,7 @@ class trange():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['TRANGE']
         self.entryba = self.tech_dict['TRANGE']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -35,7 +35,7 @@ class trange():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['TRANGE']
         self.entryba = self.tech_dict['TRANGE']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

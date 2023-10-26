@@ -1,5 +1,5 @@
 import talib
-from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox,QComboBox
+from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox, QComboBox
 from PyQt6.QtCore import QSize, Qt
 from Global.Value.TechToolParam import TechValue
 from Global.Value.UniversalValue import GlobalValue
@@ -15,43 +15,49 @@ class midprice():
         self.buysignalcb = QComboBox()
         self.sellsignalcb = QComboBox()
 
-
     def base(self):
         return {'MIDPRICE': 14}
 
     def entry_exit_base(self):
-        self.entryprofo = {'MIDPRICE': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
+        self.entryprofo = {'MIDPRICE': {
+            'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
         return self.entryprofo
-    
+
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['MIDPRICE']['GOLDEN CROSS']
+        self.MIDPOINTitem = testitem.loc['MIDPRICE']
+        self.Highitem = testitem.loc['High']
+        self.Lowitem = testitem.loc['Low']
+        self.MIditem = (float(self.Highitem) + float(self.Lowitem))/2
         if (self.entryba == 'True'):
-            self.MIDPOINTitem = testitem.loc['MIDPRICE']
-            self.Highitem = testitem.loc['High']
-            self.Lowitem = testitem.loc['Low']
-            self.MIditem = (float(self.Highitem) + float(self.Lowitem))/2
             if float(self.MIDPOINTitem) < float(self.MIditem):
                 return True
             else:
                 return False
-        else:
+        elif (self.exitba == 'False'):
+            if float(self.MIDPOINTitem) > float(self.MIditem):
                 return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['MIDPRICE']['Death Cross']
+        self.MIDPOINTitem = testitem.loc['MIDPRICE']
+        self.Highitem = testitem.loc['High']
+        self.Lowitem = testitem.loc['Low']
+        self.MIditem = (float(self.Highitem) + float(self.Lowitem))/2
         if (self.exitba == 'True'):
-            self.MIDPOINTitem = testitem.loc['MIDPRICE']
-            self.Highitem = testitem.loc['High']
-            self.Lowitem = testitem.loc['Low']
-            self.MIditem = (float(self.Highitem) + float(self.Lowitem))/2
             if float(self.MIDPOINTitem) > float(self.MIditem):
                 return True
             else:
-                    return False
-        else:
-            return True
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MIDPOINTitem) < float(self.MIditem):
+                return True
+            else:
+                return False
 
     def setup(self):
         tech_dict = self.getterTechValue()
@@ -61,7 +67,7 @@ class midprice():
         else:
             self.datadef = 14
             return self.datadef
-        
+
     def buysignalsetup(self):
         tech_dict = self.getterEntryTechValue()
         if 'MIDPRICE' in tech_dict:
@@ -128,17 +134,17 @@ class midprice():
 
     def gettertoolhistory(self):
         return GlobalValue.get_TechTool_history_var()
-    
+
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
-    
+
     def setterEntryTechValue(self, text):
         TechValue.set_tech_Entry_var(text)
 
     def calculate(self):
         self.datadb = self.gettertoolhistory()
         self.datadb["MIDPRICE"] = talib.MIDPRICE(
-            self.datadb["High"],self.datadb["Low"], timeperiod=int(self.parameter))
+            self.datadb["High"], self.datadb["Low"], timeperiod=int(self.parameter))
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
@@ -147,7 +153,7 @@ class midprice():
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.buysignalcb.addItems(['True','False'])
+        self.buysignalcb.addItems(['True', 'False'])
         self.buysignalcb.setCurrentText(str(self.buysignal))
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
@@ -157,7 +163,7 @@ class midprice():
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.sellsignalcb.addItems(['True','False'])
+        self.sellsignalcb.addItems(['True', 'False'])
         self.sellsignalcb.setCurrentText(str(self.sellsignal))
         self.sellsignalcb.setMinimumSize(QSize(200, 25))
         self.sellsignalcb.setStyleSheet(
@@ -174,7 +180,7 @@ class midprice():
         self.layout.addLayout(self.formlayout)
         self.layout.addWidget(self.button)
         return self.layout
-    
+
     def Entry_tool_dicts(self):
         self.tool_dict = {}
         self.tool_dict['MIDPRICE'] = {}

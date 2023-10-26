@@ -1,5 +1,5 @@
 import talib
-from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox,QComboBox
+from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox, QComboBox
 from PyQt6.QtCore import QSize, Qt
 from Global.Value.TechToolParam import TechValue
 from Global.Value.UniversalValue import GlobalValue
@@ -14,7 +14,7 @@ class stoch():
         self.slowd_period = self.slowd_periodsetup()
         self.slowd_matype = self.slowd_matypesetup()
         self.buysignal = self.buysignalsetup()
-        self.sellsignal = self.sellsignalsetup()        
+        self.sellsignal = self.sellsignalsetup()
         self.fastk_periodlineedit = QLineEdit()
         self.slowk_periodlineedit = QLineEdit()
         self.slowk_matypelineedit = QLineEdit()
@@ -25,36 +25,43 @@ class stoch():
 
     def base(self):
         return {'STOCH': {'fastk_period': 5, 'slowk_period': 3, 'slowk_matype': 0, 'slowd_period': 3, 'slowd_matype': 0}}
-    
+
     def entry_exit_base(self):
-        self.entryprofo = {'STOCH': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
+        self.entryprofo = {
+            'STOCH': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
         return self.entryprofo
 
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['STOCH']['GOLDEN CROSS']
+        self.MACDitem = testitem.loc['STOCH_SLOWK']
+        self.MACD_SIGNALitem = testitem.loc['STOCH_SLOWD']
         if (self.entryba == 'True'):
-            self.MACDitem = testitem.loc['STOCH_SLOWK']
-            self.MACD_SIGNALitem = testitem.loc['STOCH_SLOWD']
             if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
             else:
                 return False
-        else:
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['STOCH']['Death Cross']
+        self.MACDitem = testitem.loc['STOCH_SLOWK']
+        self.MACD_SIGNALitem = testitem.loc['STOCH_SLOWD']
         if (self.exitba == 'True'):
-            self.MACDitem = testitem.loc['STOCH_SLOWK']
-            self.MACD_SIGNALitem = testitem.loc['STOCH_SLOWD']
             if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
             else:
-                    return False
-        else:
-            return True
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
     def fastk_periodsetup(self):
         tech_dict = self.getterTechValue()
@@ -172,10 +179,14 @@ class stoch():
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
 
         self.formlayout = QFormLayout()
-        self.formlayout.addRow(self.Fastk_periodlabel, self.fastk_periodlineedit)
-        self.formlayout.addRow(self.slowk_periodlabel, self.slowk_periodlineedit)
-        self.formlayout.addRow(self.slowk_matypelabel, self.slowk_matypelineedit)
-        self.formlayout.addRow(self.slowd_periodlabel, self.slowd_periodlineedit)
+        self.formlayout.addRow(self.Fastk_periodlabel,
+                               self.fastk_periodlineedit)
+        self.formlayout.addRow(self.slowk_periodlabel,
+                               self.slowk_periodlineedit)
+        self.formlayout.addRow(self.slowk_matypelabel,
+                               self.slowk_matypelineedit)
+        self.formlayout.addRow(self.slowd_periodlabel,
+                               self.slowd_periodlineedit)
         self.formlayout.addRow(self.slowd_matypelabel,
                                self.slowd_matypelineedit)
         self.button = QPushButton('Submit')
@@ -228,7 +239,7 @@ class stoch():
     def calculate(self):
         self.datadb = self.gettertoolhistory()
         self.datadb["STOCH_SLOWK"], self.datadb["STOCH_SLOWD"] = talib.STOCH(
-            self.datadb['High'],self.datadb['Low'],self.datadb['Close'], fastk_period=int(self.fastk_period), slowk_period=int(self.slowk_period), slowk_matype=int(self.slowk_matype), slowd_period=int(self.slowd_period), slowd_matype=int(self.slowd_matype))
+            self.datadb['High'], self.datadb['Low'], self.datadb['Close'], fastk_period=int(self.fastk_period), slowk_period=int(self.slowk_period), slowk_matype=int(self.slowk_matype), slowd_period=int(self.slowd_period), slowd_matype=int(self.slowd_matype))
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
@@ -237,7 +248,7 @@ class stoch():
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.buysignalcb.addItems(['True','False'])
+        self.buysignalcb.addItems(['True', 'False'])
         self.buysignalcb.setCurrentText(str(self.buysignal))
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
@@ -247,7 +258,7 @@ class stoch():
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.sellsignalcb.addItems(['True','False'])
+        self.sellsignalcb.addItems(['True', 'False'])
         self.sellsignalcb.setCurrentText(str(self.sellsignal))
         self.sellsignalcb.setMinimumSize(QSize(200, 25))
         self.sellsignalcb.setStyleSheet(
@@ -264,7 +275,7 @@ class stoch():
         self.layout.addLayout(self.formlayout)
         self.layout.addWidget(self.button)
         return self.layout
-    
+
     def Entry_tool_dicts(self):
         self.tool_dict = {}
         self.tool_dict['STOCH'] = {}

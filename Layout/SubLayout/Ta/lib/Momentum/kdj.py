@@ -34,7 +34,7 @@ class kdj():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['KDJ_SLOWJ']
         self.entryba = self.tech_dict['KDJ']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -43,7 +43,7 @@ class kdj():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['KDJ_SLOWJ']
         self.entryba = self.tech_dict['KDJ']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

@@ -31,28 +31,34 @@ class stochrsi():
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['STOCHRSI']['GOLDEN CROSS']
+        self.MACDitem = testitem.loc['STOCHRSI_SLOWK']
+        self.MACD_SIGNALitem = testitem.loc['STOCHRSI_SLOWD']
         if (self.entryba == 'True'):
-            self.MACDitem = testitem.loc['STOCHRSI_SLOWK']
-            self.MACD_SIGNALitem = testitem.loc['STOCHRSI_SLOWD']
             if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
             else:
                 return False
-        else:
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['STOCHRSI']['Death Cross']
+        self.MACDitem = testitem.loc['STOCHRSI_SLOWK']
+        self.MACD_SIGNALitem = testitem.loc['STOCHRSI_SLOWD']
         if (self.exitba == 'True'):
-            self.MACDitem = testitem.loc['STOCHRSI_SLOWK']
-            self.MACD_SIGNALitem = testitem.loc['STOCHRSI_SLOWD']
             if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
             else:
-                    return False
-        else:
-            return True
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
         
     def buysignalsetup(self):
         tech_dict = self.getterEntryTechValue()

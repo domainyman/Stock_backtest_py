@@ -27,28 +27,34 @@ class mama():
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['MAMA']['GOLDEN CROSS']
+        self.MACDitem = testitem.loc['MAMA']
+        self.MACD_SIGNALitem = testitem.loc['MAMA_FAMA']
         if (self.entryba == 'True'):
-            self.MACDitem = testitem.loc['MAMA']
-            self.MACD_SIGNALitem = testitem.loc['MAMA_FAMA']
             if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
             else:
                 return False
         else:
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['MAMA']['Death Cross']
+        self.MACDitem = testitem.loc['MAMA']
+        self.MACD_SIGNALitem = testitem.loc['MAMA_FAMA']
         if (self.exitba == 'True'):
-            self.MACDitem = testitem.loc['MAMA']
-            self.MACD_SIGNALitem = testitem.loc['MAMA_FAMA']
             if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
             else:
-                    return False
+                return False
         else:
-            return True
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
     
     def buysignalsetup(self):
         tech_dict = self.getterEntryTechValue()

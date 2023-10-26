@@ -74,45 +74,40 @@ class t3():
             'Parameters_3 - Parameters_4']['Golden Cross']
         self.parameters_4_Parameters_5 = self.tech_dict['T3'][
             'Parameters_4 - Parameters_5']['Golden Cross']
-        if (self.parameters_1_Parameters_2 == 'False' and self.parameters_2_Parameters_3 == 'False' and self.parameters_3_Parameters_4 == 'False' and self.parameters_4_Parameters_5 == 'False'):
-            return True
-        elif (self.parameters_1_Parameters_2 == 'True' or self.parameters_2_Parameters_3 == 'True' or self.parameters_3_Parameters_4 == 'True' or self.parameters_4_Parameters_5 == 'True'):
-            self.check_list = []
-            if (self.parameters_1_Parameters_2 == 'True'):
-                self.MACDitem = testitem.loc['T3_parameter_1']
-                self.MACD_SIGNALitem = testitem.loc['T3_parameter_2']
-                if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    self.check_list.append(True)
-                else:
-                    self.check_list.append(False)
-            if (self.parameters_2_Parameters_3 == 'True'):
-                self.MACDitem = testitem.loc['T3_parameter_2']
-                self.MACD_SIGNALitem = testitem.loc['T3_parameter_3']
-                if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    self.check_list.append(True)
-                else:
-                    self.check_list.append(False)
-            if (self.parameters_3_Parameters_4 == 'True'):
-                self.MACDitem = testitem.loc['T3_parameter_3']
-                self.MACD_SIGNALitem = testitem.loc['T3_parameter_4']
-                if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    self.check_list.append(True)
-                else:
-                    self.check_list.append(False)
-            if (self.parameters_4_Parameters_5 == 'True'):
-                self.MACDitem = testitem.loc['T3_parameter_4']
-                self.MACD_SIGNALitem = testitem.loc['T3_parameter_5']
-                if float(self.MACDitem) > float(self.MACD_SIGNALitem):
-                    self.check_list.append(True)
-                else:
-                    self.check_list.append(False)
-            if (all(self.check_list)):
-                return True
-            else:
-                return False
+        self.p1 = testitem.loc['T3_parameter_1']
+        self.p2 = testitem.loc['T3_parameter_2']
+        self.p3 = testitem.loc['T3_parameter_3']
+        self.p4 = testitem.loc['T3_parameter_4']
+        self.p5 = testitem.loc['T3_parameter_5']
+        
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) > float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) < float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) > float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) < float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) > float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) < float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) > float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) < float(self.p5):
+            P_4_5 = 'False'
 
-        else:
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
             return True
+        else:
+            return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
@@ -124,45 +119,40 @@ class t3():
             'Parameters_3 - Parameters_4']['Death Cross']
         self.parameters_4_Parameters_5 = self.tech_dict['T3'][
             'Parameters_4 - Parameters_5']['Death Cross']
-        if (self.parameters_1_Parameters_2 == 'False' and self.parameters_2_Parameters_3 == 'False' and self.parameters_3_Parameters_4 == 'False' and self.parameters_4_Parameters_5 == 'False'):
-            return True
-        elif (self.parameters_1_Parameters_2 == 'True' or self.parameters_2_Parameters_3 == 'True' or self.parameters_3_Parameters_4 == 'True' or self.parameters_4_Parameters_5 == 'True'):
-            self.check_list = []
-            if (self.parameters_1_Parameters_2 == 'True'):
-                self.MACDitem = testitem.loc['T3_parameter_1']
-                self.MACD_SIGNALitem = testitem.loc['T3_parameter_2']
-                if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    self.check_list.append(True)
-                else:
-                    self.check_list.append(False)
-            if (self.parameters_2_Parameters_3 == 'True'):
-                self.MACDitem = testitem.loc['T3_parameter_2']
-                self.MACD_SIGNALitem = testitem.loc['T3_parameter_3']
-                if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    self.check_list.append(True)
-                else:
-                    self.check_list.append(False)
-            if (self.parameters_3_Parameters_4 == 'True'):
-                self.MACDitem = testitem.loc['T3_parameter_3']
-                self.MACD_SIGNALitem = testitem.loc['T3_parameter_4']
-                if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    self.check_list.append(True)
-                else:
-                    self.check_list.append(False)
-            if (self.parameters_4_Parameters_5 == 'True'):
-                self.MACDitem = testitem.loc['T3_parameter_4']
-                self.MACD_SIGNALitem = testitem.loc['T3_parameter_5']
-                if float(self.MACDitem) < float(self.MACD_SIGNALitem):
-                    self.check_list.append(True)
-                else:
-                    self.check_list.append(False)
-            if (all(self.check_list)):
-                return True
-            else:
-                return False
+        self.p1 = testitem.loc['T3_parameter_1']
+        self.p2 = testitem.loc['T3_parameter_2']
+        self.p3 = testitem.loc['T3_parameter_3']
+        self.p4 = testitem.loc['T3_parameter_4']
+        self.p5 = testitem.loc['T3_parameter_5']
 
-        else:
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) < float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) > float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) < float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) > float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) < float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) > float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) < float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) > float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
             return True
+        else:
+            return False
 
     def parameter_1timeperiodsetup(self):
         tech_dict = self.getterTechValue()

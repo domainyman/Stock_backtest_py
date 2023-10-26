@@ -26,7 +26,7 @@ class roc():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['ROC']
         self.entryba = self.tech_dict['ROC']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -35,7 +35,7 @@ class roc():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['ROC']
         self.entryba = self.tech_dict['ROC']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

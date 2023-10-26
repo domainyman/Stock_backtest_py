@@ -53,7 +53,7 @@ class rocp():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['ROCP']
         self.entryba = self.tech_dict['ROCP']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -62,7 +62,7 @@ class rocp():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['ROCP']
         self.entryba = self.tech_dict['ROCP']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

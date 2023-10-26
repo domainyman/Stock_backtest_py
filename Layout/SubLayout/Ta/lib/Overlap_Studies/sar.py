@@ -1,5 +1,5 @@
 import talib
-from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox,QComboBox
+from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox, QComboBox
 from PyQt6.QtCore import QSize, Qt
 from Global.Value.TechToolParam import TechValue
 from Global.Value.UniversalValue import GlobalValue
@@ -21,34 +21,41 @@ class sar():
         return {'SAR': {'acceleration': 0.02, 'maximum': 0.2}}
 
     def entry_exit_base(self):
-        self.entryprofo = {'SAR': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
+        self.entryprofo = {
+            'SAR': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
         return self.entryprofo
-    
+
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['SAR']['GOLDEN CROSS']
+        self.MIDPOINTitem = testitem.loc['SAR']
+        self.Closeitem = testitem.loc['Close']
         if (self.entryba == 'True'):
-            self.MIDPOINTitem = testitem.loc['SAR']
-            self.Closeitem = testitem.loc['Close']
             if float(self.MIDPOINTitem) < float(self.Closeitem):
                 return True
             else:
                 return False
         else:
+            if float(self.MIDPOINTitem) > float(self.Closeitem):
                 return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['SAR']['Death Cross']
+        self.MIDPOINTitem = testitem.loc['SAR']
+        self.Closeitem = testitem.loc['Close']
         if (self.exitba == 'True'):
-            self.MIDPOINTitem = testitem.loc['SAR']
-            self.Closeitem = testitem.loc['Close']
             if float(self.MIDPOINTitem) > float(self.Closeitem):
                 return True
             else:
-                    return False
+                return False
         else:
-            return True
+            if float(self.MIDPOINTitem) < float(self.Closeitem):
+                return True
+            else:
+                return False
 
     def accelerationsetup(self):
         tech_dict = self.getterTechValue()
@@ -109,7 +116,8 @@ class sar():
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
 
         self.formlayout = QFormLayout()
-        self.formlayout.addRow(self.accelerationlabel, self.accelerationlineedit)
+        self.formlayout.addRow(self.accelerationlabel,
+                               self.accelerationlineedit)
         self.formlayout.addRow(self.maximumlabel, self.maximumlineedit)
         self.button = QPushButton('Submit')
         self.button.clicked.connect(self.uploadValue)
@@ -151,14 +159,14 @@ class sar():
 
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
-    
+
     def setterEntryTechValue(self, text):
         TechValue.set_tech_Entry_var(text)
 
     def calculate(self):
         self.datadb = self.gettertoolhistory()
         self.datadb["SAR"] = talib.SAR(
-            self.datadb['High'],self.datadb['Low'], acceleration=float(self.acceleration), maximum=float(self.maximum))
+            self.datadb['High'], self.datadb['Low'], acceleration=float(self.acceleration), maximum=float(self.maximum))
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
@@ -167,7 +175,7 @@ class sar():
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.buysignalcb.addItems(['True','False'])
+        self.buysignalcb.addItems(['True', 'False'])
         self.buysignalcb.setCurrentText(str(self.buysignal))
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
@@ -177,7 +185,7 @@ class sar():
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.sellsignalcb.addItems(['True','False'])
+        self.sellsignalcb.addItems(['True', 'False'])
         self.sellsignalcb.setCurrentText(str(self.sellsignal))
         self.sellsignalcb.setMinimumSize(QSize(200, 25))
         self.sellsignalcb.setStyleSheet(
@@ -194,7 +202,7 @@ class sar():
         self.layout.addLayout(self.formlayout)
         self.layout.addWidget(self.button)
         return self.layout
-    
+
     def Entry_tool_dicts(self):
         self.tool_dict = {}
         self.tool_dict['SAR'] = {}

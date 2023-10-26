@@ -53,28 +53,34 @@ class macdfix():
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['MACDFIX']['GOLDEN CROSS']
+        self.MACDitem = testitem.loc['MACDFIX']
+        self.MACD_SIGNALitem = testitem.loc['MACDFIX_SIGNAL']
         if (self.entryba == 'True'):
-            self.MACDitem = testitem.loc['MACDFIX']
-            self.MACD_SIGNALitem = testitem.loc['MACDFIX_SIGNAL']
             if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
             else:
                 return False
-        else:
-            return True
-
-    def Check_Exit(self, testitem):
-        self.tech_dict = self.getterEntryTechValue()
-        self.exitba = self.tech_dict['MACDFIX']['Death Cross']
-        if (self.exitba == 'True'):
-            self.MACDitem = testitem.loc['MACDFIX']
-            self.MACD_SIGNALitem = testitem.loc['MACDFIX_SIGNAL']
+        elif (self.exitba == 'False'):
             if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
             else:
                 return False
-        else:
-            return True
+
+    def Check_Exit(self, testitem):
+        self.tech_dict = self.getterEntryTechValue()
+        self.exitba = self.tech_dict['MACDFIX']['Death Cross']
+        self.MACDitem = testitem.loc['MACDFIX']
+        self.MACD_SIGNALitem = testitem.loc['MACDFIX_SIGNAL']
+        if (self.exitba == 'True'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
     def widgetedit(self):
         self.label = QLabel('Signalperiod :')

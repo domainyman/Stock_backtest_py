@@ -28,29 +28,35 @@ class stochf():
     
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
-        self.entryba = self.tech_dict['STOCHF']['GOLDEN CROSS']
+        self.entryba = self.tech_dict['STOCHF']['GOLDEN CROSS']    
+        self.MACDitem = testitem.loc['STOCHF_FASTK']
+        self.MACD_SIGNALitem = testitem.loc['STOCHF_FASTD']
         if (self.entryba == 'True'):
-            self.MACDitem = testitem.loc['STOCHF_FASTK']
-            self.MACD_SIGNALitem = testitem.loc['STOCHF_FASTD']
             if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
             else:
                 return False
-        else:
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['STOCHF']['Death Cross']
+        self.MACDitem = testitem.loc['STOCHF_FASTK']
+        self.MACD_SIGNALitem = testitem.loc['STOCHF_FASTD']
         if (self.exitba == 'True'):
-            self.MACDitem = testitem.loc['STOCHF_FASTK']
-            self.MACD_SIGNALitem = testitem.loc['STOCHF_FASTD']
             if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
             else:
-                    return False
-        else:
-            return True
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
     def fastk_periodsetup(self):
         tech_dict = self.getterTechValue()

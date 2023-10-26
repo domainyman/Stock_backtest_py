@@ -26,7 +26,7 @@ class willr():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['WILLR']
         self.entryba = self.tech_dict['WILLR']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -35,7 +35,7 @@ class willr():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['WILLR']
         self.entryba = self.tech_dict['WILLR']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

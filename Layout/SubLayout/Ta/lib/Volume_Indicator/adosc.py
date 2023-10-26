@@ -29,34 +29,40 @@ class adosc():
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['ADOSC']['GOLDEN CROSS']
+        self.itemclose = testitem.loc['Close']
+        self.itemADOSC = testitem.loc['ADOSC']
+        self.oldclose, self.oldad = self.get_db_for_entry_exit(testitem)
+        self.ad_test = self.Check_RELAT(
+            self.oldclose, self.itemclose, self.oldad, self.itemADOSC)
         if (self.entryba == 'True'):
-            self.itemclose = testitem.loc['Close']
-            self.itemADOSC = testitem.loc['ADOSC']
-            self.oldclose, self.oldad = self.get_db_for_entry_exit(testitem)
-            self.ad_test = self.Check_RELAT(
-                self.oldclose, self.itemclose, self.oldad, self.itemADOSC)
             if (self.ad_test == "111"):
                 return True
             else:
                 return False
-        else:
-            return True
-
-    def Check_Exit(self, testitem):
-        self.tech_dict = self.getterEntryTechValue()
-        self.entryba = self.tech_dict['ADOSC']['Death Cross']
-        if (self.entryba == 'True'):
-            self.itemclose = testitem.loc['Close']
-            self.itemADOSC = testitem.loc['ADOSC']
-            self.oldclose, self.oldad = self.get_db_for_entry_exit(testitem)
-            self.ad_test = self.Check_RELAT(
-                self.oldclose, self.itemclose, self.oldad, self.itemADOSC)
+        elif (self.entryba == 'False'):
             if (self.ad_test == "000"):
                 return True
             else:
                 return False
-        else:
-            return True
+
+    def Check_Exit(self, testitem):
+        self.tech_dict = self.getterEntryTechValue()
+        self.entryba = self.tech_dict['ADOSC']['Death Cross']
+        self.itemclose = testitem.loc['Close']
+        self.itemADOSC = testitem.loc['ADOSC']
+        self.oldclose, self.oldad = self.get_db_for_entry_exit(testitem)
+        self.ad_test = self.Check_RELAT(
+            self.oldclose, self.itemclose, self.oldad, self.itemADOSC)
+        if (self.entryba == 'True'):
+            if (self.ad_test == "000"):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if (self.ad_test == "111"):
+                return True
+            else:
+                return False
 
     def get_db_for_entry_exit(self, testitem):
         self.ChecklistClose = []

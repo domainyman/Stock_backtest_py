@@ -26,7 +26,7 @@ class trix():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['TRIX']
         self.entryba = self.tech_dict['TRIX']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -35,7 +35,7 @@ class trix():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['TRIX']
         self.entryba = self.tech_dict['TRIX']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

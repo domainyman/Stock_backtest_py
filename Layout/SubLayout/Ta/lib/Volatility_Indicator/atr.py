@@ -26,7 +26,7 @@ class atr():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['ATR']
         self.entryba = self.tech_dict['ATR']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False
@@ -35,7 +35,7 @@ class atr():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['ATR']
         self.entryba = self.tech_dict['ATR']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False

@@ -1,5 +1,5 @@
 import talib
-from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox,QComboBox
+from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox, QComboBox
 from PyQt6.QtCore import QSize, Qt
 from Global.Value.TechToolParam import TechValue
 from Global.Value.UniversalValue import GlobalValue
@@ -19,34 +19,41 @@ class ht_trendline():
         return {'HT_TRENDLINE': 30}
 
     def entry_exit_base(self):
-        self.entryprofo = {'HT_TRENDLINE': {'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
+        self.entryprofo = {'HT_TRENDLINE': {
+            'GOLDEN CROSS': 'True', 'Death Cross': 'True'}}
         return self.entryprofo
-    
+
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['HT_TRENDLINE']['GOLDEN CROSS']
+        self.MACDitem = testitem.loc['HT_TRENDLINE']
+        self.MACD_SIGNALitem = testitem.loc['Close']
         if (self.entryba == 'True'):
-            self.MACDitem = testitem.loc['HT_TRENDLINE']
-            self.MACD_SIGNALitem = testitem.loc['Close']
             if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
             else:
                 return False
-        else:
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.exitba = self.tech_dict['HT_TRENDLINE']['Death Cross']
+        self.MACDitem = testitem.loc['HT_TRENDLINE']
+        self.MACD_SIGNALitem = testitem.loc['Close']
         if (self.exitba == 'True'):
-            self.MACDitem = testitem.loc['HT_TRENDLINE']
-            self.MACD_SIGNALitem = testitem.loc['Close']
             if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
             else:
-                    return False
-        else:
-            return True
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
     def setup(self):
         tech_dict = self.getterTechValue()
@@ -117,7 +124,7 @@ class ht_trendline():
 
     def getterTechValue(self):
         return TechValue.get_tech_toolperm_var()
-    
+
     def settertoolhistory(self, text):
         GlobalValue.set_TechTool_history_var(text)
 
@@ -126,7 +133,7 @@ class ht_trendline():
 
     def getterEntryTechValue(self):
         return TechValue.get_tech_Entry_var()
-    
+
     def setterEntryTechValue(self, text):
         TechValue.set_tech_Entry_var(text)
 
@@ -141,7 +148,7 @@ class ht_trendline():
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.buysignalcb.addItems(['True','False'])
+        self.buysignalcb.addItems(['True', 'False'])
         self.buysignalcb.setCurrentText(str(self.buysignal))
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
@@ -151,7 +158,7 @@ class ht_trendline():
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.sellsignalcb.addItems(['True','False'])
+        self.sellsignalcb.addItems(['True', 'False'])
         self.sellsignalcb.setCurrentText(str(self.sellsignal))
         self.sellsignalcb.setMinimumSize(QSize(200, 25))
         self.sellsignalcb.setStyleSheet(
@@ -168,7 +175,7 @@ class ht_trendline():
         self.layout.addLayout(self.formlayout)
         self.layout.addWidget(self.button)
         return self.layout
-    
+
     def Entry_tool_dicts(self):
         self.tool_dict = {}
         self.tool_dict['HT_TRENDLINE'] = {}
@@ -184,5 +191,3 @@ class ht_trendline():
         print(self.getterEntryTechValue())
         QMessageBox.information(None, 'Parameter Saved',
                                 'Saved Parameter Setting')
-
-

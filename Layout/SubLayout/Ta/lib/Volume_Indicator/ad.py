@@ -1,5 +1,5 @@
 import talib
-from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox,QComboBox
+from PyQt6.QtWidgets import QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QMessageBox, QComboBox
 from PyQt6.QtCore import QSize, Qt
 from Global.Value.TechToolParam import TechValue
 from Global.Value.UniversalValue import GlobalValue
@@ -10,7 +10,7 @@ class ad():
         super().__init__()
         self.parameter = self.setup()
         self.buysignal = self.buysignalsetup()
-        self.sellsignal = self.sellsignalsetup()     
+        self.sellsignal = self.sellsignalsetup()
         self.lineedit = QLineEdit()
         self.buysignalcb = QComboBox()
         self.sellsignalcb = QComboBox()
@@ -19,25 +19,29 @@ class ad():
         return {'AD': 14}
 
     def entry_exit_base(self):
-        self.entryprofo = {'AD': {'Bottom Divergence': 'True', 'Top Divergence': 'True'}}
+        self.entryprofo = {
+            'AD': {'Bottom Divergence': 'True', 'Top Divergence': 'True'}}
         return self.entryprofo
 
     def Check_Entry(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['AD']['Bottom Divergence']
+        self.itemclose = testitem.loc['Close']
+        self.itemad = testitem.loc['AD']
+        self.oldclose, self.oldad = self.get_db_for_entry_exit(testitem)
+        self.close_test = self.Check_AD_CLOSE_RELAT(
+            self.oldclose, self.itemclose)
+        self.ad_test = self.Check_AD_CLOSE_RELAT(self.oldad, self.itemad)
         if (self.entryba == 'True'):
-            self.itemclose = testitem.loc['Close']
-            self.itemad = testitem.loc['AD']
-            self.oldclose, self.oldad = self.get_db_for_entry_exit(testitem)
-            self.close_test = self.Check_AD_CLOSE_RELAT(
-                self.oldclose, self.itemclose)
-            self.ad_test = self.Check_AD_CLOSE_RELAT(self.oldad, self.itemad)
             if (self.close_test == "000" and self.ad_test == "111"):
                 return True
             else:
                 return False
-        else:
+        elif (self.entryba == 'False'):
+            if (self.close_test == "111" and self.ad_test == "000"):
                 return True
+            else:
+                return False
 
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
@@ -53,8 +57,11 @@ class ad():
                 return True
             else:
                 return False
-        else:
+        elif (self.entryba == 'False'):
+            if (self.close_test == "000" and self.ad_test == "111"):
                 return True
+            else:
+                return False
 
     def get_db_for_entry_exit(self, testitem):
         self.ChecklistClose = []
@@ -75,7 +82,7 @@ class ad():
     def Check_AD_CLOSE_RELAT(self, rel, new):
         self.new = new
         self.rel = rel
-        if (self.rel !=[]):
+        if (self.rel != []):
             close_0 = self.rel[0]
             if (float(self.new) > float(close_0)):
                 return "111"
@@ -85,7 +92,6 @@ class ad():
                 return "Unknown"
         else:
             return "Unknown"
-
 
     def setup(self):
         tech_dict = self.getterTechValue()
@@ -181,7 +187,7 @@ class ad():
         self.buylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.buylabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.buysignalcb.addItems(['True','False'])
+        self.buysignalcb.addItems(['True', 'False'])
         self.buysignalcb.setCurrentText(str(self.buysignal))
         self.buysignalcb.setMinimumSize(QSize(200, 25))
         self.buysignalcb.setStyleSheet(
@@ -191,7 +197,7 @@ class ad():
         self.selllabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selllabel.setStyleSheet(
             "color: rgb(255, 255, 255);\n""background-color: rgb(25, 69, 85);")
-        self.sellsignalcb.addItems(['True','False'])
+        self.sellsignalcb.addItems(['True', 'False'])
         self.sellsignalcb.setCurrentText(str(self.sellsignal))
         self.sellsignalcb.setMinimumSize(QSize(200, 25))
         self.sellsignalcb.setStyleSheet(
@@ -208,7 +214,7 @@ class ad():
         self.layout.addLayout(self.formlayout)
         self.layout.addWidget(self.button)
         return self.layout
-    
+
     def Entry_tool_dicts(self):
         self.tool_dict = {}
         self.tool_dict['AD'] = {}

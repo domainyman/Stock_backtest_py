@@ -53,7 +53,7 @@ class mfi():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['MFI']
         self.entryba = self.tech_dict['MFI']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -62,7 +62,7 @@ class mfi():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['MFI']
         self.entryba = self.tech_dict['MFI']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

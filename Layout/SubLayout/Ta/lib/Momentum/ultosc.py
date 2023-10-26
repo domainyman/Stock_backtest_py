@@ -30,7 +30,7 @@ class ultosc():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['ULTOSC']
         self.entryba = self.tech_dict['ULTOSC']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -39,7 +39,7 @@ class ultosc():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['ULTOSC']
         self.entryba = self.tech_dict['ULTOSC']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

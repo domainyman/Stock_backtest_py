@@ -26,7 +26,7 @@ class dx():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['DX']
         self.entryba = self.tech_dict['DX']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -35,7 +35,7 @@ class dx():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['DX']
         self.entryba = self.tech_dict['DX']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

@@ -26,7 +26,7 @@ class obv():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['OBV']
         self.entryba = self.tech_dict['OBV']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -35,7 +35,7 @@ class obv():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['OBV']
         self.entryba = self.tech_dict['OBV']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False

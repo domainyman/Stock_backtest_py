@@ -3,6 +3,7 @@ import talib
 import quantstats as qs
 import pytz
 import backtrader as bt
+import numpy as np
 
 
 class bt_enter_exit(bt.Strategy):
@@ -566,6 +567,22 @@ class cmo_inq():
             datadb["Close"], timeperiod=int(TechValue['CMO']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['CMO']
+        self.entryba = entryTechValue['CMO']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['CMO']
+        self.entryba = entryTechValue['CMO']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class dx_inq():
     def calculate(self, TechValue, toolhistory):
@@ -573,6 +590,22 @@ class dx_inq():
         datadb["DX"] = talib.DX(datadb["High"], datadb["Low"],
                                 datadb["Close"], timeperiod=int(TechValue['DX']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['DX']
+        self.entryba = entryTechValue['DX']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['DX']
+        self.entryba = entryTechValue['DX']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class macdext_inq():
@@ -582,6 +615,36 @@ class macdext_inq():
             TechValue['MACDEXT']['slowperiod']), slowmatype=int(TechValue['MACDEXT']['slowmatype']), signalperiod=int(TechValue['MACDEXT']['signalperiod']), signalmatype=int(TechValue['MACDEXT']['signalmatype']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['MACDEXT']['GOLDEN CROSS']
+        self.MACDitem = row.loc['MACDEXT']
+        self.MACD_SIGNALitem = row.loc['MACDEXT_SIGNAL']
+        if (self.entryba == 'True'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['MACDEXT']['Death Cross']
+        self.MACDitem = row.loc['MACDEXT']
+        self.MACD_SIGNALitem = row.loc['MACDEXT_SIGNAL']
+        if (self.exitba == 'True'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
 
 class macdfix_inq():
     def calculate(self, TechValue, toolhistory):
@@ -589,6 +652,36 @@ class macdfix_inq():
         datadb["MACDFIX"], datadb["MACDFIX_SIGNAL"], datadb["MACDFIX_HIST"] = talib.MACDFIX(
             datadb["Close"], signalperiod=int(TechValue['MACDFIX']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['MACDFIX']['GOLDEN CROSS']
+        self.MACDitem = row.loc['MACDFIX']
+        self.MACD_SIGNALitem = row.loc['MACDFIX_SIGNAL']
+        if (self.entryba == 'True'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['MACDFIX']['Death Cross']
+        self.MACDitem = row.loc['MACDFIX']
+        self.MACD_SIGNALitem = row.loc['MACDFIX_SIGNAL']
+        if (self.exitba == 'True'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
 
 class mfi_inq():
@@ -598,6 +691,22 @@ class mfi_inq():
                                   datadb["Volume"], timeperiod=int(TechValue['MFI']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['MFI']
+        self.entryba = entryTechValue['MFI']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['MFI']
+        self.entryba = entryTechValue['MFI']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class minus_di_inq():
     def calculate(self, TechValue, toolhistory):
@@ -605,6 +714,22 @@ class minus_di_inq():
         datadb["MINUS_DI"] = talib.MINUS_DI(
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['MINUS_DI']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['MINUS_DI']
+        self.entryba = entryTechValue['MINUS_DI']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['MINUS_DI']
+        self.entryba = entryTechValue['MINUS_DI']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class minus_dm_inq():
@@ -614,6 +739,22 @@ class minus_dm_inq():
             datadb["High"], datadb["Low"], timeperiod=int(TechValue['MINUS_DM']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['MINUS_DI']
+        self.entryba = entryTechValue['MINUS_DI']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['MINUS_DI']
+        self.entryba = entryTechValue['MINUS_DI']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class mom_inq():
     def calculate(self, TechValue, toolhistory):
@@ -621,6 +762,22 @@ class mom_inq():
         datadb["MOM"] = talib.MOM(
             datadb["Close"], timeperiod=int(TechValue['MOM']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['MOM']
+        self.entryba = entryTechValue['MOM']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['MOM']
+        self.entryba = entryTechValue['MOM']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class plusdi_inq():
@@ -630,6 +787,22 @@ class plusdi_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['PLUS_DI']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['PLUS_DI']
+        self.entryba = entryTechValue['PLUS_DI']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['PLUS_DI']
+        self.entryba = entryTechValue['PLUS_DI']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class plusdm_inq():
     def calculate(self, TechValue, toolhistory):
@@ -637,6 +810,22 @@ class plusdm_inq():
         datadb["PLUS_DM"] = talib.PLUS_DM(
             datadb["High"], datadb["Low"], timeperiod=int(TechValue['PLUS_DM']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['PLUS_DM']
+        self.entryba = entryTechValue['PLUS_DM']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['PLUS_DM']
+        self.entryba = entryTechValue['PLUS_DM']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class ppo_inq():
@@ -646,6 +835,22 @@ class ppo_inq():
             TechValue['PPO']['slowperiod']), matype=int(TechValue['PPO']['matype']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['PPO']
+        self.entryba = entryTechValue['PPO']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['PPO']
+        self.entryba = entryTechValue['PPO']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class roc_inq():
     def calculate(self, TechValue, toolhistory):
@@ -653,6 +858,22 @@ class roc_inq():
         datadb["ROC"] = talib.ROC(
             datadb["Close"], timeperiod=int(TechValue['ROC']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['ROC']
+        self.entryba = entryTechValue['ROC']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['ROC']
+        self.entryba = entryTechValue['ROC']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class rocp_inq():
@@ -662,6 +883,22 @@ class rocp_inq():
             datadb["Close"], timeperiod=int(TechValue['ROCP']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['ROCP']
+        self.entryba = entryTechValue['ROCP']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['ROCP']
+        self.entryba = entryTechValue['ROCP']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class rocr_inq():
     def calculate(self, TechValue, toolhistory):
@@ -669,6 +906,22 @@ class rocr_inq():
         datadb["ROCR"] = talib.ROCR(
             datadb["Close"], timeperiod=int(TechValue['ROCR']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['ROCR']
+        self.entryba = entryTechValue['ROCR']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['ROCR']
+        self.entryba = entryTechValue['ROCR']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class rocr100_inq():
@@ -678,6 +931,22 @@ class rocr100_inq():
             datadb["Close"], timeperiod=int(TechValue['ROCR100']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['ROCR100']
+        self.entryba = entryTechValue['ROCR100']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['ROCR100']
+        self.entryba = entryTechValue['ROCR100']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class stoch_inq():
     def calculate(self, TechValue, toolhistory):
@@ -685,6 +954,36 @@ class stoch_inq():
         datadb["STOCH_SLOWK"], datadb["STOCH_SLOWD"] = talib.STOCH(datadb['High'], datadb['Low'], datadb['Close'], fastk_period=int(TechValue['STOCH']['fastk_period']), slowk_period=int(
             TechValue['STOCH']['slowk_period']), slowk_matype=int(TechValue['STOCH']['slowk_matype']), slowd_period=int(TechValue['STOCH']['slowd_period']), slowd_matype=int(TechValue['STOCH']['slowd_matype']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['STOCH']['GOLDEN CROSS']
+        self.MACDitem = row.loc['STOCH_SLOWK']
+        self.MACD_SIGNALitem = row.loc['STOCH_SLOWD']
+        if (self.entryba == 'True'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['STOCH']['Death Cross']
+        self.MACDitem = row.loc['STOCH_SLOWK']
+        self.MACD_SIGNALitem = row.loc['STOCH_SLOWD']
+        if (self.exitba == 'True'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
 
 class stochf_inq():
@@ -694,6 +993,36 @@ class stochf_inq():
             TechValue['STOCHF']['fastk_period']), fastd_period=int(TechValue['STOCHF']['fastd_period']), fastd_matype=int(TechValue['STOCHF']['fastd_matype']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['STOCHF']['GOLDEN CROSS']
+        self.MACDitem = row.loc['STOCHF_FASTK']
+        self.MACD_SIGNALitem = row.loc['STOCHF_FASTD']
+        if (self.entryba == 'True'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['STOCHF']['Death Cross']
+        self.MACDitem = row.loc['STOCHF_FASTK']
+        self.MACD_SIGNALitem = row.loc['STOCHF_FASTD']
+        if (self.exitba == 'True'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
 
 class stochrsi_inq():
     def calculate(self, TechValue, toolhistory):
@@ -701,6 +1030,36 @@ class stochrsi_inq():
         datadb["STOCHRSI_SLOWK"], datadb["STOCHRSI_SLOWD"] = talib.STOCHRSI(datadb['Close'], timeperiod=int(TechValue['STOCHRSI']['timeperiod']), fastk_period=int(
             TechValue['STOCHRSI']['fastk_period']), fastd_period=int(TechValue['STOCHRSI']['fastd_period']), fastd_matype=int(TechValue['STOCHRSI']['fastd_matype']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['STOCHRSI']['GOLDEN CROSS']
+        self.MACDitem = row.loc['STOCHRSI_SLOWK']
+        self.MACD_SIGNALitem = row.loc['STOCHRSI_SLOWD']
+        if (self.entryba == 'True'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['STOCHRSI']['Death Cross']
+        self.MACDitem = row.loc['STOCHRSI_SLOWK']
+        self.MACD_SIGNALitem = row.loc['STOCHRSI_SLOWD']
+        if (self.exitba == 'True'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
 
 class trix_inq():
@@ -710,6 +1069,22 @@ class trix_inq():
             datadb["Close"], timeperiod=int(TechValue['TRIX']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['TRIX']
+        self.entryba = entryTechValue['TRIX']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['TRIX']
+        self.entryba = entryTechValue['TRIX']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class ultosc_inq():
     def calculate(self, TechValue, toolhistory):
@@ -718,6 +1093,22 @@ class ultosc_inq():
             TechValue['ULTOSC']['timeperiod1']), timeperiod2=int(TechValue['ULTOSC']['timeperiod2']), timeperiod3=int(TechValue['ULTOSC']['timeperiod3']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['ULTOSC']
+        self.entryba = entryTechValue['ULTOSC']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['ULTOSC']
+        self.entryba = entryTechValue['ULTOSC']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class willr_inq():
     def calculate(self, TechValue, toolhistory):
@@ -725,6 +1116,22 @@ class willr_inq():
         datadb["WILLR"] = talib.WILLR(
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['WILLR']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['WILLR']
+        self.entryba = entryTechValue['WILLR']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['WILLR']
+        self.entryba = entryTechValue['WILLR']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class mavp_inq():
@@ -735,6 +1142,22 @@ class mavp_inq():
             TechValue['MAVP']['maxperiod']), matype=int(TechValue['MAVP']['matype']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['MAVP']
+        self.entryba = entryTechValue['MAVP']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['MAVP']
+        self.entryba = entryTechValue['MAVP']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class bbands_inq():
     def calculate(self, TechValue, toolhistory):
@@ -742,6 +1165,38 @@ class bbands_inq():
         datadb["BBANDS_UPPERBAND"], datadb["BBANDS_MIDDLEBAND"], datadb["BBANDS_LOWERBAND"] = talib.BBANDS(
             datadb['Close'], timeperiod=int(TechValue['BBANDS']['timeperiod']), nbdevup=int(TechValue['BBANDS']['nbdevup']), nbdevdn=int(TechValue['BBANDS']['nbdevdn']), matype=int(TechValue['BBANDS']['matype']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['BBANDS']['BBANDS_UPPERBAND']
+        self.MACDitem = row.loc['Close']
+        self.MACD_SIGNALitem = row.loc['BBANDS_UPPERBAND']
+        self.entryMIDDLEBAND = row.loc['BBANDS_MIDDLEBAND']
+        if (self.entryba == 'True'):
+            if (float(self.MACDitem) < float(self.MACD_SIGNALitem) and float(self.MACDitem) < float(self.entryMIDDLEBAND)):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if (float(self.MACDitem) > float(self.MACD_SIGNALitem) and float(self.MACDitem) > float(self.entryMIDDLEBAND)):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['BBANDS']['BBANDS_LOWERBAND']
+        self.MACDitem = row.loc['Close']
+        self.MACD_SIGNALitem = row.loc['BBANDS_LOWERBAND']
+        self.entryMIDDLEBAND = row.loc['BBANDS_MIDDLEBAND']
+        if (self.exitba == 'True'):
+            if (float(self.MACDitem) > float(self.MACD_SIGNALitem) and float(self.MACDitem) > float(self.entryMIDDLEBAND)):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if (float(self.MACDitem) < float(self.MACD_SIGNALitem) and float(self.MACDitem) < float(self.entryMIDDLEBAND)):
+                return True
+            else:
+                return False
 
 
 class dema_inq():
@@ -759,6 +1214,93 @@ class dema_inq():
             datadb["Close"], timeperiod=int(TechValue['DEMA']['Parameters_5']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['DEMA'][
+            'Parameters_1 - Parameters_2']['GOLDEN CROSS']
+        self.parameters_2_Parameters_3 = entryTechValue['DEMA'][
+            'Parameters_2 - Parameters_3']['GOLDEN CROSS']
+        self.parameters_3_Parameters_4 = entryTechValue['DEMA'][
+            'Parameters_3 - Parameters_4']['GOLDEN CROSS']
+        self.parameters_4_Parameters_5 = entryTechValue['DEMA'][
+            'Parameters_4 - Parameters_5']['GOLDEN CROSS']
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        self.p1 = row.loc['DEMA_parameter_1']
+        self.p2 = row.loc['DEMA_parameter_2']
+        self.p3 = row.loc['DEMA_parameter_3']
+        self.p4 = row.loc['DEMA_parameter_4']
+        self.p5 = row.loc['DEMA_parameter_5']
+        if float(self.p1) > float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) < float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) > float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) < float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) > float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) < float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) > float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) < float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['DEMA'][
+            'Parameters_1 - Parameters_2']['Death Cross']
+        self.parameters_2_Parameters_3 = entryTechValue['DEMA'][
+            'Parameters_2 - Parameters_3']['Death Cross']
+        self.parameters_3_Parameters_4 = entryTechValue['DEMA'][
+            'Parameters_3 - Parameters_4']['Death Cross']
+        self.parameters_4_Parameters_5 = entryTechValue['DEMA'][
+            'Parameters_4 - Parameters_5']['Death Cross']
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        self.p1 = row.loc['DEMA_parameter_1']
+        self.p2 = row.loc['DEMA_parameter_2']
+        self.p3 = row.loc['DEMA_parameter_3']
+        self.p4 = row.loc['DEMA_parameter_4']
+        self.p5 = row.loc['DEMA_parameter_5']
+        ####
+        if float(self.p1) < float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) > float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) < float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) > float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) < float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) > float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) < float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) > float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
 
 class ema_inq():
     def calculate(self, TechValue, toolhistory):
@@ -775,12 +1317,130 @@ class ema_inq():
             datadb["Close"], timeperiod=int(TechValue['EMA']['Parameters_5']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['EMA'][
+            'Parameters_1 - Parameters_2']['GOLDEN CROSS']
+        self.parameters_2_Parameters_3 = entryTechValue['EMA'][
+            'Parameters_2 - Parameters_3']['GOLDEN CROSS']
+        self.parameters_3_Parameters_4 = entryTechValue['EMA'][
+            'Parameters_3 - Parameters_4']['GOLDEN CROSS']
+        self.parameters_4_Parameters_5 = entryTechValue['EMA'][
+            'Parameters_4 - Parameters_5']['GOLDEN CROSS']
+        self.p1 = row.loc['EMA_parameter_1']
+        self.p2 = row.loc['EMA_parameter_2']
+        self.p3 = row.loc['EMA_parameter_3']
+        self.p4 = row.loc['EMA_parameter_4']
+        self.p5 = row.loc['EMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) > float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) < float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) > float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) < float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) > float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) < float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) > float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) < float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['EMA'][
+            'Parameters_1 - Parameters_2']['Death Cross']
+        self.parameters_2_Parameters_3 = entryTechValue['EMA'][
+            'Parameters_2 - Parameters_3']['Death Cross']
+        self.parameters_3_Parameters_4 = entryTechValue['EMA'][
+            'Parameters_3 - Parameters_4']['Death Cross']
+        self.parameters_4_Parameters_5 = entryTechValue['EMA'][
+            'Parameters_4 - Parameters_5']['Death Cross']
+        self.p1 = row.loc['EMA_parameter_1']
+        self.p2 = row.loc['EMA_parameter_2']
+        self.p3 = row.loc['EMA_parameter_3']
+        self.p4 = row.loc['EMA_parameter_4']
+        self.p5 = row.loc['EMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) < float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) > float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) < float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) > float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) < float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) > float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) < float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) > float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
 
 class ht_trendline_inq():
     def calculate(self, TechValue, toolhistory):
         datadb = toolhistory
         datadb["HT_TRENDLINE"] = talib.HT_TRENDLINE(datadb["Close"])
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['HT_TRENDLINE']['GOLDEN CROSS']
+        self.MACDitem = row.loc['HT_TRENDLINE']
+        self.MACD_SIGNALitem = row.loc['Close']
+        if (self.entryba == 'True'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['HT_TRENDLINE']['Death Cross']
+        self.MACDitem = row.loc['HT_TRENDLINE']
+        self.MACD_SIGNALitem = row.loc['Close']
+        if (self.exitba == 'True'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
 
 
 class kama_inq():
@@ -798,6 +1458,94 @@ class kama_inq():
             datadb["Close"], timeperiod=int(TechValue['KAMA']['Parameters_5']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['KAMA'][
+            'Parameters_1 - Parameters_2']['GOLDEN CROSS']
+        self.parameters_2_Parameters_3 = entryTechValue['KAMA'][
+            'Parameters_2 - Parameters_3']['GOLDEN CROSS']
+        self.parameters_3_Parameters_4 = entryTechValue['KAMA'][
+            'Parameters_3 - Parameters_4']['GOLDEN CROSS']
+        self.parameters_4_Parameters_5 = entryTechValue['KAMA'][
+            'Parameters_4 - Parameters_5']['GOLDEN CROSS']
+        self.p1 = row.loc['KAMA_parameter_1']
+        self.p2 = row.loc['KAMA_parameter_2']
+        self.p3 = row.loc['KAMA_parameter_3']
+        self.p4 = row.loc['KAMA_parameter_4']
+        self.p5 = row.loc['KAMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) > float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) < float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) > float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) < float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) > float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) < float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) > float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) < float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['KAMA'][
+            'Parameters_1 - Parameters_2']['Death Cross']
+        self.parameters_2_Parameters_3 = entryTechValue['KAMA'][
+            'Parameters_2 - Parameters_3']['Death Cross']
+        self.parameters_3_Parameters_4 = entryTechValue['KAMA'][
+            'Parameters_3 - Parameters_4']['Death Cross']
+        self.parameters_4_Parameters_5 = entryTechValue['KAMA'][
+            'Parameters_4 - Parameters_5']['Death Cross']
+        self.p1 = row.loc['KAMA_parameter_1']
+        self.p2 = row.loc['KAMA_parameter_2']
+        self.p3 = row.loc['KAMA_parameter_3']
+        self.p4 = row.loc['KAMA_parameter_4']
+        self.p5 = row.loc['KAMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) < float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) > float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) < float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) > float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) < float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) > float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) < float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) > float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
 
 class ma_inq():
     def calculate(self, TechValue, toolhistory):
@@ -805,7 +1553,12 @@ class ma_inq():
         datadb["MA"] = talib.MA(datadb['Close'], timeperiod=int(
             TechValue['MA']['timeperiod']), matype=int(TechValue['MA']['matype']))
         return datadb
-        return datadb
+
+    def entry(self, row, entryTechValue):
+        return True
+
+    def exit(self, row, entryTechValue):
+        return True
 
 
 class mama_inq():
@@ -815,6 +1568,36 @@ class mama_inq():
             datadb['Close'], fastlimit=float(TechValue['MAMA']['fastlimit']), slowlimit=float(TechValue['MAMA']['slowlimit']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['MAMA']['GOLDEN CROSS']
+        self.MACDitem = row.loc['MAMA']
+        self.MACD_SIGNALitem = row.loc['MAMA_FAMA']
+        if (self.entryba == 'True'):
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        else:
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['MAMA']['Death Cross']
+        self.MACDitem = row.loc['MAMA']
+        self.MACD_SIGNALitem = row.loc['MAMA_FAMA']
+        if (self.exitba == 'True'):
+            if float(self.MACDitem) < float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+        else:
+            if float(self.MACDitem) > float(self.MACD_SIGNALitem):
+                return True
+            else:
+                return False
+
 
 class midpoint_inq():
     def calculate(self, TechValue, toolhistory):
@@ -822,6 +1605,40 @@ class midpoint_inq():
         datadb["MIDPOINT"] = talib.MIDPOINT(
             datadb["Close"], timeperiod=int(TechValue['MIDPOINT']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['MIDPOINT']['GOLDEN CROSS']
+        self.MIDPOINTitem = row.loc['MIDPOINT']
+        self.Highitem = row.loc['High']
+        self.Lowitem = row.loc['Low']
+        self.MIditem = (float(self.Highitem) + float(self.Lowitem))/2
+        if (self.entryba == 'True'):
+            if float(self.MIDPOINTitem) < float(self.MIditem):
+                return True
+            else:
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MIDPOINTitem) > float(self.MIditem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['MIDPOINT']['Death Cross']
+        self.MIDPOINTitem = row.loc['MIDPOINT']
+        self.Highitem = row.loc['High']
+        self.Lowitem = row.loc['Low']
+        self.MIditem = (float(self.Highitem) + float(self.Lowitem))/2
+        if (self.exitba == 'True'):
+            if float(self.MIDPOINTitem) > float(self.MIditem):
+                return True
+            else:
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MIDPOINTitem) < float(self.MIditem):
+                return True
+            else:
+                return False
 
 
 class midprice_inq():
@@ -831,6 +1648,40 @@ class midprice_inq():
             datadb["High"], datadb["Low"], timeperiod=int(TechValue['MIDPRICE']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['MIDPRICE']['GOLDEN CROSS']
+        self.MIDPOINTitem = row.loc['MIDPRICE']
+        self.Highitem = row.loc['High']
+        self.Lowitem = row.loc['Low']
+        self.MIditem = (float(self.Highitem) + float(self.Lowitem))/2
+        if (self.entryba == 'True'):
+            if float(self.MIDPOINTitem) < float(self.MIditem):
+                return True
+            else:
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MIDPOINTitem) > float(self.MIditem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['MIDPRICE']['Death Cross']
+        self.MIDPOINTitem = row.loc['MIDPRICE']
+        self.Highitem = row.loc['High']
+        self.Lowitem = row.loc['Low']
+        self.MIditem = (float(self.Highitem) + float(self.Lowitem))/2
+        if (self.exitba == 'True'):
+            if float(self.MIDPOINTitem) > float(self.MIditem):
+                return True
+            else:
+                return False
+        elif (self.exitba == 'False'):
+            if float(self.MIDPOINTitem) < float(self.MIditem):
+                return True
+            else:
+                return False
+
 
 class sar_inq():
     def calculate(self, TechValue, toolhistory):
@@ -839,6 +1690,36 @@ class sar_inq():
             TechValue['SAR']['acceleration']), maximum=float(TechValue['SAR']['maximum']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.entryba = entryTechValue['SAR']['GOLDEN CROSS']
+        self.MIDPOINTitem = row.loc['SAR']
+        self.Closeitem = row.loc['Close']
+        if (self.entryba == 'True'):
+            if float(self.MIDPOINTitem) < float(self.Closeitem):
+                return True
+            else:
+                return False
+        else:
+            if float(self.MIDPOINTitem) > float(self.Closeitem):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue):
+        self.exitba = entryTechValue['SAR']['Death Cross']
+        self.MIDPOINTitem = row.loc['SAR']
+        self.Closeitem = row.loc['Close']
+        if (self.exitba == 'True'):
+            if float(self.MIDPOINTitem) > float(self.Closeitem):
+                return True
+            else:
+                return False
+        else:
+            if float(self.MIDPOINTitem) < float(self.Closeitem):
+                return True
+            else:
+                return False
+
 
 class sarext_inq():
     def calculate(self, TechValue, toolhistory):
@@ -846,6 +1727,22 @@ class sarext_inq():
         datadb["SAREXT"] = talib.SAREXT(datadb['High'], datadb['Low'], startvalue=float(TechValue['SAREXT']['startvalue']), offsetonreverse=float(TechValue['SAREXT']['offsetonreverse']), accelerationinitlong=float(TechValue['SAREXT']['accelerationinitlong']), accelerationlong=float(
             TechValue['SAREXT']['accelerationlong']), accelerationmaxlong=float(TechValue['SAREXT']['accelerationmaxlong']), accelerationinitshort=float(TechValue['SAREXT']['accelerationinitshort']), accelerationshort=float(TechValue['SAREXT']['accelerationshort']), accelerationmaxshort=float(TechValue['SAREXT']['accelerationmaxshort']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['SAREXT']
+        self.entryba = entryTechValue['SAREXT']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['SAREXT']
+        self.entryba = entryTechValue['SAREXT']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class sma_inq():
@@ -863,6 +1760,94 @@ class sma_inq():
             datadb["Close"], timeperiod=int(TechValue['SMA']['Parameters_5']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['SMA'][
+            'Parameters_1 - Parameters_2']['GOLDEN CROSS']
+        self.parameters_2_Parameters_3 = entryTechValue['SMA'][
+            'Parameters_2 - Parameters_3']['GOLDEN CROSS']
+        self.parameters_3_Parameters_4 = entryTechValue['SMA'][
+            'Parameters_3 - Parameters_4']['GOLDEN CROSS']
+        self.parameters_4_Parameters_5 = entryTechValue['SMA'][
+            'Parameters_4 - Parameters_5']['GOLDEN CROSS']
+        self.p1 = row.loc['SMA_parameter_1']
+        self.p2 = row.loc['SMA_parameter_2']
+        self.p3 = row.loc['SMA_parameter_3']
+        self.p4 = row.loc['SMA_parameter_4']
+        self.p5 = row.loc['SMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) > float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) < float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) > float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) < float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) > float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) < float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) > float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) < float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['SMA'][
+            'Parameters_1 - Parameters_2']['Death Cross']
+        self.parameters_2_Parameters_3 = entryTechValue['SMA'][
+            'Parameters_2 - Parameters_3']['Death Cross']
+        self.parameters_3_Parameters_4 = entryTechValue['SMA'][
+            'Parameters_3 - Parameters_4']['Death Cross']
+        self.parameters_4_Parameters_5 = entryTechValue['SMA'][
+            'Parameters_4 - Parameters_5']['Death Cross']
+        self.p1 = row.loc['SMA_parameter_1']
+        self.p2 = row.loc['SMA_parameter_2']
+        self.p3 = row.loc['SMA_parameter_3']
+        self.p4 = row.loc['SMA_parameter_4']
+        self.p5 = row.loc['SMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) < float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) > float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) < float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) > float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) < float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) > float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) < float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) > float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
 
 class t3_inq():
     def calculate(self, TechValue, toolhistory):
@@ -878,6 +1863,94 @@ class t3_inq():
         datadb["T3_parameter_5"] = talib.T3(datadb['Close'], timeperiod=int(
             TechValue['T3']['parameter_5timeperiod']), vfactor=int(TechValue['T3']['parameter_5vfactor']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['T3'][
+            'Parameters_1 - Parameters_2']['Golden Cross']
+        self.parameters_2_Parameters_3 = entryTechValue['T3'][
+            'Parameters_2 - Parameters_3']['Golden Cross']
+        self.parameters_3_Parameters_4 = entryTechValue['T3'][
+            'Parameters_3 - Parameters_4']['Golden Cross']
+        self.parameters_4_Parameters_5 = entryTechValue['T3'][
+            'Parameters_4 - Parameters_5']['Golden Cross']
+        self.p1 = row.loc['T3_parameter_1']
+        self.p2 = row.loc['T3_parameter_2']
+        self.p3 = row.loc['T3_parameter_3']
+        self.p4 = row.loc['T3_parameter_4']
+        self.p5 = row.loc['T3_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) > float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) < float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) > float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) < float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) > float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) < float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) > float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) < float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['T3'][
+            'Parameters_1 - Parameters_2']['Death Cross']
+        self.parameters_2_Parameters_3 = entryTechValue['T3'][
+            'Parameters_2 - Parameters_3']['Death Cross']
+        self.parameters_3_Parameters_4 = entryTechValue['T3'][
+            'Parameters_3 - Parameters_4']['Death Cross']
+        self.parameters_4_Parameters_5 = entryTechValue['T3'][
+            'Parameters_4 - Parameters_5']['Death Cross']
+        self.p1 = row.loc['T3_parameter_1']
+        self.p2 = row.loc['T3_parameter_2']
+        self.p3 = row.loc['T3_parameter_3']
+        self.p4 = row.loc['T3_parameter_4']
+        self.p5 = row.loc['T3_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) < float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) > float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) < float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) > float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) < float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) > float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) < float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) > float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
 
 
 class tema_inq():
@@ -895,6 +1968,94 @@ class tema_inq():
             datadb["Close"], timeperiod=int(TechValue['TEMA']['Parameters_5']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['TEMA'][
+            'Parameters_1 - Parameters_2']['GOLDEN CROSS']
+        self.parameters_2_Parameters_3 = entryTechValue['TEMA'][
+            'Parameters_2 - Parameters_3']['GOLDEN CROSS']
+        self.parameters_3_Parameters_4 = entryTechValue['TEMA'][
+            'Parameters_3 - Parameters_4']['GOLDEN CROSS']
+        self.parameters_4_Parameters_5 = entryTechValue['TEMA'][
+            'Parameters_4 - Parameters_5']['GOLDEN CROSS']
+        self.p1 = row.loc['TEMA_parameter_1']
+        self.p2 = row.loc['TEMA_parameter_2']
+        self.p3 = row.loc['TEMA_parameter_3']
+        self.p4 = row.loc['TEMA_parameter_4']
+        self.p5 = row.loc['TEMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) > float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) < float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) > float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) < float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) > float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) < float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) > float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) < float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['TEMA'][
+            'Parameters_1 - Parameters_2']['Death Cross']
+        self.parameters_2_Parameters_3 = entryTechValue['TEMA'][
+            'Parameters_2 - Parameters_3']['Death Cross']
+        self.parameters_3_Parameters_4 = entryTechValue['TEMA'][
+            'Parameters_3 - Parameters_4']['Death Cross']
+        self.parameters_4_Parameters_5 = entryTechValue['TEMA'][
+            'Parameters_4 - Parameters_5']['Death Cross']
+        self.p1 = row.loc['TEMA_parameter_1']
+        self.p2 = row.loc['TEMA_parameter_2']
+        self.p3 = row.loc['TEMA_parameter_3']
+        self.p4 = row.loc['TEMA_parameter_4']
+        self.p5 = row.loc['TEMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) < float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) > float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) < float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) > float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) < float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) > float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) < float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) > float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
 
 class trima_inq():
     def calculate(self, TechValue, toolhistory):
@@ -910,6 +2071,94 @@ class trima_inq():
         datadb["TRIMA_parameter_5"] = talib.TRIMA(
             datadb["Close"], timeperiod=int(TechValue['TRIMA']['Parameters_5']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['TRIMA'][
+            'Parameters_1 - Parameters_2']['GOLDEN CROSS']
+        self.parameters_2_Parameters_3 = entryTechValue['TRIMA'][
+            'Parameters_2 - Parameters_3']['GOLDEN CROSS']
+        self.parameters_3_Parameters_4 = entryTechValue['TRIMA'][
+            'Parameters_3 - Parameters_4']['GOLDEN CROSS']
+        self.parameters_4_Parameters_5 = entryTechValue['TRIMA'][
+            'Parameters_4 - Parameters_5']['GOLDEN CROSS']
+        self.p1 = row.loc['TRIMA_parameter_1']
+        self.p2 = row.loc['TRIMA_parameter_2']
+        self.p3 = row.loc['TRIMA_parameter_3']
+        self.p4 = row.loc['TRIMA_parameter_4']
+        self.p5 = row.loc['TRIMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) > float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) < float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) > float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) < float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) > float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) < float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) > float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) < float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['TRIMA'][
+            'Parameters_1 - Parameters_2']['Death Cross']
+        self.parameters_2_Parameters_3 = entryTechValue['TRIMA'][
+            'Parameters_2 - Parameters_3']['Death Cross']
+        self.parameters_3_Parameters_4 = entryTechValue['TRIMA'][
+            'Parameters_3 - Parameters_4']['Death Cross']
+        self.parameters_4_Parameters_5 = entryTechValue['TRIMA'][
+            'Parameters_4 - Parameters_5']['Death Cross']
+        self.p1 = row.loc['TRIMA_parameter_1']
+        self.p2 = row.loc['TRIMA_parameter_2']
+        self.p3 = row.loc['TRIMA_parameter_3']
+        self.p4 = row.loc['TRIMA_parameter_4']
+        self.p5 = row.loc['TRIMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) < float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) > float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) < float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) > float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) < float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) > float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) < float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) > float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
 
 
 class wma_inq():
@@ -927,6 +2176,94 @@ class wma_inq():
             datadb["Close"], timeperiod=int(TechValue['WMA']['Parameters_5']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['WMA'][
+            'Parameters_1 - Parameters_2']['GOLDEN CROSS']
+        self.parameters_2_Parameters_3 = entryTechValue['WMA'][
+            'Parameters_2 - Parameters_3']['GOLDEN CROSS']
+        self.parameters_3_Parameters_4 = entryTechValue['WMA'][
+            'Parameters_3 - Parameters_4']['GOLDEN CROSS']
+        self.parameters_4_Parameters_5 = entryTechValue['WMA'][
+            'Parameters_4 - Parameters_5']['GOLDEN CROSS']
+        self.p1 = row.loc['WMA_parameter_1']
+        self.p2 = row.loc['WMA_parameter_2']
+        self.p3 = row.loc['WMA_parameter_3']
+        self.p4 = row.loc['WMA_parameter_4']
+        self.p5 = row.loc['WMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) > float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) < float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) > float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) < float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) > float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) < float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) > float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) < float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.parameters_1_Parameters_2 = entryTechValue['WMA'][
+            'Parameters_1 - Parameters_2']['Death Cross']
+        self.parameters_2_Parameters_3 = entryTechValue['WMA'][
+            'Parameters_2 - Parameters_3']['Death Cross']
+        self.parameters_3_Parameters_4 = entryTechValue['WMA'][
+            'Parameters_3 - Parameters_4']['Death Cross']
+        self.parameters_4_Parameters_5 = entryTechValue['WMA'][
+            'Parameters_4 - Parameters_5']['Death Cross']
+        self.p1 = row.loc['WMA_parameter_1']
+        self.p2 = row.loc['WMA_parameter_2']
+        self.p3 = row.loc['WMA_parameter_3']
+        self.p4 = row.loc['WMA_parameter_4']
+        self.p5 = row.loc['WMA_parameter_5']
+
+        P_1_2 = None
+        P_2_3 = None
+        P_3_4 = None
+        P_4_5 = None
+        if float(self.p1) < float(self.p2):
+            P_1_2 = 'True'
+        elif float(self.p1) > float(self.p2):
+            P_1_2 = 'False'
+            ####
+        if float(self.p2) < float(self.p3):
+            P_2_3 = 'True'
+        elif float(self.p2) > float(self.p3):
+            P_2_3 = 'False'
+            ####
+        if float(self.p3) < float(self.p4):
+            P_3_4 = 'True'
+        elif float(self.p3) > float(self.p4):
+            P_3_4 = 'False'
+            ####
+        if float(self.p4) < float(self.p5):
+            P_4_5 = 'True'
+        elif float(self.p4) > float(self.p5):
+            P_4_5 = 'False'
+
+        if (self.parameters_1_Parameters_2 == P_1_2) and (self.parameters_2_Parameters_3 == P_2_3) and (self.parameters_3_Parameters_4 == P_3_4) and (self.parameters_4_Parameters_5 == P_4_5):
+            return True
+        else:
+            return False
+
 
 class kdj_inq():
     def calculate(self, TechValue, toolhistory):
@@ -936,6 +2273,22 @@ class kdj_inq():
         datadb['KDJ_SLOWJ'] = 3*datadb['KDJ_SLOWK']-2*datadb['KDJ_SLOWD']
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['KDJ_SLOWJ']
+        self.entryba = entryTechValue['KDJ']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['KDJ_SLOWJ']
+        self.entryba = entryTechValue['KDJ']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class atr_inq():
     def calculate(self, TechValue, toolhistory):
@@ -943,6 +2296,22 @@ class atr_inq():
         datadb["ATR"] = talib.ATR(
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['ATR']))
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['ATR']
+        self.entryba = entryTechValue['ATR']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['ATR']
+        self.entryba = entryTechValue['ATR']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class natr_inq():
@@ -952,6 +2321,22 @@ class natr_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['NATR']))
         return datadb
 
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['NATR']
+        self.entryba = entryTechValue['NATR']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['NATR']
+        self.entryba = entryTechValue['NATR']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
 
 class trange_inq():
     def calculate(self, TechValue, toolhistory):
@@ -959,6 +2344,22 @@ class trange_inq():
         datadb["TRANGE"] = talib.TRANGE(
             datadb["High"], datadb["Low"], datadb["Close"])
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['TRANGE']
+        self.entryba = entryTechValue['TRANGE']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['TRANGE']
+        self.entryba = entryTechValue['TRANGE']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class ad_inq():
@@ -968,6 +2369,76 @@ class ad_inq():
                                 datadb["Close"], datadb["Volume"])
         return datadb
 
+    def get_db_for_entry_exit(self, testitem, toolhistory):
+        self.ChecklistClose = []
+        self.ChecklistAD = []
+        self.df = toolhistory
+        self.targetindex = testitem
+        for i in range(1, 3):
+            previous_close = self.df.shift(i).loc[(self.df['AD'] == self.targetindex['AD']) & (
+                self.df['Close'] == self.targetindex['Close'])].head(1)
+            # Add 'Close' values to self.Checklist
+            if not previous_close.empty:
+                self.ChecklistClose.append(previous_close['Close'].iloc[0])
+                self.ChecklistAD.append(previous_close['AD'].iloc[0])
+            else:
+                break
+        return self.ChecklistClose, self.ChecklistAD
+
+    def Check_AD_CLOSE_RELAT(self, rel, new):
+        self.new = new
+        self.rel = rel
+        if (self.rel != []):
+            close_0 = self.rel[0]
+            if (float(self.new) > float(close_0)):
+                return "111"
+            elif (float(self.new) < float(close_0)):
+                return "000"
+            else:
+                return "Unknown"
+        else:
+            return "Unknown"
+
+    def entry(self, row, entryTechValue, toolhistory):
+        self.entryba = entryTechValue['AD']['Bottom Divergence']
+        self.itemclose = row.loc['Close']
+        self.itemad = row.loc['AD']
+        self.oldclose, self.oldad = self.get_db_for_entry_exit(
+            row, toolhistory)
+        self.close_test = self.Check_AD_CLOSE_RELAT(
+            self.oldclose, self.itemclose)
+        self.ad_test = self.Check_AD_CLOSE_RELAT(self.oldad, self.itemad)
+        if (self.entryba == 'True'):
+            if (self.close_test == "000" and self.ad_test == "111"):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if (self.close_test == "111" and self.ad_test == "000"):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue, toolhistory):
+        self.entryba = entryTechValue['AD']['Top Divergence']
+        if (self.entryba == 'True'):
+            self.itemclose = row.loc['Close']
+            self.itemad = row.loc['AD']
+            self.oldclose, self.oldad = self.get_db_for_entry_exit(
+                row, toolhistory)
+            self.close_test = self.Check_AD_CLOSE_RELAT(
+                self.oldclose, self.itemclose)
+            self.ad_test = self.Check_AD_CLOSE_RELAT(self.oldad, self.itemad)
+            if (self.close_test == "111" and self.ad_test == "000"):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if (self.close_test == "000" and self.ad_test == "111"):
+                return True
+            else:
+                return False
+
 
 class adosc_inq():
     def calculate(self, TechValue, toolhistory):
@@ -976,12 +2447,108 @@ class adosc_inq():
             datadb['High'], datadb['Low'], datadb['Close'], datadb['Volume'], fastperiod=int(TechValue['ADOSC']['fastperiod']), slowperiod=int(TechValue['ADOSC']['slowperiod']))
         return datadb
 
+    def get_db_for_entry_exit(self, testitem, toolhistory):
+        self.ChecklistClose = []
+        self.ChecklistAD = []
+        self.df = toolhistory
+        self.targetindex = testitem
+        for i in range(1, 3):
+            self.adoscitem = self.targetindex['ADOSC']
+            if (self.adoscitem != np.nan):
+                previous_close = self.df.shift(i).loc[(self.df['ADOSC'] == self.targetindex['ADOSC']) & (
+                    self.df['Close'] == self.targetindex['Close'])].head(1)
+                # Add 'Close' values to self.Checklist
+                if not previous_close.empty:
+                    self.ChecklistClose.append(previous_close['Close'].iloc[0])
+                    self.ChecklistAD.append(previous_close['ADOSC'].iloc[0])
+            else:
+                break
+        return self.ChecklistClose, self.ChecklistAD
+
+    def CheckMathis(self, item):
+        self.math = item
+        if (self.math > 0):
+            return "1"
+        elif (self.math < 0):
+            return "0"
+        else:
+            return "-"
+
+    def Check_RELAT(self, relclose, newclose, relad, newad):
+        self.relclose = relclose
+        self.relad = relad
+
+        if (self.relad != [] and self.relclose != []):
+
+            if (self.CheckMathis(newad) == "0" and self.CheckMathis(self.relad[0]) == "1"):
+                return "111"
+            elif (self.CheckMathis(newad) == "1" and self.CheckMathis(self.relad[0]) == "0"):
+                return "000"
+            else:
+                return "Unknown"
+        else:
+            return "Unknown"
+
+    def entry(self, row, entryTechValue, toolhistory):
+        self.entryba = entryTechValue['ADOSC']['GOLDEN CROSS']
+        self.itemclose = row.loc['Close']
+        self.itemADOSC = row.loc['ADOSC']
+        self.oldclose, self.oldad = self.get_db_for_entry_exit(
+            row, toolhistory)
+        self.ad_test = self.Check_RELAT(
+            self.oldclose, self.itemclose, self.oldad, self.itemADOSC)
+        if (self.entryba == 'True'):
+            if (self.ad_test == "111"):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if (self.ad_test == "000"):
+                return True
+            else:
+                return False
+
+    def exit(self, row, entryTechValue, toolhistory):
+        self.entryba = entryTechValue['ADOSC']['Death Cross']
+        self.itemclose = row.loc['Close']
+        self.itemADOSC = row.loc['ADOSC']
+        self.oldclose, self.oldad = self.get_db_for_entry_exit(
+            row, toolhistory)
+        self.ad_test = self.Check_RELAT(
+            self.oldclose, self.itemclose, self.oldad, self.itemADOSC)
+        if (self.entryba == 'True'):
+            if (self.ad_test == "000"):
+                return True
+            else:
+                return False
+        elif (self.entryba == 'False'):
+            if (self.ad_test == "111"):
+                return True
+            else:
+                return False
+
 
 class obv_inq():
     def calculate(self, TechValue, toolhistory):
         datadb = toolhistory
         datadb["OBV"] = talib.OBV(datadb["Close"], datadb["Volume"])
         return datadb
+
+    def entry(self, row, entryTechValue):
+        self.item = row.loc['OBV']
+        self.entryba = entryTechValue['OBV']['LOW']
+        if (float(self.item) < float(self.entryba)):
+            return True
+        else:
+            return False
+
+    def exit(self, row, entryTechValue):
+        self.item = row.loc['OBV']
+        self.entryba = entryTechValue['OBV']['HIGH']
+        if (float(self.item) > float(self.entryba)):
+            return True
+        else:
+            return False
 
 
 class basesetup():
