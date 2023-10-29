@@ -1,23 +1,78 @@
+
 from concurrent.futures import ProcessPoolExecutor
 import talib
 import quantstats as qs
 import pytz
 import backtrader as bt
 import numpy as np
+import yfinance as yf
+from PyQt6.QtWidgets import QMessageBox
+import numpy as np
+np.seterr(invalid='ignore')
+
+
+class Dataset:
+    tool_perm = {}
+    Entry_perm = {}
+    history = None
+
+    @staticmethod
+    def get__var():
+        # print('Get Tech Tool Perm')
+        return Dataset.tool_perm, Dataset.Entry_perm, Dataset.history
+
+    @staticmethod
+    def set_var(toolperm, entryperm, history):
+        # print('Set Tech Tool Perm')
+        Dataset.tool_perm = toolperm
+        Dataset.Entry_perm = entryperm
+        Dataset.history = history
+
+
+class Tickersearch:
+
+    def __init__(self, text):
+        self.texts = text
+
+    def tickerchecking(self):
+        try:
+            # 创建 Ticker 对象
+            self.ticker = None
+            self.ticker = yf.Ticker(self.texts)
+            print('Checking Symbol : ' + self.texts)
+            # 检查是否可用
+            if self.ticker.history_metadata is not None:
+                print('股票代碼 : ' + self.texts + ' 可用')
+                return True
+            else:
+                print('股票代码不可用')
+                QMessageBox.warning(None, 'Error Ticker Symbol', '股票代碼不可用')
+                return False
+        except BaseException as msg:
+            QMessageBox.warning(None, 'System Error', str(msg))
+            return False
+
+    def tickerinfo(self):
+        self.ticker = yf.Ticker(self.texts)
+        return self.ticker.info
+
+    def tickerhisory(self, kwargs):
+        self.ticker = yf.Ticker(self.texts)
+        data = self.ticker.history(**kwargs)
+        return data
+
+    def tickernew(self):
+        self.ticker = yf.Ticker(self.texts)
+        return self.ticker.news
 
 
 class bt_enter_exit(bt.Strategy):
     # list of parameters which are configurable for the strategy
-    def __init__(self):
-        pass
 
     def next(self):
         current_close = self.data.close[0]
         current_datetime = self.data.datetime.datetime()
-        row = basesetup().df_row(current_datetime, current_close)
-        row = row.squeeze()
-        self.entry = basesetup().tran_entry(row)
-        self.exit = basesetup().tran_exit(row)
+        self.entry, self.exit = basesetup().proc(current_datetime, current_close)
         if not self.position:  # not in the market
             if (self.entry == True) & (self.exit == False):
                 self.buy()  # enter long
@@ -26,12 +81,15 @@ class bt_enter_exit(bt.Strategy):
             self.close()  # close long position
 
 
-class optcerebrosetup():
-    def __init__(self):
+class optcerebrosetup:
+    def __init__(self, datadb, modelValue):
+        self.modelValue = modelValue
+        self.modelValue = {'Cash': 10000, 'Commission': 0.0, 'Sizers': 90}
         self.cerebro = bt.Cerebro()
-        self.cerebro.adddata(self.btfeel())
+        self.db = self.btfeel(datadb)
+        self.cerebro.adddata(self.db)
         self.cerebro.addstrategy(bt_enter_exit)
-        self.cerebro.addobserver(bt.observers.DrawDown)
+        # self.cerebro.addobserver(bt.observers.DrawDown)
         self.cerebro.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio')
         self.loopperm()
         results = self.cerebro.run()
@@ -42,10 +100,6 @@ class optcerebrosetup():
         self.return_sharpe_ratio = qs.stats.sharpe(self.returns)
         self.return_risk_return_ratio = qs.stats.risk_return_ratio(
             self.returns)
-        # qs.reports.html(
-        #     returns, output='Stock Sentiment Report.html', title='Stock Sentiment')
-        # webbrowser.open('Stock Sentiment Report.html')
-        # self.cerebro.plot()
 
     def opt_file(self):
         return self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio
@@ -65,11 +119,8 @@ class optcerebrosetup():
     def returns_file(self):
         return self.returns, self.positions, self.transactions, self.gross_lev
 
-    def btfeel(self):
-        return bt.feeds.PandasData(dataname=self.gettertoolhistory())
-
-    def gettertoolhistory(self):
-        return GlobalValue.get_TechTool_history_var()
+    def btfeel(self, datadb):
+        return bt.feeds.PandasData(dataname=datadb)
 
     def setcash(self, dollar):
         self.cerebro.broker.setcash(dollar)
@@ -81,11 +132,11 @@ class optcerebrosetup():
         self.cerebro.addsizer(bt.sizers.PercentSizer, percents=sizer)
 
     def loopperm(self):
-        for perm in list(self.getterModelValue().keys()):
+        for perm in list(self.modelValue.keys()):
             self.setperm(perm)
 
     def setperm(self, text):
-        self.value = self.getterModelValue()
+        self.value = self.modelValue
         if (text == 'Cash'):
             self.setcash(self.value[text])
         elif (text == 'Commission'):
@@ -94,19 +145,60 @@ class optcerebrosetup():
             self.setsizers(self.value[text])
 
 
-class tread_p_task():
+class runa:
 
-    def __init__(self, mesh_conv, toolhistory):
-        self.task(mesh_conv, toolhistory)
+    def __init__(self):
+        self.ans = tread_p_task(self.work(), self.eatechanalysisenter(), "111")
+        self.ans.processes(cpu=20)
+
+    def work(self):
+        data = [[{'RSI': 12}, {'RSI': {'HIGH': 80, 'LOW': 20}}],
+                [{'RSI': 12}, {'RSI': {'HIGH': 80, 'LOW': 30}}],
+                [{'RSI': 12}, {'RSI': {'HIGH': 70, 'LOW': 20}}],
+                [{'RSI': 12}, {'RSI': {'HIGH': 70, 'LOW': 30}}],
+                [{'RSI': 7}, {'RSI': {'HIGH': 80, 'LOW': 20}}],
+                [{'RSI': 7}, {'RSI': {'HIGH': 80, 'LOW': 30}}],
+                [{'RSI': 7}, {'RSI': {'HIGH': 70, 'LOW': 20}}],
+                [{'RSI': 7}, {'RSI': {'HIGH': 70, 'LOW': 30}}],
+                [{'RSI': 14}, {'RSI': {'HIGH': 80, 'LOW': 20}}],
+                [{'RSI': 14}, {'RSI': {'HIGH': 80, 'LOW': 30}}],
+                [{'RSI': 14}, {'RSI': {'HIGH': 70, 'LOW': 20}}],
+                [{'RSI': 14}, {'RSI': {'HIGH': 70, 'LOW': 30}}]]
+        arr = np.array(data)
+        return arr
+
+    def eatechanalysisenter(self):
+        self.search = Tickersearch("AAPL")
+        # self.kwargs = self.eatoolhistorytextmodel()
+        self.pdtext = self.search.tickerhisory(
+            {'interval': '1d', 'period': '6mo'})
+        # self.settertoolhistory(self.pdtext)
+        return self.pdtext
+
+
+class tread_p_task:
+
+    def __init__(self, mesh_conv, toolhistory, modelValue):
+        self.mesh_conv = mesh_conv
+        self.toolhistory = toolhistory
+        self.modelValue = modelValue
 
     def processes(self, cpu):
         with ProcessPoolExecutor(max_workers=cpu) as executor:
-            future = executor.submit(self.task)
-            ret = future.result()
+            futures = []
+            for mesh in self.mesh_conv:
+                future = executor.submit(self.task, mesh, self.toolhistory)
+                futures.append(future)
+            results = [future.result() for future in futures]
+            return print(results)
 
     def task(self, mesh_conv, toolhistory):
         TechValue, EntryTechValue = self.split_data(mesh_conv)
         datadb = self.calculateinter(TechValue, toolhistory)
+        self.setterret_profo_var(TechValue, EntryTechValue, datadb)
+        self.return_sharpe_ratio = optcerebrosetup(datadb, self.modelValue)
+        self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio = self.return_sharpe_ratio.opt_file()
+        return [TechValue, EntryTechValue, self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio]
 
     def split_data(self, mesh_conv):
         return mesh_conv[0], mesh_conv[1]
@@ -115,75 +207,154 @@ class tread_p_task():
         datadb = toolhistory
         TechValuekey = list(TechValue.keys())
         for param in TechValuekey:
-            returndatadb = self.param_cal_return(param, TechValue, toolhistory)
+            pr = param_return()
+            returndatadb = pr.param_cal_return(
+                model='cal', param=param, TechValue=TechValue, toolhistory=toolhistory)
             datadb = returndatadb
         return datadb
 
-    def param_cal_return(self, param, TechValue, toolhistory):
+    def setterret_profo_var(self, toolpermm, entryperm, history):
+        Dataset.set_var(toolpermm, entryperm, history)
+
+    def getterret_profo_var(self):
+        return Dataset.get__var()
+
+
+class param_return:
+
+    def param_cal_return(self, model, param, TechValue=None, toolhistory=None, row=None, entryTechValue=None):
         methods = {
-            "RSI": rsi_inq.calculate,
-            "MACD": macd_inq.calculate,
-            "HT_DCPERIOD": ht_dc_inq.calculate,
-            "HT_DCPHASE": ht_dchase_inq.calculate,
-            "HT_PHASOR": ht_phasor_inq.calculate,
-            "HT_SINE": ht_sine_inq.calculate,
-            "HT_TRENDMODE": ht_trendmode_inq.calculate,
-            "ADX": adx_inq.calculate,
-            "ADXR": adxr_inq.calculate,
-            "APO": apo_inq.calculate,
-            "AROON": aroon_inq.calculate,
-            "AROONOSC": aroonosc_inq.calculate,
-            "BOP": bop_inq.calculate,
-            "CCI": cci_inq.calculate,
-            "CMO": cmo_inq.calculate,
-            "DX": dx_inq.calculate,
-            "MACDEXT": macdext_inq.calculate,
-            "MACDFIX": macdfix_inq.calculate,
-            "MFI": mfi_inq.calculate,
-            "MINUS_DI": minus_di_inq.calculate,
-            "MINUS_DM": minus_dm_inq.calculate,
-            "MOM": mom_inq.calculate,
-            "PLUS_DI": plusdi_inq.calculate,
-            "PLUS_DM": plusdm_inq.calculate,
-            "PPO": ppo_inq.calculate,
-            "ROC": roc_inq.calculate,
-            "ROCP": rocp_inq.calculate,
-            "ROCR": rocr_inq.calculate,
-            "ROCR100": rocr100_inq.calculate,
-            "STOCH": stoch_inq.calculate,
-            "STOCHF": stochf_inq.calculate,
-            "STOCHRSI": stochrsi_inq.calculate,
-            "TRIX": trix_inq.calculate,
-            "ULTOSC": ultosc_inq.calculate,
-            "WILLR": willr_inq.calculate,
-            "MAVP": mavp_inq.calculate,
-            "BBANDS": bbands_inq.calculate,
-            "DEMA": dema_inq.calculate,
-            "EMA": ema_inq.calculate,
-            "HT_TRENDLINE": ht_trendline_inq.calculate,
-            "KAMA": kama_inq.calculate,
-            "MA": ma_inq.calculate,
-            "MAMA": mama_inq.calculate,
-            "MIDPOINT": midpoint_inq.calculate,
-            "MIDPRICE": midprice_inq.calculate,
-            "SAR": sar_inq.calculate,
-            "SAREXT": sarext_inq.calculate,
-            "SMA": sma_inq.calculate,
-            "T3": t3_inq.calculate,
-            "TEMA": tema_inq.calculate,
-            "TRIMA": trima_inq.calculate,
-            "WMA": wma_inq.calculate,
-            "KDJ": kdj_inq.calculate,
-            "ATR": atr_inq.calculate,
-            "NATR": natr_inq.calculate,
-            "TRANGE": trange_inq.calculate,
-            "AD": ad_inq.calculate,
-            "ADOSC": adosc_inq.calculate,
-            "OBV": obv_inq.calculate
+            "RSI": rsi_inq,
+            "MACD": macd_inq,
+            "HT_DCPERIOD": ht_dc_inq,
+            "HT_DCPHASE": ht_dchase_inq,
+            "HT_PHASOR": ht_phasor_inq,
+            "HT_SINE": ht_sine_inq,
+            "HT_TRENDMODE": ht_trendmode_inq,
+            "ADX": adx_inq,
+            "ADXR": adxr_inq,
+            "APO": apo_inq,
+            "AROON": aroon_inq,
+            "AROONOSC": aroonosc_inq,
+            "BOP": bop_inq,
+            "CCI": cci_inq,
+            "CMO": cmo_inq,
+            "DX": dx_inq,
+            "MACDEXT": macdext_inq,
+            "MACDFIX": macdfix_inq,
+            "MFI": mfi_inq,
+            "MINUS_DI": minus_di_inq,
+            "MINUS_DM": minus_dm_inq,
+            "MOM": mom_inq,
+            "PLUS_DI": plusdi_inq,
+            "PLUS_DM": plusdm_inq,
+            "PPO": ppo_inq,
+            "ROC": roc_inq,
+            "ROCP": rocp_inq,
+            "ROCR": rocr_inq,
+            "ROCR100": rocr100_inq,
+            "STOCH": stoch_inq,
+            "STOCHF": stochf_inq,
+            "STOCHRSI": stochrsi_inq,
+            "TRIX": trix_inq,
+            "ULTOSC": ultosc_inq,
+            "WILLR": willr_inq,
+            "MAVP": mavp_inq,
+            "BBANDS": bbands_inq,
+            "DEMA": dema_inq,
+            "EMA": ema_inq,
+            "HT_TRENDLINE": ht_trendline_inq,
+            "KAMA": kama_inq,
+            "MA": ma_inq,
+            "MAMA": mama_inq,
+            "MIDPOINT": midpoint_inq,
+            "MIDPRICE": midprice_inq,
+            "SAR": sar_inq,
+            "SAREXT": sarext_inq,
+            "SMA": sma_inq,
+            "T3": t3_inq,
+            "TEMA": tema_inq,
+            "TRIMA": trima_inq,
+            "WMA": wma_inq,
+            "KDJ": kdj_inq,
+            "ATR": atr_inq,
+            "NATR": natr_inq,
+            "TRANGE": trange_inq,
+            "AD": ad_inq,
+            "ADOSC": adosc_inq,
+            "OBV": obv_inq
         }
-        if param in methods:
-            datadb = methods[param](TechValue, toolhistory)
-            return datadb
+        if (model == 'cal'):
+            if param in methods:
+                datadb = methods[param]().calculate(
+                    TechValue=TechValue, toolhistory=toolhistory)
+                return datadb
+        if (model == 'enter'):
+            if param in methods:
+                datadb = methods[param]().entry(
+                    row=row, entryTechValue=entryTechValue, toolhistory=toolhistory)
+                return datadb
+        if (model == 'exit'):
+            if param in methods:
+                datadb = methods[param]().exit(
+                    row=row, entryTechValue=entryTechValue, toolhistory=toolhistory)
+                return datadb
+
+
+class basesetup:
+    def __init__(self):
+        pass
+
+    def proc(self, current_datetime, current_close):
+        tool_perm, Entry_perm, history = self.getterret_profo_var()
+        rows = self.df_row(current_datetime, current_close, history)
+        rows = rows.squeeze()
+        self.entry = self.tran_entry(
+            row=rows, entryTechValue=Entry_perm, toolhistory=history)
+        self.exit = self.tran_exit(
+            row=rows, entryTechValue=Entry_perm, toolhistory=history)
+        return self.entry, self.exit
+
+    def df_row(self, datatime, close, toolhistory):
+        self.df = toolhistory
+        self.converted_dt = self.conv_date_to_America_New_York(datatime)
+        selected_rows = self.df.loc[(self.df['Close'] == close) & (
+            self.df.index == self.converted_dt)]
+        print(selected_rows)
+        return selected_rows
+
+    def conv_date_to_America_New_York(self, datetime):
+        dt_without_tz = pytz.utc.localize(datetime)
+        converted_dt = dt_without_tz.astimezone(
+            pytz.timezone('America/New_York'))
+        return converted_dt
+
+    def tran_entry(self, row, entryTechValue, toolhistory):
+        self.entry_exit_trankeys = list(entryTechValue.keys())
+        self.Checklist = []
+        for param in self.entry_exit_trankeys:
+            self.entryCheck = param_return().param_cal_return(
+                model='enter', param=param, row=row, entryTechValue=entryTechValue, toolhistory=toolhistory)
+            self.Checklist.append(self.entryCheck)
+        if (all(self.Checklist)):
+            return True
+        else:
+            return False
+
+    def tran_exit(self, row, entryTechValue, toolhistory):
+        self.exit_exit_trankeys = list(entryTechValue.keys())
+        self.Checklist = []
+        for param in self.exit_exit_trankeys:
+            self.exitCheck = param_return().param_cal_return(
+                model='exit', param=param, row=row, entryTechValue=entryTechValue, toolhistory=toolhistory)
+            self.Checklist.append(self.exitCheck)
+        if (all(self.Checklist)):
+            return True
+        else:
+            return False
+
+    def getterret_profo_var(self):
+        return Dataset.get__var()
 
 
 class rsi_inq():
@@ -193,18 +364,18 @@ class rsi_inq():
             datadb["Close"], timeperiod=int(TechValue['RSI']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['RSI']
         self.entryba = entryTechValue['RSI']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['RSI']
         self.entryba = entryTechValue['RSI']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False
@@ -217,7 +388,7 @@ class macd_inq():
             TechValue['MACD']['slowperiod']), signalperiod=int(TechValue['MACD']['signalperiod']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['MACD']['GOLDEN CROSS']
         self.MACDitem = row.loc['MACD']
         self.MACD_SIGNALitem = row.loc['MACD_SIGNAL']
@@ -232,7 +403,7 @@ class macd_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['MACD']['Death Cross']
         self.MACDitem = row.loc['MACD']
         self.MACD_SIGNALitem = row.loc['MACD_SIGNAL']
@@ -254,7 +425,7 @@ class ht_dc_inq():
         datadb["HT_DCPERIOD"] = talib.HT_DCPERIOD(datadb["Close"])
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['HT_DCPERIOD']
         self.entryba = entryTechValue['HT_DCPERIOD']['LOW']
         if (float(self.item) <= float(self.entryba)):
@@ -262,7 +433,7 @@ class ht_dc_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['HT_DCPERIOD']
         self.entryba = entryTechValue['HT_DCPERIOD']['HIGH']
         if (float(self.item) >= float(self.entryba)):
@@ -277,7 +448,7 @@ class ht_dchase_inq():
         datadb["HT_DCPHASE"] = talib.HT_DCPHASE(datadb["Close"])
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['HT_DCPHASE']
         self.entryba = entryTechValue['HT_DCPHASE']['LOW']
         if (float(self.item) <= float(self.entryba)):
@@ -285,7 +456,7 @@ class ht_dchase_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['HT_DCPHASE']
         self.entryba = entryTechValue['HT_DCPHASE']['HIGH']
         if (float(self.item) >= float(self.entryba)):
@@ -301,7 +472,7 @@ class ht_phasor_inq():
             datadb["Close"])
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['HT_PHASOR']['GOLDEN CROSS']
         self.HT_PHASORitem = row.loc['HT_PHASOR_INHPASE']
         self.HT_PHASOR_QUADRATUREitem = row.loc['HT_PHASOR_QUADRATURE']
@@ -316,7 +487,7 @@ class ht_phasor_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['HT_PHASOR']['Death Cross']
         self.HT_PHASORitem = row.loc['HT_PHASOR_INHPASE']
         self.HT_PHASOR_QUADRATUREitem = row.loc['HT_PHASOR_QUADRATURE']
@@ -338,7 +509,7 @@ class ht_sine_inq():
         datadb["SINE"], datadb["LEADSINE"] = talib.HT_SINE(datadb["Close"])
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['SINE']
         self.entryba = entryTechValue['HT_SINE']['LOW']
         if (float(self.item) <= float(self.entryba)):
@@ -346,7 +517,7 @@ class ht_sine_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['SINE']
         self.entryba = entryTechValue['HT_SINE']['HIGH']
         if (float(self.item) >= float(self.entryba)):
@@ -361,7 +532,7 @@ class ht_trendmode_inq():
         datadb["HT_TRENDMODE"] = talib.HT_TRENDMODE(datadb["Close"])
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['HT_TRENDMODE']
         self.entryba = entryTechValue['HT_TRENDMODE']['LOW']
         if (float(self.item) <= float(self.entryba)):
@@ -369,7 +540,7 @@ class ht_trendmode_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['HT_TRENDMODE']
         self.entryba = entryTechValue['HT_TRENDMODE']['HIGH']
         if (float(self.item) >= float(self.entryba)):
@@ -385,7 +556,7 @@ class adx_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['ADX']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ADX']
         self.entryba = entryTechValue['ADX']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -393,7 +564,7 @@ class adx_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ADX']
         self.entryba = entryTechValue['ADX']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -409,7 +580,7 @@ class adxr_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['ADXR']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ADXR']
         self.entryba = entryTechValue['ADXR']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -417,7 +588,7 @@ class adxr_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ADXR']
         self.entryba = entryTechValue['ADXR']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -433,7 +604,7 @@ class apo_inq():
             TechValue['APO']['slowperiod']), matype=int(TechValue['APO']['matype']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['APO']
         self.entryba = entryTechValue['APO']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -441,7 +612,7 @@ class apo_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['APO']
         self.entryba = entryTechValue['APO']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -457,7 +628,7 @@ class aroon_inq():
             datadb["High"], datadb["Low"], timeperiod=int(TechValue['AROON']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['AROON']['GOLDEN CROSS']
         self.item = row.loc['AROON_UP']
         self.SIGNALitem = row.loc['AROON_DOWN']
@@ -472,7 +643,7 @@ class aroon_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['AROON']['Death Cross']
         self.item = row.loc['AROON_UP']
         self.SIGNALitem = row.loc['AROON_DOWN']
@@ -495,7 +666,7 @@ class aroonosc_inq():
             datadb["High"], datadb["Low"], timeperiod=int(TechValue['AROONOSC']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['AROONOSC']
         self.entryba = entryTechValue['AROONOSC']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -503,7 +674,7 @@ class aroonosc_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['AROONOSC']
         self.entryba = entryTechValue['AROONOSC']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -519,7 +690,7 @@ class bop_inq():
             datadb["Open"], datadb["High"], datadb["Low"], datadb["Close"])
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['BOP']
         self.entryba = entryTechValue['BOP']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -527,7 +698,7 @@ class bop_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['BOP']
         self.entryba = entryTechValue['BOP']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -543,7 +714,7 @@ class cci_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['CCI']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['CCI']
         self.entryba = entryTechValue['CCI']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -551,7 +722,7 @@ class cci_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['CCI']
         self.entryba = entryTechValue['CCI']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -567,7 +738,7 @@ class cmo_inq():
             datadb["Close"], timeperiod=int(TechValue['CMO']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['CMO']
         self.entryba = entryTechValue['CMO']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -575,7 +746,7 @@ class cmo_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['CMO']
         self.entryba = entryTechValue['CMO']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -591,7 +762,7 @@ class dx_inq():
                                 datadb["Close"], timeperiod=int(TechValue['DX']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['DX']
         self.entryba = entryTechValue['DX']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -599,7 +770,7 @@ class dx_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['DX']
         self.entryba = entryTechValue['DX']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -615,7 +786,7 @@ class macdext_inq():
             TechValue['MACDEXT']['slowperiod']), slowmatype=int(TechValue['MACDEXT']['slowmatype']), signalperiod=int(TechValue['MACDEXT']['signalperiod']), signalmatype=int(TechValue['MACDEXT']['signalmatype']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['MACDEXT']['GOLDEN CROSS']
         self.MACDitem = row.loc['MACDEXT']
         self.MACD_SIGNALitem = row.loc['MACDEXT_SIGNAL']
@@ -630,7 +801,7 @@ class macdext_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['MACDEXT']['Death Cross']
         self.MACDitem = row.loc['MACDEXT']
         self.MACD_SIGNALitem = row.loc['MACDEXT_SIGNAL']
@@ -653,7 +824,7 @@ class macdfix_inq():
             datadb["Close"], signalperiod=int(TechValue['MACDFIX']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['MACDFIX']['GOLDEN CROSS']
         self.MACDitem = row.loc['MACDFIX']
         self.MACD_SIGNALitem = row.loc['MACDFIX_SIGNAL']
@@ -668,7 +839,7 @@ class macdfix_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['MACDFIX']['Death Cross']
         self.MACDitem = row.loc['MACDFIX']
         self.MACD_SIGNALitem = row.loc['MACDFIX_SIGNAL']
@@ -691,7 +862,7 @@ class mfi_inq():
                                   datadb["Volume"], timeperiod=int(TechValue['MFI']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MFI']
         self.entryba = entryTechValue['MFI']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -699,7 +870,7 @@ class mfi_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MFI']
         self.entryba = entryTechValue['MFI']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -715,7 +886,7 @@ class minus_di_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['MINUS_DI']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MINUS_DI']
         self.entryba = entryTechValue['MINUS_DI']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -723,7 +894,7 @@ class minus_di_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MINUS_DI']
         self.entryba = entryTechValue['MINUS_DI']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -739,7 +910,7 @@ class minus_dm_inq():
             datadb["High"], datadb["Low"], timeperiod=int(TechValue['MINUS_DM']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MINUS_DI']
         self.entryba = entryTechValue['MINUS_DI']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -747,7 +918,7 @@ class minus_dm_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MINUS_DI']
         self.entryba = entryTechValue['MINUS_DI']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -763,7 +934,7 @@ class mom_inq():
             datadb["Close"], timeperiod=int(TechValue['MOM']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MOM']
         self.entryba = entryTechValue['MOM']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -771,7 +942,7 @@ class mom_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MOM']
         self.entryba = entryTechValue['MOM']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -787,7 +958,7 @@ class plusdi_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['PLUS_DI']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['PLUS_DI']
         self.entryba = entryTechValue['PLUS_DI']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -795,7 +966,7 @@ class plusdi_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['PLUS_DI']
         self.entryba = entryTechValue['PLUS_DI']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -811,7 +982,7 @@ class plusdm_inq():
             datadb["High"], datadb["Low"], timeperiod=int(TechValue['PLUS_DM']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['PLUS_DM']
         self.entryba = entryTechValue['PLUS_DM']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -819,7 +990,7 @@ class plusdm_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['PLUS_DM']
         self.entryba = entryTechValue['PLUS_DM']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -835,7 +1006,7 @@ class ppo_inq():
             TechValue['PPO']['slowperiod']), matype=int(TechValue['PPO']['matype']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['PPO']
         self.entryba = entryTechValue['PPO']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -843,7 +1014,7 @@ class ppo_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['PPO']
         self.entryba = entryTechValue['PPO']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -859,7 +1030,7 @@ class roc_inq():
             datadb["Close"], timeperiod=int(TechValue['ROC']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ROC']
         self.entryba = entryTechValue['ROC']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -867,7 +1038,7 @@ class roc_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ROC']
         self.entryba = entryTechValue['ROC']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -883,7 +1054,7 @@ class rocp_inq():
             datadb["Close"], timeperiod=int(TechValue['ROCP']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ROCP']
         self.entryba = entryTechValue['ROCP']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -891,7 +1062,7 @@ class rocp_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ROCP']
         self.entryba = entryTechValue['ROCP']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -907,7 +1078,7 @@ class rocr_inq():
             datadb["Close"], timeperiod=int(TechValue['ROCR']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ROCR']
         self.entryba = entryTechValue['ROCR']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -915,7 +1086,7 @@ class rocr_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ROCR']
         self.entryba = entryTechValue['ROCR']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -931,7 +1102,7 @@ class rocr100_inq():
             datadb["Close"], timeperiod=int(TechValue['ROCR100']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ROCR100']
         self.entryba = entryTechValue['ROCR100']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -939,7 +1110,7 @@ class rocr100_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ROCR100']
         self.entryba = entryTechValue['ROCR100']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -955,7 +1126,7 @@ class stoch_inq():
             TechValue['STOCH']['slowk_period']), slowk_matype=int(TechValue['STOCH']['slowk_matype']), slowd_period=int(TechValue['STOCH']['slowd_period']), slowd_matype=int(TechValue['STOCH']['slowd_matype']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['STOCH']['GOLDEN CROSS']
         self.MACDitem = row.loc['STOCH_SLOWK']
         self.MACD_SIGNALitem = row.loc['STOCH_SLOWD']
@@ -970,7 +1141,7 @@ class stoch_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['STOCH']['Death Cross']
         self.MACDitem = row.loc['STOCH_SLOWK']
         self.MACD_SIGNALitem = row.loc['STOCH_SLOWD']
@@ -993,7 +1164,7 @@ class stochf_inq():
             TechValue['STOCHF']['fastk_period']), fastd_period=int(TechValue['STOCHF']['fastd_period']), fastd_matype=int(TechValue['STOCHF']['fastd_matype']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['STOCHF']['GOLDEN CROSS']
         self.MACDitem = row.loc['STOCHF_FASTK']
         self.MACD_SIGNALitem = row.loc['STOCHF_FASTD']
@@ -1008,7 +1179,7 @@ class stochf_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['STOCHF']['Death Cross']
         self.MACDitem = row.loc['STOCHF_FASTK']
         self.MACD_SIGNALitem = row.loc['STOCHF_FASTD']
@@ -1031,7 +1202,7 @@ class stochrsi_inq():
             TechValue['STOCHRSI']['fastk_period']), fastd_period=int(TechValue['STOCHRSI']['fastd_period']), fastd_matype=int(TechValue['STOCHRSI']['fastd_matype']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['STOCHRSI']['GOLDEN CROSS']
         self.MACDitem = row.loc['STOCHRSI_SLOWK']
         self.MACD_SIGNALitem = row.loc['STOCHRSI_SLOWD']
@@ -1046,7 +1217,7 @@ class stochrsi_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['STOCHRSI']['Death Cross']
         self.MACDitem = row.loc['STOCHRSI_SLOWK']
         self.MACD_SIGNALitem = row.loc['STOCHRSI_SLOWD']
@@ -1069,7 +1240,7 @@ class trix_inq():
             datadb["Close"], timeperiod=int(TechValue['TRIX']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['TRIX']
         self.entryba = entryTechValue['TRIX']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -1077,7 +1248,7 @@ class trix_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['TRIX']
         self.entryba = entryTechValue['TRIX']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -1093,7 +1264,7 @@ class ultosc_inq():
             TechValue['ULTOSC']['timeperiod1']), timeperiod2=int(TechValue['ULTOSC']['timeperiod2']), timeperiod3=int(TechValue['ULTOSC']['timeperiod3']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ULTOSC']
         self.entryba = entryTechValue['ULTOSC']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -1101,7 +1272,7 @@ class ultosc_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ULTOSC']
         self.entryba = entryTechValue['ULTOSC']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -1117,7 +1288,7 @@ class willr_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['WILLR']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['WILLR']
         self.entryba = entryTechValue['WILLR']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -1125,7 +1296,7 @@ class willr_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['WILLR']
         self.entryba = entryTechValue['WILLR']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -1142,7 +1313,7 @@ class mavp_inq():
             TechValue['MAVP']['maxperiod']), matype=int(TechValue['MAVP']['matype']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MAVP']
         self.entryba = entryTechValue['MAVP']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -1150,7 +1321,7 @@ class mavp_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['MAVP']
         self.entryba = entryTechValue['MAVP']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -1166,7 +1337,7 @@ class bbands_inq():
             datadb['Close'], timeperiod=int(TechValue['BBANDS']['timeperiod']), nbdevup=int(TechValue['BBANDS']['nbdevup']), nbdevdn=int(TechValue['BBANDS']['nbdevdn']), matype=int(TechValue['BBANDS']['matype']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['BBANDS']['BBANDS_UPPERBAND']
         self.MACDitem = row.loc['Close']
         self.MACD_SIGNALitem = row.loc['BBANDS_UPPERBAND']
@@ -1182,7 +1353,7 @@ class bbands_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['BBANDS']['BBANDS_LOWERBAND']
         self.MACDitem = row.loc['Close']
         self.MACD_SIGNALitem = row.loc['BBANDS_LOWERBAND']
@@ -1214,7 +1385,7 @@ class dema_inq():
             datadb["Close"], timeperiod=int(TechValue['DEMA']['Parameters_5']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['DEMA'][
             'Parameters_1 - Parameters_2']['GOLDEN CROSS']
         self.parameters_2_Parameters_3 = entryTechValue['DEMA'][
@@ -1257,7 +1428,7 @@ class dema_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['DEMA'][
             'Parameters_1 - Parameters_2']['Death Cross']
         self.parameters_2_Parameters_3 = entryTechValue['DEMA'][
@@ -1317,7 +1488,7 @@ class ema_inq():
             datadb["Close"], timeperiod=int(TechValue['EMA']['Parameters_5']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['EMA'][
             'Parameters_1 - Parameters_2']['GOLDEN CROSS']
         self.parameters_2_Parameters_3 = entryTechValue['EMA'][
@@ -1361,7 +1532,7 @@ class ema_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['EMA'][
             'Parameters_1 - Parameters_2']['Death Cross']
         self.parameters_2_Parameters_3 = entryTechValue['EMA'][
@@ -1412,7 +1583,7 @@ class ht_trendline_inq():
         datadb["HT_TRENDLINE"] = talib.HT_TRENDLINE(datadb["Close"])
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['HT_TRENDLINE']['GOLDEN CROSS']
         self.MACDitem = row.loc['HT_TRENDLINE']
         self.MACD_SIGNALitem = row.loc['Close']
@@ -1427,7 +1598,7 @@ class ht_trendline_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['HT_TRENDLINE']['Death Cross']
         self.MACDitem = row.loc['HT_TRENDLINE']
         self.MACD_SIGNALitem = row.loc['Close']
@@ -1458,7 +1629,7 @@ class kama_inq():
             datadb["Close"], timeperiod=int(TechValue['KAMA']['Parameters_5']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['KAMA'][
             'Parameters_1 - Parameters_2']['GOLDEN CROSS']
         self.parameters_2_Parameters_3 = entryTechValue['KAMA'][
@@ -1502,7 +1673,7 @@ class kama_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['KAMA'][
             'Parameters_1 - Parameters_2']['Death Cross']
         self.parameters_2_Parameters_3 = entryTechValue['KAMA'][
@@ -1554,10 +1725,10 @@ class ma_inq():
             TechValue['MA']['timeperiod']), matype=int(TechValue['MA']['matype']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         return True
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         return True
 
 
@@ -1568,7 +1739,7 @@ class mama_inq():
             datadb['Close'], fastlimit=float(TechValue['MAMA']['fastlimit']), slowlimit=float(TechValue['MAMA']['slowlimit']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['MAMA']['GOLDEN CROSS']
         self.MACDitem = row.loc['MAMA']
         self.MACD_SIGNALitem = row.loc['MAMA_FAMA']
@@ -1583,7 +1754,7 @@ class mama_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['MAMA']['Death Cross']
         self.MACDitem = row.loc['MAMA']
         self.MACD_SIGNALitem = row.loc['MAMA_FAMA']
@@ -1606,7 +1777,7 @@ class midpoint_inq():
             datadb["Close"], timeperiod=int(TechValue['MIDPOINT']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['MIDPOINT']['GOLDEN CROSS']
         self.MIDPOINTitem = row.loc['MIDPOINT']
         self.Highitem = row.loc['High']
@@ -1623,7 +1794,7 @@ class midpoint_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['MIDPOINT']['Death Cross']
         self.MIDPOINTitem = row.loc['MIDPOINT']
         self.Highitem = row.loc['High']
@@ -1648,7 +1819,7 @@ class midprice_inq():
             datadb["High"], datadb["Low"], timeperiod=int(TechValue['MIDPRICE']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['MIDPRICE']['GOLDEN CROSS']
         self.MIDPOINTitem = row.loc['MIDPRICE']
         self.Highitem = row.loc['High']
@@ -1665,7 +1836,7 @@ class midprice_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['MIDPRICE']['Death Cross']
         self.MIDPOINTitem = row.loc['MIDPRICE']
         self.Highitem = row.loc['High']
@@ -1690,7 +1861,7 @@ class sar_inq():
             TechValue['SAR']['acceleration']), maximum=float(TechValue['SAR']['maximum']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.entryba = entryTechValue['SAR']['GOLDEN CROSS']
         self.MIDPOINTitem = row.loc['SAR']
         self.Closeitem = row.loc['Close']
@@ -1705,7 +1876,7 @@ class sar_inq():
             else:
                 return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.exitba = entryTechValue['SAR']['Death Cross']
         self.MIDPOINTitem = row.loc['SAR']
         self.Closeitem = row.loc['Close']
@@ -1728,7 +1899,7 @@ class sarext_inq():
             TechValue['SAREXT']['accelerationlong']), accelerationmaxlong=float(TechValue['SAREXT']['accelerationmaxlong']), accelerationinitshort=float(TechValue['SAREXT']['accelerationinitshort']), accelerationshort=float(TechValue['SAREXT']['accelerationshort']), accelerationmaxshort=float(TechValue['SAREXT']['accelerationmaxshort']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['SAREXT']
         self.entryba = entryTechValue['SAREXT']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -1736,7 +1907,7 @@ class sarext_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['SAREXT']
         self.entryba = entryTechValue['SAREXT']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -1760,7 +1931,7 @@ class sma_inq():
             datadb["Close"], timeperiod=int(TechValue['SMA']['Parameters_5']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['SMA'][
             'Parameters_1 - Parameters_2']['GOLDEN CROSS']
         self.parameters_2_Parameters_3 = entryTechValue['SMA'][
@@ -1804,7 +1975,7 @@ class sma_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['SMA'][
             'Parameters_1 - Parameters_2']['Death Cross']
         self.parameters_2_Parameters_3 = entryTechValue['SMA'][
@@ -1864,7 +2035,7 @@ class t3_inq():
             TechValue['T3']['parameter_5timeperiod']), vfactor=int(TechValue['T3']['parameter_5vfactor']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['T3'][
             'Parameters_1 - Parameters_2']['Golden Cross']
         self.parameters_2_Parameters_3 = entryTechValue['T3'][
@@ -1908,7 +2079,7 @@ class t3_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['T3'][
             'Parameters_1 - Parameters_2']['Death Cross']
         self.parameters_2_Parameters_3 = entryTechValue['T3'][
@@ -1968,7 +2139,7 @@ class tema_inq():
             datadb["Close"], timeperiod=int(TechValue['TEMA']['Parameters_5']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['TEMA'][
             'Parameters_1 - Parameters_2']['GOLDEN CROSS']
         self.parameters_2_Parameters_3 = entryTechValue['TEMA'][
@@ -2012,7 +2183,7 @@ class tema_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['TEMA'][
             'Parameters_1 - Parameters_2']['Death Cross']
         self.parameters_2_Parameters_3 = entryTechValue['TEMA'][
@@ -2072,7 +2243,7 @@ class trima_inq():
             datadb["Close"], timeperiod=int(TechValue['TRIMA']['Parameters_5']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['TRIMA'][
             'Parameters_1 - Parameters_2']['GOLDEN CROSS']
         self.parameters_2_Parameters_3 = entryTechValue['TRIMA'][
@@ -2116,7 +2287,7 @@ class trima_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['TRIMA'][
             'Parameters_1 - Parameters_2']['Death Cross']
         self.parameters_2_Parameters_3 = entryTechValue['TRIMA'][
@@ -2176,7 +2347,7 @@ class wma_inq():
             datadb["Close"], timeperiod=int(TechValue['WMA']['Parameters_5']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['WMA'][
             'Parameters_1 - Parameters_2']['GOLDEN CROSS']
         self.parameters_2_Parameters_3 = entryTechValue['WMA'][
@@ -2220,7 +2391,7 @@ class wma_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.parameters_1_Parameters_2 = entryTechValue['WMA'][
             'Parameters_1 - Parameters_2']['Death Cross']
         self.parameters_2_Parameters_3 = entryTechValue['WMA'][
@@ -2273,7 +2444,7 @@ class kdj_inq():
         datadb['KDJ_SLOWJ'] = 3*datadb['KDJ_SLOWK']-2*datadb['KDJ_SLOWD']
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['KDJ_SLOWJ']
         self.entryba = entryTechValue['KDJ']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -2281,7 +2452,7 @@ class kdj_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['KDJ_SLOWJ']
         self.entryba = entryTechValue['KDJ']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -2297,7 +2468,7 @@ class atr_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['ATR']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ATR']
         self.entryba = entryTechValue['ATR']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -2305,7 +2476,7 @@ class atr_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['ATR']
         self.entryba = entryTechValue['ATR']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -2321,7 +2492,7 @@ class natr_inq():
             datadb["High"], datadb["Low"], datadb["Close"], timeperiod=int(TechValue['NATR']))
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['NATR']
         self.entryba = entryTechValue['NATR']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -2329,7 +2500,7 @@ class natr_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['NATR']
         self.entryba = entryTechValue['NATR']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -2345,7 +2516,7 @@ class trange_inq():
             datadb["High"], datadb["Low"], datadb["Close"])
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['TRANGE']
         self.entryba = entryTechValue['TRANGE']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -2353,7 +2524,7 @@ class trange_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['TRANGE']
         self.entryba = entryTechValue['TRANGE']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -2534,7 +2705,7 @@ class obv_inq():
         datadb["OBV"] = talib.OBV(datadb["Close"], datadb["Volume"])
         return datadb
 
-    def entry(self, row, entryTechValue):
+    def entry(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['OBV']
         self.entryba = entryTechValue['OBV']['LOW']
         if (float(self.item) < float(self.entryba)):
@@ -2542,7 +2713,7 @@ class obv_inq():
         else:
             return False
 
-    def exit(self, row, entryTechValue):
+    def exit(self, row, entryTechValue, toolhistory=None):
         self.item = row.loc['OBV']
         self.entryba = entryTechValue['OBV']['HIGH']
         if (float(self.item) > float(self.entryba)):
@@ -2551,58 +2722,5 @@ class obv_inq():
             return False
 
 
-class basesetup():
-    def __init__(self, toolhistory, EntryTechValue):
-        self.toolhistory = toolhistory
-        self.entryTechValue = EntryTechValue
-
-    def df_row(self, datatime, close):
-        self.df = self.toolhistory
-        self.converted_dt = self.conv_date_to_America_New_York(datatime)
-        selected_rows = self.df.loc[(self.df['Close'] == close) & (
-            self.df.index == self.converted_dt)]
-        print(selected_rows)
-        return selected_rows
-
-    def conv_date_to_America_New_York(self, datetime):
-        dt_without_tz = pytz.utc.localize(datetime)
-        converted_dt = dt_without_tz.astimezone(
-            pytz.timezone('America/New_York'))
-        return converted_dt
-
-    def tran_entry(self, row):
-        self.entry_exit_trankeys = list(self.entryTechValue.keys())
-        self.Checklist = []
-        for param in self.entry_exit_trankeys:
-            self.entryCheck = self.check_entery_para(
-                param, row)
-            self.Checklist.append(self.entryCheck)
-        if (all(self.Checklist)):
-            return True
-        else:
-            return False
-
-    def tran_exit(self, row):
-        self.exit_exit_trankeys = list(self.entryTechValue.keys())
-        self.Checklist = []
-        for param in self.exit_exit_trankeys:
-            self.exitCheck = self.check_exit_para(
-                param, row)
-            self.Checklist.append(self.exitCheck)
-        if (all(self.Checklist)):
-            return True
-        else:
-            return False
-
-    def check_entery_para(self, testname, testitemrow):
-        self.name = testname
-        from Layout.SubLayout.Ta.talib_lib import talib_list
-        self.libret = talib_list()
-        self.entryCheck = self.libret.entry_turn(self.name, testitemrow)
-        return self.entryCheck
-
-    def check_exit_para(self, testname, testitem):
-        self.name = testname
-        self.libret = talib_list()
-        self.entryCheck = self.libret.exit_turn(self.name, testitem)
-        return self.entryCheck
+if __name__ == "__main__":
+    a = runa()

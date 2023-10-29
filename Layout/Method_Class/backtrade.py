@@ -6,6 +6,8 @@ import webbrowser
 import quantstats as qs
 import pytz
 import backtrader as bt
+import numpy as np
+np.seterr(invalid='ignore')
 
 
 class bt_enter_exit(bt.Strategy):

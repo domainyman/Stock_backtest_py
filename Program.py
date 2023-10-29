@@ -13,6 +13,7 @@ from Layout.SubLayout.Entrymanagement.OptEntmanagementPage import optEntrymanage
 from Layout.SubLayout.Entrymanagement.EntmanagementPage import Entrymanagepage
 from Layout.Method_Class.backtrade import cerebrosetup
 from Layout.Method_Class.optbacktrade import optcerebrosetup
+from Layout.Method_Class.pool_ayns import tread_p_task
 from Layout.Method_Class.segmentationrageenter_inq import seqmentationrange_inq, seqmentationrange_entry, seqmentationrange_conv
 from Layout.SubLayout.Search.SearchSymbol import Tickersearch
 from Global.Value.UniversalValue import GlobalValue
@@ -912,15 +913,43 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.settertoolhistory(self.pdtext)
         return True
 
+    # def eatechanalysisenter(self):
+    #     self.search = Tickersearch(self.gettersymbol())
+    #     self.kwargs = self.eatoolhistorytextmodel()
+    #     self.pdtext = self.search.tickerhisory(self.kwargs)
+    #     # self.settertoolhistory(self.pdtext)
+    #     return self.pdtext
+
+    # def eatechanalysisenterdetail(self):
+    #     try:
+    #         if (self.clear_uiea_tableView() == True):
+    #             if (self.check_date_final(self.getterEntryRangeValue()) == True):
+    #                 self.toolhis = self.eatechanalysisenter()
+    #             #     self.mesh_cov = self._muitifrom_ticker()
+    #                 # self.ans = tread_p_task(mesh_conv=arr,toolhistory=self.toolhis)
+    #                 # self.ans.processes(cpu=20)
+    #                 # self.anyal_list(self.mesh_conv)
+    #                 # self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(
+    #                 #     self.getterret_profo_var()), self.getterret_profo_var()))
+    #             else:
+    #                 QMessageBox.information(
+    #                     None, 'Input Error', 'Input Error!,Please enter correct information')
+    #     except BaseException as msg:
+    #         print(msg)
+    #         QMessageBox.warning(None, 'System Error',
+    #                             'System Error !' + str(msg))
+
     def eatechanalysisenterdetail(self):
         try:
             if (self.eatechanalysisenter() == True):
                 if (self.check_date_final(self.getterEntryRangeValue()) == True):
                     self.clear_uiea_tableView()
                     self.mesh_cov = self._muitifrom_ticker()
-                    self.anyal_list(self.mesh_conv)
-                    self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(
-                        self.getterret_profo_var()), self.getterret_profo_var()))
+                    self.proc = tread_p_task(self.mesh_cov,self.gettertoolhistory(),self.getterModelValue())
+                    self.results = self.proc.processes(cpu=20)
+                    # self.anyal_list(self.mesh_conv)
+                    # self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(
+                    #     self.getterret_profo_var()), self.getterret_profo_var()))
                 else:
                     QMessageBox.information(
                         None, 'Input Error', 'Input Error!,Please enter correct information')
@@ -945,10 +974,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.setterTechValue(item[0])
             self.setterEntryTechValue(item[1])
             self.calculateinter()
-            self.opt = optcerebrosetup()
-            self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio = self.opt.opt_file()
-            self.uploading_prof_var(item[0], item[1], self.return_prof, self.return_cagr,
-                                    self.return_sharpe_ratio, self.return_risk_return_ratio)
+            # self.opt = optcerebrosetup()
+            # self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio = self.opt.opt_file()
+            # self.uploading_prof_var(item[0], item[1], self.return_prof, self.return_cagr,
+            #                         self.return_sharpe_ratio, self.return_risk_return_ratio)
 
     def uploading_prof_var(self, tech, enter, avg_return=None, cagr=None, sharpe_ratio=None, risk_return_ratio=None):
         self.val = {"TechRange": tech, "EntryRange": enter, "avg_return": avg_return,
@@ -1054,6 +1083,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.model.clear()
         self.model.setHorizontalHeaderLabels([])
         self.ui.ea_tableView.setModel(self.model)
+        return True
 
     # def ea_tableView_clicked(self):
     #     self.selected_rows = self.eatable_click()
@@ -1159,6 +1189,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def addret_profo_var(self, text):
         SegmentationRange.add_ret_profo_var(text)
 ###########################
+
 
     def clear_db_perm(self):
         self.setterEntryRangeValue({})
