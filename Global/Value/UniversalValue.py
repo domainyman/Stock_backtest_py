@@ -48,7 +48,7 @@ class GlobalValue(object):
 
     @staticmethod
     def get_TechTool_history_var():
-        print('Get Tech History')
+        # print('Get Tech History')
         return GlobalValue.TechTool
 
     @staticmethod

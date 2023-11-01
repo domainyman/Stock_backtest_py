@@ -137,12 +137,13 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
             return True
         else:
             return False
+        
 
     def check_dict_contains_true(self, your_dict, text, permvalue):
         values = your_dict[text][permvalue]
         if (values == 'True') or (values == 'False'):
             return "Bool"
-        elif (isinstance(values, int)):
+        elif (isinstance(values, int) or (isinstance(values, float))):
             return "Int"
         elif (isinstance(values, dict)):
             return "Dict"
@@ -502,9 +503,9 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
     def tool_dicts(self, textname, firstname, lastname, stepname):
         self.tool_dict = {}
         self.tool_dict[textname] = {}
-        self.tool_dict[textname]['First'] = int(firstname)
-        self.tool_dict[textname]['Last'] = int(lastname)
-        self.tool_dict[textname]['Step'] = int(stepname)
+        self.tool_dict[textname]['First'] = float(firstname)
+        self.tool_dict[textname]['Last'] = float(lastname)
+        self.tool_dict[textname]['Step'] = float(stepname)
         return self.tool_dict
 
     def bool_dicts(self, textname, boolname):

@@ -157,7 +157,7 @@ class seqmentationrange_inq():
         if (self.first == 0) and (self.last == 0) and (self.step == 0):
             return []
         else:
-            self.techlist = range(self.first, self.last, self.step)
+            self.techlist = np.arange(self.first, self.last, self.step, dtype=np.float64).round(3)
             return list(self.techlist)
 
     def rebuilding_structure(self, key, dict_structure):
@@ -344,7 +344,7 @@ class seqmentationrange_entry():
         if (self.first == 0) and (self.last == 0) and (self.step == 0):
             return []
         else:
-            self.techlist = range(self.first, self.last, self.step)
+            self.techlist = np.arange(self.first, self.last, self.step, dtype=np.float64).round(3)
             return list(self.techlist)
 
     def seqment_techTrue_F_dict(self, dicttech) -> list:

@@ -92,7 +92,7 @@ class basesetup():
         self.converted_dt = self.conv_date_to_America_New_York(datatime)
         selected_rows = self.df.loc[(self.df['Close'] == close) & (
             self.df.index == self.converted_dt)]
-        print(selected_rows)
+        # print(selected_rows)
         return selected_rows
 
     def conv_date_to_America_New_York(self, datetime):

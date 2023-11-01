@@ -2,7 +2,8 @@
 import sys
 from PyQt6.QtCore import Qt, QDate, QUrl
 from PyQt6.QtWidgets import QApplication, QMainWindow, QHeaderView, QFileDialog, QMessageBox
-from PyQt6.QtGui import QStandardItemModel, QStandardItem, QDesktopServices
+from PyQt6.QtGui import QStandardItemModel, QStandardItem, QDesktopServices, QMouseEvent
+from Layout.SubLayout.info.Profo_infoPage import Profo_info
 from Layout.Ui_Layout.Ui_main import Ui_MainWindow
 from Layout.SubLayout.info.LongBusSumPage import LongBusSumPage
 from Layout.SubLayout.info.CompanyOfficersPage import CompanyOfficerPage
@@ -33,6 +34,7 @@ import webbrowser
 import quantstats as qs
 import pytz
 import backtrader as bt
+import ast
 
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
@@ -98,6 +100,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.aamoneymanagepage)
         self.ui.ea_techanalysis_tools_entriesbtn.clicked.connect(
             self.Optentrymanagepage)
+
+        self.ui.ea_tableView.doubleClicked.connect(self.ea_tableView_clicked)
 
     def side_meun_btn(self):
         self.ui.Btn_Home.clicked.connect(self.showtkhome)
@@ -719,7 +723,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             type = self.getterModeParamlValue()
             if (type == "From_Signals()"):
                 self.calculateinter()
-            return True
+                return True
+            else:
+                QMessageBox.warning(None, 'System Error', 'No mode selected')
+                return False
         except BaseException as msg:
             QMessageBox.warning(None, 'System Error',
                                 'System Error !' + str(msg))
@@ -756,8 +763,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.aa_tableview_list = [self.ui.aa_positions_tableview,
                                   self.ui.aa_transactions_tableview]
         for item in self.aa_tableview_list:
+            item.setSortingEnabled(True)  # Enable sorting
             item.horizontalHeader().setSectionResizeMode(
-                QHeaderView.ResizeMode.Stretch)
+                QHeaderView.ResizeMode.ResizeToContents)  # Allow resizing of header labels
+            item.horizontalHeader().setStretchLastSection(True)
             item.horizontalHeader().setStyleSheet(
                 "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
             item.verticalHeader().setStyleSheet(
@@ -834,7 +843,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                 self.showeatechanalysis()
                 self.clear_db_perm()
                 self.clear_uiea_tableView()
-                self.ea_techanalysispagesetup()
                 self.eatechdetail()
 
             else:
@@ -887,9 +895,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.ui.ea_techstart_dateEdit.hide()
             self.ui.ea_techend_dateEdit.hide()
 
-    def ea_techanalysispagesetup(self):
-        self.ui.ea_DownLoad_btn.hide()
-
     def eatoolhistorytextmodel(self):
         history_params = {}
         interval = self.ui.ea_techInterval_combo.currentText()
@@ -913,43 +918,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.settertoolhistory(self.pdtext)
         return True
 
-    # def eatechanalysisenter(self):
-    #     self.search = Tickersearch(self.gettersymbol())
-    #     self.kwargs = self.eatoolhistorytextmodel()
-    #     self.pdtext = self.search.tickerhisory(self.kwargs)
-    #     # self.settertoolhistory(self.pdtext)
-    #     return self.pdtext
-
-    # def eatechanalysisenterdetail(self):
-    #     try:
-    #         if (self.clear_uiea_tableView() == True):
-    #             if (self.check_date_final(self.getterEntryRangeValue()) == True):
-    #                 self.toolhis = self.eatechanalysisenter()
-    #             #     self.mesh_cov = self._muitifrom_ticker()
-    #                 # self.ans = tread_p_task(mesh_conv=arr,toolhistory=self.toolhis)
-    #                 # self.ans.processes(cpu=20)
-    #                 # self.anyal_list(self.mesh_conv)
-    #                 # self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(
-    #                 #     self.getterret_profo_var()), self.getterret_profo_var()))
-    #             else:
-    #                 QMessageBox.information(
-    #                     None, 'Input Error', 'Input Error!,Please enter correct information')
-    #     except BaseException as msg:
-    #         print(msg)
-    #         QMessageBox.warning(None, 'System Error',
-    #                             'System Error !' + str(msg))
-
     def eatechanalysisenterdetail(self):
         try:
             if (self.eatechanalysisenter() == True):
                 if (self.check_date_final(self.getterEntryRangeValue()) == True):
                     self.clear_uiea_tableView()
                     self.mesh_cov = self._muitifrom_ticker()
-                    self.proc = tread_p_task(self.mesh_cov,self.gettertoolhistory(),self.getterModelValue())
-                    self.results = self.proc.processes(cpu=20)
-                    # self.anyal_list(self.mesh_conv)
-                    # self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(
-                    #     self.getterret_profo_var()), self.getterret_profo_var()))
+                    if self.mesh_cov is not None and self.mesh_cov.any():
+                        self.proc = tread_p_task(
+                            self.mesh_cov, self.gettertoolhistory(), self.getterModelValue())
+                        self.results = self.proc.processes(cpu=20)
+                        self.splier_poc_prof(self.results)
+                        self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(
+                            self.getterret_profo_var()), self.getterret_profo_var()))
+                    else:
+                        QMessageBox.information(
+                            None, 'System Error', 'No mode selected')
                 else:
                     QMessageBox.information(
                         None, 'Input Error', 'Input Error!,Please enter correct information')
@@ -966,22 +950,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.re_entry_list = self.re_list(self.entrylist)
             self.mesh_conv = seqmentationrange_conv().meshgrid_conv(
                 [self.re_inq_list, self.re_entry_list])
-        return self.mesh_conv
+            return self.mesh_conv
+        else:
+            return None
 
-    def anyal_list(self, mesh_conv):
-        self.mesh_conv = mesh_conv
-        for item in self.mesh_conv:
-            self.setterTechValue(item[0])
-            self.setterEntryTechValue(item[1])
-            self.calculateinter()
-            # self.opt = optcerebrosetup()
-            # self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio = self.opt.opt_file()
-            # self.uploading_prof_var(item[0], item[1], self.return_prof, self.return_cagr,
-            #                         self.return_sharpe_ratio, self.return_risk_return_ratio)
+    def splier_poc_prof(self, mesh):
+        mesh = [sub_list for sub_list in mesh if sub_list]
+        for item in mesh:
+            self.uploading_poc_prof_var(item)
 
-    def uploading_prof_var(self, tech, enter, avg_return=None, cagr=None, sharpe_ratio=None, risk_return_ratio=None):
-        self.val = {"TechRange": tech, "EntryRange": enter, "avg_return": avg_return,
-                    "cagr": cagr, "sharpe_ratio": sharpe_ratio, "risk_return_ratio": risk_return_ratio}
+    def uploading_poc_prof_var(self, cov_list):
+        self.val = {"TechRange": cov_list[0], "EntryRange": cov_list[1], "avg_return": cov_list[2],
+                    "cagr": cov_list[3], "sharpe_ratio": cov_list[4], "risk_return_ratio": cov_list[5]}
         return self.addret_profo_var(self.val)
 
     def split_data(self, data, num_splits):
@@ -1039,6 +1019,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def eatableviewsetup(self, model):
         self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.ResizeToContents)
+        self.ui.ea_tableView.setSortingEnabled(True)  # Enable sorting
+        # self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)  # Allow resizing of header labels
+        self.ui.ea_tableView.horizontalHeader().setStretchLastSection(True)
         self.ui.ea_tableView.horizontalHeader().setStyleSheet(
             "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
         self.ui.ea_tableView.verticalHeader().setStyleSheet(
@@ -1085,22 +1068,50 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.ea_tableView.setModel(self.model)
         return True
 
-    # def ea_tableView_clicked(self):
-    #     self.selected_rows = self.eatable_click()
-    #     print(self.selected_rows)
-    #     self.opt_view(self.selected_rows)
+    def ea_tableView_clicked(self):
+        try:
+            self.selected_rows = self.eatable_click()
+            self.opt_view(self.selected_rows)
+        except:
+            pass
 
-    # def eatable_click(self):
-    #     selected_rows = []
-    #     for index in self.ui.ea_tableView.selectedRows():
-    #         selected_rows.append(index.row())
-    #     return selected_rows
+    def eatable_click(self):
+        selected_indexes = self.ui.ea_tableView.selectionModel().selectedRows()
+        model = self.ui.ea_tableView.model()
+        for index in selected_indexes:
+            # 获取行号
+            row = index.row()
 
-    # def opt_view(self, opt_list):
-    #     self.entry_exit_tran = self.setterEntryTechValue(opt_list[1])
-    #     self.paramlist = self.setterTechValue(opt_list[0])
-    #     self.calculateinter()
-    #     cerebrosetup()
+            # 提取数据
+            data = []
+            for column in range(model.columnCount()):
+                item = model.index(row, column)
+                if item.isValid():
+                    data.append(item.data(Qt.ItemDataRole.DisplayRole))
+                else:
+                    data.append("")  # 处理空项
+        return data
+
+    def opt_view(self, opt_list):
+        try:
+            self.dict_entry_exit_tran = ast.literal_eval(opt_list[1])
+            self.entry_exit_tran = self.setterEntryTechValue(
+                self.dict_entry_exit_tran)
+            self.dict_paramlist = ast.literal_eval(opt_list[0])
+            self.paramlist = self.setterTechValue(self.dict_paramlist)
+            self.calculateinter()
+            self.cal = cerebrosetup()
+            self.returns, self.positions, self.transactions, self.gross_lev = self.cal.return_pf()
+            self.Profo_infopage(self.dict_paramlist, self.dict_entry_exit_tran,
+                                self.returns, self.positions, self.transactions)
+
+        except:
+            pass
+
+    def Profo_infopage(self, TechValue, EntryTechValue, Info_tableView, Positions_tableView, Transactions_tableView):
+        self.uishow = Profo_info(
+            TechValue, EntryTechValue, Info_tableView, Positions_tableView, Transactions_tableView)
+        self.uishow.show()
 
 #####################
     def settersymbol(self, text):
@@ -1190,7 +1201,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         SegmentationRange.add_ret_profo_var(text)
 ###########################
 
-
     def clear_db_perm(self):
         self.setterEntryRangeValue({})
         self.setterEntryRangeTechValue({})
@@ -1200,6 +1210,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.setterModelValue({})
         self.setterret_profo_var([])
         print(f"Reset Perm Value")
+
+    def mouseDoubleClickEvent(self, event: QMouseEvent):
+        if event.button() == Qt.MouseButton.LeftButton and event.modifiers() == Qt.KeyboardModifier.ControlModifier:
+            self.setWindowState(Qt.WindowState.WindowMaximized)
+        else:
+            super().mouseDoubleClickEvent(event)
 
 
 if __name__ == "__main__":

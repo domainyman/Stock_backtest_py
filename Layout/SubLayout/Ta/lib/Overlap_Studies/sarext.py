@@ -34,7 +34,7 @@ class sarext():
                             'accelerationmaxlong': 0.2, 'accelerationinitshort': 0.02, 'accelerationshort': 0.02, 'accelerationmaxshort': 0.2}}
     
     def entry_exit_base(self):
-        self.entryprofo = {'SAREXT': {'HIGH': '100', 'LOW': '-100'}}
+        self.entryprofo = {'SAREXT': {'HIGH': 100, 'LOW': -100}}
         return self.entryprofo
 
     def Check_Entry(self, testitem):

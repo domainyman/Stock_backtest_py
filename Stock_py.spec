@@ -3,19 +3,27 @@
 
 block_cipher = None
 
+
 py_files = [
     'Program.py',
     'Global\\Value\\MoneyManageParam.py',
+    'Global\\Value\\SegmentationRangeValue.py',
     'Global\\Value\\TechToolParam.py',
     'Global\\Value\\UniversalValue.py',
-    'Layout\\SubLayout\\BacktestPofo\\BacktestPofoPage.py',
+    'Layout\\Method_Class\\backtrade.py',
+    'Layout\\Method_Class\\optbacktrade.py',
+    'Layout\\Method_Class\\pool_ayns.py',
+    'Layout\\Method_Class\\segmentationrageenter_inq.py',
+    'Layout\\Method_Class\\SeriertotableviewPandasModel.py',
     'Layout\\SubLayout\\Entrymanagement\\EntmanagementPage.py',
-    'Layout\\SubLayout\\Entrymanagement\\OptEntmanagementPage.py'
+    'Layout\\SubLayout\\Entrymanagement\\OptEntmanagementPage.py',
     'Layout\\SubLayout\\info\\CompanyOfficersPage.py',
     'Layout\\SubLayout\\info\\LongBusSumPage.py',
+    'Layout\\SubLayout\\info\\Profo_infoPage.py',
     'Layout\\SubLayout\\matplotlib\\plt.py',
     'Layout\\SubLayout\\Mmanagement\\MmanagementPage.py',
     'Layout\\SubLayout\\Search\\SearchSymbol.py',
+    'Layout\\SubLayout\\Ta\\talib_lib.py',
     'Layout\\SubLayout\\Ta\\lib\\Cycle\\ht_dcperiod.py',
     'Layout\\SubLayout\\Ta\\lib\\Cycle\\ht_dcphase.py',
     'Layout\\SubLayout\\Ta\\lib\\Cycle\\ht_phasor.py',
@@ -78,17 +86,16 @@ py_files = [
     'Layout\\SubLayout\\Ta\\lib\\Volume_Indicator\\ad.py',
     'Layout\\SubLayout\\Ta\\lib\\Volume_Indicator\\adosc.py',
     'Layout\\SubLayout\\Ta\\lib\\Volume_Indicator\\obv.py',
+    'Layout\\SubLayout\\Techanalysis\\OptimizationIndicatorTools.py',
     'Layout\\SubLayout\\Techanalysis\\TechanalysisPage.py',
-    'Layout\\SubLayout\\Techanalysis\\OptimizationIndicatorTools.py'
-    'Layout\\Method_Class\\backtrade.py',
-    'Layout\\Method_Class\\optbacktrade.py'
+    'Layout\\Ui_Layout\\Ui_main.py',
     'Layout\\Ui_Layout\\Entrymanagement\\Ui_entrymanagement.py',
     'Layout\\Ui_Layout\\Info\\Ui_companyOfficers.py',
     'Layout\\Ui_Layout\\Info\\Ui_longbussum.py',
+    'Layout\\Ui_Layout\\Info\\Ui_prof_pf.py',
     'Layout\\Ui_Layout\\Moneymanagement\\Ui_moneymanagement.py',
     'Layout\\Ui_Layout\\TechAnalysis\\Ui_techanalysisindicatorsTool.py',
-    'Layout\\Ui_Layout\\Ui_Backtest_Pofo\\Ui_pofo_data.py',
-    'Layout\\Ui_Layout\\Ui_main.py'
+    'Ui_File\\Ui_test.py'
 ]
 
 pathex_link = [
@@ -105,32 +112,7 @@ a = Analysis(
     pathex=pathex_link,
     binaries=[],
     datas=[],
-    hiddenimports=[
-        'PyQt6',
-        'PyQt6-Qt6',
-        'PyQt6-sip',
-        'json',
-        'TA-Lib',
-        'talib',
-        'talib.stream',
-        'numba',
-        'numpy',
-        'plotly',
-        'pandas',
-        'vectorbt',
-        'yfinance',
-        'matplotlib',
-        'matplotlib-inline',
-        'matplotlib.pyplot',
-        'mplfinance',
-        'sklearn.utils._cython_blas',
-        'sklearn.neighbors.typedefs',
-        'sklearn.neighbors.quad_tree',
-        'sklearn.tree._utils',
-        'sklearn.neighbors._typedefs',
-        'sklearn.utils._typedefs',
-        'sklearn.neighbors._partition_nodes'
-    ],
+    hiddenimports=['PyQt6.QtGui.QStandardItemModel', 'matplotlib.pyplot', 'Layout.SubLayout.Ta.lib.Cycle.ht_phasor.ht_phasor', 'PyQt6.QtGui.QAction', 'PyQt6.QtGui', 'Layout.SubLayout.Ta.lib.Momentum.aroon.aroon', 'pandas', 'PyQt6.QtWidgets.QPushButton', 'PyQt6.QtWidgets', 'Layout.SubLayout.Ta.lib.Momentum.rocp.rocp', 'datetime.datetime', 'Layout.SubLayout.Ta.lib.Momentum.stoch.stoch', 'Layout.SubLayout.Mmanagement.MmanagementPage.Moneymanagepage', 'Layout.SubLayout.Ta.lib.Momentum.mfi.mfi', 'Layout.SubLayout.info.CompanyOfficersPage.CompanyOfficerPage', 'Layout.SubLayout.Ta.lib.Overlap_Studies.sma.sma', 'Layout.SubLayout.info.LongBusSumPage.LongBusSumPage', 'Layout.SubLayout.Ta.lib.Momentum.willr.willr', 'PyQt6.QtGui.QDesktopServices', 'PyQt6.QtCore.QSize', 'Layout.SubLayout.Ta.lib.Overlap_Studies.mavp.mavp', 'PyQt6.QtWidgets.QMenu', 'Layout.SubLayout.Ta.lib.Overlap_Studies.tema.tema', 'PyQt6.QtCore', 'Layout.Method_Class.segmentationrageenter_inq.seqmentationrange_inq', 'concurrent.futures.as_completed', 'Layout.SubLayout.Ta.lib.Overlap_Studies.midpoint.midpoint', 'webbrowser', 'PyQt6.QtGui.QMouseEvent', 'PyQt6.QtWidgets.QComboBox', 'Global.Value.TechToolParam.TechValue', 'Layout.SubLayout.Ta.lib.Momentum.roc.roc', 'Layout.SubLayout.Ta.lib.Overlap_Studies.ht_trendline.ht_trendline', 'Layout.SubLayout.Ta.lib.Momentum.aroonosc.aroonosc', 'Layout.SubLayout.Ta.lib.Overlap_Studies.mama.mama', 'Layout.SubLayout.Ta.lib.Volatility_Indicator.atr.atr', 'PyQt6.QtWidgets.QLineEdit', 'Layout.SubLayout.Ta.lib.Volume_Indicator.ad.ad', 'Layout.Ui_Layout.Ui_main.Ui_MainWindow', 'Layout.Method_Class.segmentationrageenter_inq.seqmentationrange_entry', 'Layout.SubLayout.Ta.lib.Overlap_Studies.wma.wma', 'Layout.SubLayout.Ta.lib.Momentum.adxr.adxr', 'Layout.SubLayout.Ta.lib.Overlap_Studies.ma.ma', 'Layout.SubLayout.Ta.lib.Momentum.rocr.rocr', 'concurrent.futures.ProcessPoolExecutor', 'Global.Value.MoneyManageParam.MoneyValue', 'Layout.SubLayout.Ta.lib.Overlap_Studies.kama.kama', 'PyQt6.QtWidgets.QMessageBox', 'Layout.Method_Class.segmentationrageenter_inq.seqmentationrange_conv', 'Layout.SubLayout.Techanalysis.OptimizationIndicatorTools.OptimizationIndicatorTool', 'Layout.SubLayout.Ta.lib.Overlap_Studies.ema.ema', 'Layout.SubLayout.Ta.lib.Volume_Indicator.adosc.adosc', 'PyQt6.QtWidgets.QApplication', 'os', 'PyQt6.QtCore.QAbstractTableModel', 'mplfinance', 'Layout.Ui_Layout.TechAnalysis.Ui_techanalysisindicatorsTool.Ui_TechAnalysis', 'Layout.SubLayout.Ta.lib.Overlap_Studies.sarext.sarext', 'Layout.Ui_Layout.Moneymanagement.Ui_moneymanagement.Ui_MoneyManagement', 'Layout.Ui_Layout.Info.Ui_companyOfficers.Ui_CompanyOfficers', 'Layout.SubLayout.Ta.lib.Momentum.adx.adx', 'Layout.SubLayout.Ta.lib.Momentum.macdfix.macdfix', 'ast', 'functools', 'Layout.SubLayout.Ta.lib.Cycle.ht_dcperiod.ht_dcperiod', 'Layout.SubLayout.Ta.lib.Momentum.trix.trix', 'Layout.SubLayout.Entrymanagement.OptEntmanagementPage.optEntrymanagepage', 'Layout.SubLayout.Ta.lib.Volume_Indicator.obv.obv', 'PyQt6.QtWidgets.QFormLayout', 'Layout.SubLayout.Ta.lib.Momentum.dx.dx', 'Layout.Method_Class.backtrade.cerebrosetup', 'Layout.SubLayout.Ta.lib.Cycle.ht_dcphase.ht_dcphase', 'Layout.SubLayout.Ta.lib.Cycle.ht_trendmode.ht_trendmode', 'yfinance', 'quantstats', 'PyQt6.QtCore.Qt', 'pytz', 'Layout.SubLayout.Ta.lib.Momentum.stochf.stochf', 'Layout.SubLayout.Ta.lib.Momentum.kdj.kdj', 'PyQt6.QtWidgets.QDialog', 'Layout.Ui_Layout.Info.Ui_longbussum.Ui_longbussum', 'Layout.SubLayout.Ta.lib.Overlap_Studies.bbands.bbands', 'PyQt6.QtWidgets.QVBoxLayout', 'vectorbt', 'Layout.SubLayout.Ta.lib.Momentum.bop.bop', 'Layout.SubLayout.Ta.lib.Volatility_Indicator.trange.trange', 'PyQt6.QtWidgets.QLabel', 'glob', 'PyQt6.QtWidgets.QMainWindow', 'Layout.SubLayout.Ta.lib.Momentum.mom.mom', 'Layout.SubLayout.Search.SearchSymbol.Tickersearch', 'sys', 'Layout.SubLayout.Ta.lib.Momentum.apo.apo', 'talib', 'Layout.SubLayout.Ta.lib.Momentum.cmo.cmo', 'PyQt6.QtWidgets.QScrollBar', 'Layout.SubLayout.Ta.lib.Overlap_Studies.sar.sar', 'Layout.SubLayout.Ta.lib.Overlap_Studies.trima.trima', 'Layout.SubLayout.Ta.lib.Momentum.ultosc.ultosc', 'prettytable.PrettyTable', 'PyQt6.QtWidgets.QHeaderView', 'Layout.SubLayout.Ta.lib.Overlap_Studies.t3.t3', 'Layout.Method_Class.pool_ayns.tread_p_task', 'Layout.SubLayout.Ta.lib.Momentum.minus_di.minusdi', 'Layout.SubLayout.Ta.lib.Momentum.rocr100.rocr100', 'Layout.Ui_Layout.Info.Ui_prof_pf.Ui_Profo_info', 'Layout.Ui_Layout.Entrymanagement.Ui_entrymanagement.Ui_EntryManagement', 'talib.abstract', 'PyQt6.QtCore.QDate', 'Layout.SubLayout.Ta.lib.Momentum.cci.cci', 'Layout.SubLayout.info.Profo_infoPage.Profo_info', 'Global.Value.SegmentationRangeValue.SegmentationRange', 'Layout.SubLayout.Techanalysis.TechanalysisPage.TechAnalysispage', 'PyQt6.QtWidgets.QFileDialog', 'Layout.SubLayout.Ta.lib.Momentum.plus_di.plusdi', 'Layout.Method_Class.optbacktrade.optcerebrosetup', 'Layout.SubLayout.Ta.lib.Momentum.rsi.rsi', 'PyQt6.QtCore.QUrl', 'PyQt6.QtGui.QStandardItem', 'Layout.SubLayout.Ta.lib.Volatility_Indicator.natr.natr', 'Layout.SubLayout.matplotlib.plt.matplotlib_Canvas', 'Layout.SubLayout.Ta.lib.Momentum.plus_dm.plusdm', 'Layout.SubLayout.Entrymanagement.EntmanagementPage.Entrymanagepage', 'Global.Value.UniversalValue.GlobalValue', 'backtrader', 'Layout.SubLayout.Ta.lib.Momentum.ppo.ppo', 'Layout.SubLayout.Ta.lib.Momentum.macd.macd', 'Layout.SubLayout.Ta.lib.Momentum.stochrsi.stochrsi', 'Layout.SubLayout.Ta.lib.Momentum.macdext.macdext', 'Layout.SubLayout.Ta.lib.Overlap_Studies.dema.dema', 'Layout.SubLayout.Ta.lib.Cycle.ht_sine.ht_sine', 'numpy', 'Layout.SubLayout.Ta.lib.Momentum.minus_dm.minusdm', 'Layout.SubLayout.Ta.talib_lib.talib_list', 'Layout.SubLayout.Ta.lib.Overlap_Studies.midprice.midprice']
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
