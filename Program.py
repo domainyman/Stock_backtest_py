@@ -22,19 +22,22 @@ from Global.Value.TechToolParam import TechValue
 from Global.Value.SegmentationRangeValue import SegmentationRange
 from Global.Value.MoneyManageParam import MoneyValue
 from Layout.SubLayout.Ta.talib_lib import talib_list
+from concurrent.futures import ProcessPoolExecutor, as_completed
 import matplotlib.pyplot as plt
 import mplfinance as mpf
 import talib
+import talib.stream
 import functools
 import numpy as np
 import yfinance as yf
-import vectorbt as vbt
 import pandas as pd
 import webbrowser
 import quantstats as qs
 import pytz
 import backtrader as bt
 import ast
+from prettytable import PrettyTable
+import multiprocessing
 
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
@@ -1014,7 +1017,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                         return False
             return True
         except BaseException as msg:
-            QMessageBox.warning(None, 'System Error', str(msg))
+            QMessageBox.warning(None, 'System Info',"Input Error")
 
     def eatableviewsetup(self, model):
         self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(
@@ -1219,6 +1222,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     app = QApplication(sys.argv)
     win = MyMainWindow()
     win.show()

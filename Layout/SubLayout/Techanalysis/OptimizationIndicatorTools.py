@@ -247,13 +247,16 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                     if (isinstance(self.Entryglobal_dict[text][perm], dict)):
                         if text not in self.entryrange_dict:
                             self.entryrange_dict[text] = {}
-                        self.sign_valuekey = self.Entryglobal_dict[text][perm].keys()
+                        self.sign_valuekey = self.Entryglobal_dict[text][perm].keys(
+                        )
                         for sign_value in self.sign_valuekey:
                             print(sign_value)
-                            self.keyentryvalue = self.mulitentrybaserange(text, perm, textvalue=sign_value)
+                            self.keyentryvalue = self.mulitentrybaserange(
+                                text, perm, textvalue=sign_value)
                             if perm not in self.entryrange_dict[text]:
                                 self.entryrange_dict[text][perm] = {}
-                            self.entryrange_dict[text][perm].update(self.keyentryvalue[text][perm])
+                            self.entryrange_dict[text][perm].update(
+                                self.keyentryvalue[text][perm])
                             self.setterEntryRangeValue(self.entryrange_dict)
                     else:
                         self.entrybaserange = self.mulitentrybaserange(
@@ -535,24 +538,27 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         return self.tool_dict
 
     def uploadRangeValue(self, textmain, firstname, lastname, stepname, textname=None):
-        if (textname == None):
-            self.global_dict = self.getterEntryRangeTechValue()
-            tool_dict = self.tool_dicts(
-                textmain, firstname, lastname, stepname)
-            self.global_dict.update(tool_dict)
-            self.setterEntryRangeTechValue(self.global_dict)
-            print(self.getterEntryRangeTechValue())
-            QMessageBox.information(None, 'Parameter Saved',
-                                    'Saved Parameter Setting')
+        if (int(lastname) < int(firstname)) or (int(lastname) < int(stepname)):
+            QMessageBox.warning(None, 'System Error', 'Input Errot')
         else:
-            self.global_dict = self.getterEntryRangeTechValue()
-            tool_dict = self.tool_dicts(
-                textname, firstname, lastname, stepname)
-            self.global_dict[textmain].update(tool_dict)
-            self.setterEntryRangeTechValue(self.global_dict)
-            print(self.getterEntryRangeTechValue())
-            QMessageBox.information(None, 'Parameter Saved',
-                                    'Saved Parameter Setting')
+            if (textname == None):
+                self.global_dict = self.getterEntryRangeTechValue()
+                tool_dict = self.tool_dicts(
+                    textmain, firstname, lastname, stepname)
+                self.global_dict.update(tool_dict)
+                self.setterEntryRangeTechValue(self.global_dict)
+                print(self.getterEntryRangeTechValue())
+                QMessageBox.information(None, 'Parameter Saved',
+                                        'Saved Parameter Setting')
+            else:
+                self.global_dict = self.getterEntryRangeTechValue()
+                tool_dict = self.tool_dicts(
+                    textname, firstname, lastname, stepname)
+                self.global_dict[textmain].update(tool_dict)
+                self.setterEntryRangeTechValue(self.global_dict)
+                print(self.getterEntryRangeTechValue())
+                QMessageBox.information(None, 'Parameter Saved',
+                                        'Saved Parameter Setting')
 
     def setterTechValue(self, text):
         TechValue.set_tech_toolperm_var(text)

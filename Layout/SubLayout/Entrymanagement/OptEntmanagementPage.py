@@ -137,7 +137,6 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
             return True
         else:
             return False
-        
 
     def check_dict_contains_true(self, your_dict, text, permvalue):
         values = your_dict[text][permvalue]
@@ -514,32 +513,35 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
         self.tool_dict[textname] = boolname
         return self.tool_dict
 
-    def bool_dictsbool(self, textname, boolname,textcontext):
+    def bool_dictsbool(self, textname, boolname, textcontext):
         self.tool_dict = {}
         self.tool_dict[textname] = {}
         self.tool_dict[textname][textcontext] = {}
-        self.tool_dict[textname][textcontext]  = boolname
+        self.tool_dict[textname][textcontext] = boolname
         return self.tool_dict
 
     def uploadRangeValue(self, textmain, firstname, lastname, stepname, textname=None):
-        if (textname == None):
-            self.global_dict = self.getterEntryRangeValue()
-            tool_dict = self.tool_dicts(
-                textmain, firstname, lastname, stepname)
-            self.global_dict.update(tool_dict)
-            self.setterEntryRangeValue(self.global_dict)
-            print(self.getterEntryRangeValue())
-            QMessageBox.information(None, 'Parameter Saved',
-                                    'Saved Parameter Setting')
+        if (int(lastname) < int(firstname)) or (int(lastname) < int(stepname)):
+            QMessageBox.warning(None, 'System Error', 'Input Errot')
         else:
-            self.global_dict = self.getterEntryRangeValue()
-            tool_dict = self.tool_dicts(
-                textname, firstname, lastname, stepname)
-            self.global_dict[textmain].update(tool_dict)
-            self.setterEntryRangeValue(self.global_dict)
-            print(self.getterEntryRangeValue())
-            QMessageBox.information(None, 'Parameter Saved',
-                                    'Saved Parameter Setting')
+            if (textname == None):
+                self.global_dict = self.getterEntryRangeValue()
+                tool_dict = self.tool_dicts(
+                    textmain, firstname, lastname, stepname)
+                self.global_dict.update(tool_dict)
+                self.setterEntryRangeValue(self.global_dict)
+                print(self.getterEntryRangeValue())
+                QMessageBox.information(None, 'Parameter Saved',
+                                        'Saved Parameter Setting')
+            else:
+                self.global_dict = self.getterEntryRangeValue()
+                tool_dict = self.tool_dicts(
+                    textname, firstname, lastname, stepname)
+                self.global_dict[textmain].update(tool_dict)
+                self.setterEntryRangeValue(self.global_dict)
+                print(self.getterEntryRangeValue())
+                QMessageBox.information(None, 'Parameter Saved',
+                                        'Saved Parameter Setting')
 
     def uploadboolvalue(self, textmain, boolname, textname=None):
         if (boolname == ''):
@@ -565,16 +567,16 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                 QMessageBox.information(None, 'Parameter Saved',
                                         'Saved Parameter Setting')
 
-    def uploadboolvaluedict(self, textmain, boolname, textname=None,textcontext=None):
+    def uploadboolvaluedict(self, textmain, boolname, textname=None, textcontext=None):
         if (boolname == ''):
             QMessageBox.information(None, 'Input Error',
                                     'Input Can not None')
         else:
-            if(textname is not None)and (textcontext is not None):
+            if (textname is not None) and (textcontext is not None):
                 self.global_dict = self.getterEntryRangeValue()
                 # self.tool_dict = self.bool_dictsbool(
                 #     textname, boolname,textcontext)
-                self.global_dict[textmain][textname][textcontext]=boolname
+                self.global_dict[textmain][textname][textcontext] = boolname
                 # self.global_dict[textmain].update(self.tool_dict)
                 self.setterEntryRangeValue(self.global_dict)
                 print(self.getterEntryRangeValue())

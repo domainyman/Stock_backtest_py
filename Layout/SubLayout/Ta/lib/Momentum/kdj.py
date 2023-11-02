@@ -226,7 +226,7 @@ class kdj():
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):
-        self.highlabel = QLabel('HIGH :')
+        self.highlabel = QLabel('Exit :')
         self.highlabel.setMinimumSize(QSize(150, 25))
         self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.highlabel.setStyleSheet(
@@ -236,7 +236,7 @@ class kdj():
         self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
         self.EntryHighlineedit.setStyleSheet(
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-        self.Lowlabel = QLabel('LOW :')
+        self.Lowlabel = QLabel('Entry :')
         self.Lowlabel.setMinimumSize(QSize(150, 25))
         self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Lowlabel.setStyleSheet(

@@ -131,7 +131,7 @@ class bop():
 
 
     def entrywidgetedit(self):
-            self.highlabel = QLabel('High - OverBought :')
+            self.highlabel = QLabel('Exit - OverBought :')
             self.highlabel.setMinimumSize(QSize(150, 25))
             self.highlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.highlabel.setStyleSheet(
@@ -141,7 +141,7 @@ class bop():
             self.EntryHighlineedit.setMinimumSize(QSize(200, 25))
             self.EntryHighlineedit.setStyleSheet(
                 "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
-            self.Lowlabel = QLabel('Low - OverSold :')
+            self.Lowlabel = QLabel('Entry - OverSold :')
             self.Lowlabel.setMinimumSize(QSize(150, 25))
             self.Lowlabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.Lowlabel.setStyleSheet(

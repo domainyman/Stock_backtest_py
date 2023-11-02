@@ -1,13 +1,10 @@
-
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import talib
 import quantstats as qs
 import pytz
 import backtrader as bt
 import numpy as np
-import yfinance as yf
-from PyQt6.QtWidgets import QMessageBox
-import numpy as np
+import multiprocessing
 np.seterr(invalid='ignore')
 
 
@@ -116,6 +113,7 @@ class tread_p_task:
         self.modelValue = modelValue
 
     def processes(self, cpu):
+        multiprocessing.freeze_support()
         with ProcessPoolExecutor(max_workers=cpu) as executor:
             futures = [executor.submit(
                 self.task, mesh, self.toolhistory) for mesh in self.mesh_conv]

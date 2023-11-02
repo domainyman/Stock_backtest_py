@@ -2,7 +2,6 @@ from Global.Value.UniversalValue import GlobalValue
 from Global.Value.TechToolParam import TechValue
 from Global.Value.MoneyManageParam import MoneyValue
 from Layout.SubLayout.Ta.talib_lib import talib_list
-import webbrowser
 import quantstats as qs
 import pytz
 import backtrader as bt
