@@ -3,6 +3,7 @@ import sys
 from PyQt6.QtCore import Qt, QDate, QUrl
 from PyQt6.QtWidgets import QApplication, QMainWindow, QHeaderView, QFileDialog, QMessageBox
 from PyQt6.QtGui import QStandardItemModel, QStandardItem, QDesktopServices, QMouseEvent
+from Layout.Method_Class.logger import Logger
 from Layout.SubLayout.info.Profo_infoPage import Profo_info
 from Layout.Ui_Layout.Ui_main import Ui_MainWindow
 from Layout.SubLayout.info.LongBusSumPage import LongBusSumPage
@@ -46,7 +47,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         # use the Ui_login_form
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
+        self.showtkhome()
         self.btn_click()
         self.side_meun_btn()
 
@@ -54,7 +55,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     # ...............................................................................
 
     def btn_click(self):
-
+        Logger().info('Setup Core Btn')
         self.ui.searchenter_btn.clicked.connect(self.searchpage)
         self.ui.LongBusinessSummary_btn.clicked.connect(self.longbussumpage)
         self.ui.CompanyOfficers_btn.clicked.connect(self.companyofficerspage)
@@ -107,6 +108,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.ea_tableView.doubleClicked.connect(self.ea_tableView_clicked)
 
     def side_meun_btn(self):
+        Logger().info('Setup Core Side Btn')
         self.ui.Btn_Home.clicked.connect(self.showtkhome)
         self.ui.Btn_Search.clicked.connect(self.showtksearch)
         self.ui.Btn_Info.clicked.connect(self.infopage)
@@ -143,6 +145,26 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def showtkerror(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.error_page)
 
+    def aatechanalysistoolpage(self):
+        self.uishow = TechAnalysispage()
+        self.uishow.show()
+
+    def aamoneymanagepage(self):
+        self.uishow = Moneymanagepage()
+        self.uishow.show()
+
+    def aaentrymanagepage(self):
+        self.uishow = Entrymanagepage()
+        self.uishow.show()
+
+    def OptimizationIndicatorToolspage(self):
+        self.uishow = OptimizationIndicatorTool()
+        self.uishow.show()
+
+    def Optentrymanagepage(self):
+        self.uishow = optEntrymanagepage()
+        self.uishow.show()
+
     # Base Setting
     # ...............................................................................
     # ///////////////////////////////////////////////////////////////////////////////
@@ -151,17 +173,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def searchpage(self):
         try:
-            if (Tickersearch(self.ui.text_lineEdit.text().upper()).tickerchecking() == True):
-                self.settersymbol(self.ui.text_lineEdit.text().upper())
-                self.addsearchhistory(self.gettersymbol())
+            self.text = self.ui.text_lineEdit.text().upper()
+            if (Tickersearch(self.text).tickerchecking()):
+                Logger().info('Ticker Symbol Loading')
+                self.settersymbol(self.text)
+                self.addsearchhistory(self.text)
                 self.ui.Sub_Tittle.setText(
-                    'Ticker Symbol : ' + self.gettersymbol())
+                    'Ticker Symbol : ' + self.text)
                 self.clearlineedit()
-                print('Ticker Symbol Loading')
             else:
-                print('Error Ticker Symbol')
-        except:
-            print('Error Ticker Symbol')
+                Logger().info('Error Ticker Symbol')
+        except Exception as e:
+            Logger().error(f"ERROR Ticker Symbol : {e}")
 
     def longbussumpage(self):
         self.infodict = self.gettersymbolinfo()
@@ -174,6 +197,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.uishow.show()
 
     def addsearchhistory(self, text):
+        Logger().info(f'Add Search History ,{text}')
         return self.ui.Search_listview.addItem(text)
 
     def clearlineedit(self):
@@ -188,46 +212,59 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def infopage(self):
         try:
             if (self.gettersymbol() != ""):
+                Logger().info('Info_page Loading')
                 self.showtkinfo()
-                self.tickerinfo()
+                self.ticker_info()
             else:
+                Logger().info('Error Info_page ')
                 self.showtkhome()
-        except:
+        except Exception as e:
             self.showtkerror()
+            Logger().error(f"ERROR in info_page: {e}")
 
-    def tickerinfo(self):
+    def ticker_info(self):
         self.search = Tickersearch(self.gettersymbol())
         self.settersymbolinfo(self.search.tickerinfo())
-        self.infodetail()
+        self.info_detail()
 
-    def infodetail(self):
+    def info_detail(self):
+        Logger().info('Setting Info Detail ')
         self.infodict = self.gettersymbolinfo()
-        self.ui.symbol_edit.setText(self.infodict['symbol'])
-        self.ui.shortName_edit.setText(self.infodict['shortName'])
-        self.ui.longName_edit.setText(self.infodict['longName'])
-        self.ui.city_edit.setText(self.infodict['city'])
-        self.ui.zip_edit.setText(self.infodict['zip'])
-        self.ui.country_edit.setText(self.infodict['country'])
-        self.ui.phone_edit.setText(self.infodict['phone'])
-        self.ui.website_edit.setText(self.infodict['website'])
-        self.ui.industry_edit.setText(self.infodict['industry'])
-        self.ui.industrydisp_edit.setText(self.infodict['industryDisp'])
-        self.ui.sector_edit.setText(self.infodict['sector'])
-        self.ui.auditrisk_edit.setText("{}".format(self.infodict['auditRisk']))
-        self.ui.boardrisk_edit.setText("{}".format(self.infodict['boardRisk']))
-        self.ui.compensationrisk_edit.setText(
-            "{}".format(self.infodict['compensationRisk']))
-        self.ui.shareholderrightsrisk_edit.setText(
-            "{}".format(self.infodict['shareHolderRightsRisk']))
-        self.ui.overallrisk_edit.setText(
-            "{}".format(self.infodict['overallRisk']))
-        self.ui.fulltime_edit.setText(
-            "{}".format(self.infodict['fullTimeEmployees']))
-        self.ui.address_edit.setText(self.infodict['address1'])
-        self.ui.state_edit.setText(self.infodict['state'])
-        self.ui.currency_edit.setText(self.infodict['currency'])
-        self.ui.enterprisevalue_edit.setText(
-            "{}".format(self.infodict['enterpriseValue']))
+        # self.ui.symbol_edit.setText(self.infodict['symbol'])
+        # self.ui.shortName_edit.setText(self.infodict['shortName'])
+        # self.ui.longName_edit.setText(self.infodict['longName'])
+        # self.ui.city_edit.setText(self.infodict['city'])
+        # self.ui.zip_edit.setText(self.infodict['zip'])
+        # self.ui.country_edit.setText(self.infodict['country'])
+        # self.ui.phone_edit.setText(self.infodict['phone'])
+        # self.ui.website_edit.setText(self.infodict['website'])
+        # self.ui.industry_edit.setText(self.infodict['industry'])
+        # self.ui.industrydisp_edit.setText(self.infodict['industryDisp'])
+        # self.ui.sector_edit.setText(self.infodict['sector'])
+        # self.ui.auditrisk_edit.setText("{}".format(self.infodict['auditRisk']))
+        # self.ui.boardrisk_edit.setText("{}".format(self.infodict['boardRisk']))
+        # self.ui.compensationrisk_edit.setText(
+        #     "{}".format(self.infodict['compensationRisk']))
+        # self.ui.shareholderrightsrisk_edit.setText(
+        #     "{}".format(self.infodict['shareHolderRightsRisk']))
+        # self.ui.overallrisk_edit.setText(
+        #     "{}".format(self.infodict['overallRisk']))
+        # self.ui.fulltime_edit.setText(
+        #     "{}".format(self.infodict['fullTimeEmployees']))
+        # self.ui.address_edit.setText(self.infodict['address1'])
+        # self.ui.state_edit.setText(self.infodict['state'])
+        # self.ui.currency_edit.setText(self.infodict['currency'])
+        # self.ui.enterprisevalue_edit.setText(
+        #     "{}".format(self.infodict['enterpriseValue']))
+        fields = [
+            'symbol', 'shortName', 'longName', 'city', 'zip', 'country', 'phone',
+            'website', 'industry', 'industryDisp', 'sector', 'auditRisk',
+            'boardRisk', 'compensationRisk', 'shareHolderRightsRisk', 'overallRisk',
+            'fullTimeEmployees', 'address1', 'state', 'currency', 'enterpriseValue'
+        ]
+        for field in fields:
+            value = self.infodict.get(field, '')
+            setattr(self.ui, f'{field}_edit', value)
 
     # Info Page
     # ...............................................................................
@@ -238,13 +275,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def historypage(self):
         try:
             if (self.gettersymbol() != ""):
+                Logger().info('Stock History Loading')
                 self.showhistory()
                 self.historydetail()
-
             else:
+                Logger().info('Error Stock History Page ')
                 self.showtkhome()
-        except:
+        except Exception as e:
             self.showtkerror()
+            Logger().error(f"ERROR in Stock History Page: {e}")
 
     def tickerhistory(self):
         try:
@@ -254,34 +293,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.settersymbolhistory(self.pdtext)
             self.history_tableviewsetup(
                 self.history_tableviewmodelsetup(self.gettersymbolhistory(), self.header()))
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Stock History Return : {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def historydownload(self):
         try:
             self.tickerhistorydownload(self.gettersymbolhistory())
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
-
-    def tickerhistorydownload(self, pdtext):
-        try:
-            if (pdtext is not None):
-                # create and show the file dialog
-                self.file_dialog = QFileDialog()
-                self.file_path, _ = self.file_dialog.getSaveFileName(
-                    filter='CSV files (*.csv);;All files (*.*)')
-                # save the DataFrame to the CSV file
-                if self.file_path:
-                    pdtext.to_csv(self.file_path)
-                    QMessageBox.information(
-                        None, 'Save Completed', f'The file has been saved to:\n{self.file_path}')
-
-        except:
-            print("except ! Please select the option that requires history")
-            QMessageBox.warning(None, 'Error Ticker History',
-                                'Please select the option that requires history.')
+        except Exception as e:
+            Logger().error(f"ERROR in Stock History Download: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def historycomboclear(self):
         self.ui.Period_combo.clear()
@@ -308,7 +329,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         if (self.interval == "1m"):
             self.ui.Period_combo.clear()
             self.ui.Period_combo.addItems(['Option', '1d', '5d'])
-        elif (self.interval == "30m") or (self.interval == "1h"):
+        elif self.interval in ["30m", "1h"]:
             self.ui.Period_combo.clear()
             self.ui.Period_combo.addItems(
                 ['Option', '1d', '5d', '1mo'])
@@ -317,17 +338,19 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.ui.Period_combo.addItems(self.valid_periods)
 
     def historytextmodel(self):
+        Logger().info('Return History Setting. ')
         history_params = {}
         interval = self.ui.Interval_combo.currentText()
+        period = self.ui.Period_combo.currentText()
+        start = self.ui.start_dateEdit.text()
+        end = self.ui.end_dateEdit.text()
+
         if interval not in ['Option', '']:
             history_params['interval'] = interval
-        period = self.ui.Period_combo.currentText()
         if period not in ['Option', '']:
             history_params['period'] = period
-        start = self.ui.start_dateEdit.text()
         if not self.ui.start_dateEdit.isHidden():
             history_params['start'] = start
-        end = self.ui.end_dateEdit.text()
         if not self.ui.end_dateEdit.isHidden():
             history_params['end'] = end
         return history_params
@@ -345,6 +368,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.ui.end_dateEdit.hide()
 
     def history_tableviewmodelsetup(self, pd, HeaderLabel):
+        Logger().info('Return History Table View Model. ')
         df = pd
         self.model = QStandardItemModel(df.shape[0], df.shape[1]+1)
         self.model.setHorizontalHeaderLabels(HeaderLabel)
@@ -361,9 +385,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         return self.model
 
     def header(self):
-        header = ["Datetime", "Open", "High", "Low",
-                  "Close", "Volume", "Dividends", "Stock Splits"]
-        return header
+        Logger().info('Return History Table View Model Header. ')
+        return ["Datetime", "Open", "High", "Low", "Close", "Volume", "Dividends", "Stock Splits"]
 
     def history_tableviewsetup(self, model):
         self.ui.history_tableview.horizontalHeader().setSectionResizeMode(
@@ -377,10 +400,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.history_tableview.setModel(model)
 
     def cleartickerhistory(self):
+        Logger().info('ClEAR History Table View')
         self.settersymbolhistory(None)
-        self.clearhistory_tableview()
-
-    def clearhistory_tableview(self):
         self.model = QStandardItemModel()
         self.model.clear()
         self.model.setHorizontalHeaderLabels([])
@@ -395,16 +416,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def newpage(self):
         try:
             if (self.gettersymbol() != ""):
+                Logger().info('New page Loading')
                 self.shownew()
                 self.newdetail()
                 self.tickernew()
                 self.newstableviewsetup(self.newstableviewModelsetup(
                     self.newsheader(), self.newstabledata(self.gettersymbolnews())))
-
             else:
+                Logger().info('Error New page ')
                 self.showtkhome()
-        except:
+        except Exception as e:
             self.showtkerror()
+            Logger().error(f"ERROR in New Page: {e}")
 
     def newdetail(self):
         self.ui.newsymbol_edit.setText(self.gettersymbol())
@@ -414,11 +437,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.search = Tickersearch(self.gettersymbol())
             self.text = self.search.tickernew()
             self.settersymbolnews(self.text)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in New Page Return: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def newstableviewModelsetup(self, HeaderLabel, data):
+        Logger().info('Return New Table View Model. ')
         self.model = QStandardItemModel()
         self.model.setHorizontalHeaderLabels(HeaderLabel)
         for officer in data:
@@ -432,7 +456,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def newstableviewsetup(self, model):
         self.ui.new_tableview.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.ResizeToContents)
-
         self.ui.new_tableview.horizontalHeader().setStyleSheet(
             "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
         self.ui.new_tableview.verticalHeader().setStyleSheet(
@@ -445,8 +468,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         return len(self.newstabledata(self.gettersymbolnews()))
 
     def newsheader(self):
-        header = ["Publisher", "Title",  "Link"]
-        return header
+        return ["Publisher", "Title",  "Link"]
 
     def newsheaderRow(self):
         return len(self.newsheader())
@@ -455,6 +477,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.newstext = text
         new_list = [{'publisher': officer.get('publisher'), 'title': officer.get('title'),  'link': officer.get(
             'link')} for officer in self.newstext if 'title' in officer and 'link' in officer]
+        Logger().info('Return New Data Structure')
         return new_list
 
         """ Need Remake"""
@@ -463,9 +486,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         try:
             url = self.ui.new_tableview.currentIndex().data()
             QDesktopServices.openUrl(QUrl(url))
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as msg:
+            Logger().error(f"ERROR in New URL: {e}")
+            QMessageBox.warning(None, 'System Error', str(msg))
         """ Need Remake"""
 
     # News Page
@@ -476,14 +499,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def techanalysispage(self):
         try:
             if (self.gettersymbol() != ""):
+                Logger().info('Tech Analyis Page Loading')
                 self.showtechanalysis()
                 self.clear_db_perm()
                 self.techanalysispagesetup()
                 self.techdetail()
 
             else:
+                Logger().info('Error Tech Analyis Page ')
                 self.showtkhome()
-        except:
+        except Exception as e:
+            Logger().error(f"ERROR in Tech Analyis Page: {e}")
             self.showtkerror()
 
     def techanalysispagesetup(self):
@@ -514,29 +540,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         if (self.interval == "1m"):
             self.ui.techPeriod_combo.clear()
             self.ui.techPeriod_combo.addItems(['Option', '1d', '5d'])
-        elif (self.interval == "30m") or (self.interval == "1h"):
+        elif self.interval in ["30m", "1h"]:
             self.ui.techPeriod_combo.clear()
             self.ui.techPeriod_combo.addItems(
                 ['Option', '1d', '5d', '1mo'])
         else:
             self.ui.techPeriod_combo.clear()
             self.ui.techPeriod_combo.addItems(self.valid_periods)
-
-    def techtextmodel(self):
-        self.tech_params = {}
-        interval = self.ui.techInterval_combo.currentText()
-        if interval not in ['Option', '']:
-            self.tech_params['interval'] = interval
-        period = self.ui.techPeriod_combo.currentText()
-        if period not in ['Option', '']:
-            self.tech_params['period'] = period
-        start = self.ui.techstart_dateEdit.text()
-        if not self.ui.techstart_dateEdit.isHidden():
-            self.tech_params['start'] = start
-        end = self.ui.techend_dateEdit.text()
-        if not self.ui.techend_dateEdit.isHidden():
-            self.tech_params['end'] = end
-        return self.tech_params
 
     def techPeriod_combo_box_changed(self):
         if self.ui.techPeriod_combo.currentText() == '':
@@ -555,17 +565,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.uishow.show()
 
     def toolhistorytextmodel(self):
+        Logger().info('Return Tech Analyis History Setting. ')
         history_params = {}
         interval = self.ui.techInterval_combo.currentText()
+        period = self.ui.techPeriod_combo.currentText()
+        start = self.ui.techstart_dateEdit.text()
+        end = self.ui.techend_dateEdit.text()
         if interval not in ['Option', '']:
             history_params['interval'] = interval
-        period = self.ui.techPeriod_combo.currentText()
         if period not in ['Option', '']:
             history_params['period'] = period
-        start = self.ui.techstart_dateEdit.text()
         if not self.ui.techstart_dateEdit.isHidden():
             history_params['start'] = start
-        end = self.ui.techend_dateEdit.text()
         if not self.ui.techend_dateEdit.isHidden():
             history_params['end'] = end
         return history_params
@@ -573,37 +584,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def techanalysisenterdetail(self):
         try:
             if (self.techanalysisenter() == True):
+                Logger().info('Show Tech Analyis Chart')
                 self.ui.DownLoad_btn.show()
             else:
                 self.ui.DownLoad_btn.hide()
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Tech Analyis Calculate: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def techanalysisenterdownloadcsv(self):
         try:
             self.tickerhistorydownload(self.gettertoolhistory())
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
-
-    def techanalysisenterdownload(self, pdtext):
-        try:
-            if (pdtext is not None):
-                # create and show the file dialog
-                self.file_dialog = QFileDialog()
-                self.file_path, _ = self.file_dialog.getSaveFileName(
-                    filter='CSV files (*.csv);;All files (*.*)')
-                # save the DataFrame to the CSV file
-                if self.file_path:
-                    pdtext.to_csv(self.file_path)
-                    QMessageBox.information(
-                        None, 'Save Completed', f'The file has been saved to:\n{self.file_path}')
-
-        except:
-            print("except ! Please select the option that requires history")
-            QMessageBox.warning(None, 'Error Ticker History',
-                                'Please select the option that requires history.')
+        except Exception as e:
+            Logger().error(f"ERROR in Stock History Download: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def techanalysisenter(self):
         if (self.clearLayout(self.ui.CanvasLayout) == True):
@@ -617,24 +611,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def drawPhoto(self):
         try:
+            Logger().info('Drawing Photo in Tech Analyis ')
             self.canvas = talib_list()
             self.canvas.matplotlib_main()
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
-
-    def calculateinter(self):
-        try:
-            self.paramlist = self.getterTechValue()
-            self.paramlistkey = list(self.paramlist.keys())
-            for param in self.paramlistkey:
-                self.pa = talib_list()
-                self.pa.calculatereturn(param)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except BaseException as e:
+            Logger().error(f"ERROR in Tech Analyis Draw Photo: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def clearLayout(self, layout):
+        Logger().info('Clear Tech Analyis Layout')
         while layout.count():
             child = layout.takeAt(0)
             if child.widget():
@@ -649,6 +634,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def aatechanalysispage(self):
         try:
             if (self.gettersymbol() != ""):
+                Logger().info('Auto Analyis Page')
                 self.showaatechanalysis()
                 self.clear_db_perm()
                 self.clear_ui_aa_tableView()
@@ -657,8 +643,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
             else:
                 self.showtkhome()
-        except:
+        except Exception as e:
             self.showtkerror()
+            Logger().error(f"ERROR in Auto Analyis Page: {e}")
 
     def aatechcomboclear(self):
         self.ui.aa_techPeriod_combo.clear()
@@ -685,7 +672,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         if (self.interval == "1m"):
             self.ui.aa_techPeriod_combo.clear()
             self.ui.aa_techPeriod_combo.addItems(['Option', '1d', '5d'])
-        elif (self.interval == "30m") or (self.interval == "1h"):
+        elif self.interval in ["30m", "1h"]:
             self.ui.aa_techPeriod_combo.clear()
             self.ui.aa_techPeriod_combo.addItems(
                 ['Option', '1d', '5d', '1mo'])
@@ -706,17 +693,21 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.ui.aa_techend_dateEdit.hide()
 
     def aatoolhistorytextmodel(self):
+        Logger().info('Return History Setting. ')
         history_params = {}
         interval = self.ui.aa_techInterval_combo.currentText()
+        period = self.ui.aa_techPeriod_combo.currentText()
+        start = self.ui.aa_techstart_dateEdit.text()
+        end = self.ui.aa_techend_dateEdit.text()
         if interval not in ['Option', '']:
             history_params['interval'] = interval
-        period = self.ui.aa_techPeriod_combo.currentText()
+
         if period not in ['Option', '']:
             history_params['period'] = period
-        start = self.ui.aa_techstart_dateEdit.text()
+
         if not self.ui.aa_techstart_dateEdit.isHidden():
             history_params['start'] = start
-        end = self.ui.aa_techend_dateEdit.text()
+
         if not self.ui.aa_techend_dateEdit.isHidden():
             history_params['end'] = end
         return history_params
@@ -725,15 +716,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         try:
             type = self.getterModeParamlValue()
             if (type == "From_Signals()"):
+                Logger().info('Auto Analyis Calculate')
                 self.calculateinter()
                 return True
             else:
+                Logger().info('Mode Value No mode selected')
                 QMessageBox.warning(None, 'System Error', 'No mode selected')
                 return False
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
-            print(str(msg))
+        except BaseException as e:
+            Logger().error(f"ERROR in Auto Analyis: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
             return False
 
     def aatechanalysisenterdetail(self):
@@ -749,11 +741,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                     self.ui.aa_DownLoad_btn.show()
                 else:
                     self.ui.aa_DownLoad_btn.hide()
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Auto Analyis Calculate: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def clear_ui_aa_tableView(self):
+        Logger().info('Clear Auto Analyis Table View')
         self.aa_tableview_list = [self.ui.aa_positions_tableview,
                                   self.ui.aa_transactions_tableview]
         for item in self.aa_tableview_list:
@@ -816,26 +809,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def aa_techanalysispagesetup(self):
         self.ui.aa_DownLoad_btn.hide()
 
-    def aatechanalysistoolpage(self):
-        self.uishow = TechAnalysispage()
-        self.uishow.show()
-
-    def aamoneymanagepage(self):
-        self.uishow = Moneymanagepage()
-        self.uishow.show()
-
-    def aaentrymanagepage(self):
-        self.uishow = Entrymanagepage()
-        self.uishow.show()
-
-    def OptimizationIndicatorToolspage(self):
-        self.uishow = OptimizationIndicatorTool()
-        self.uishow.show()
-
-    def Optentrymanagepage(self):
-        self.uishow = optEntrymanagepage()
-        self.uishow.show()
-
     # Tech Auto Analyis Page
     # ...............................................................................
     # EA Tech Auto Analyis Page
@@ -843,15 +816,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def eatechanalysispage(self):
         try:
             if (self.gettersymbol() != ""):
+                Logger().info('EA Tech Auto Analyis Page Loading')
                 self.showeatechanalysis()
                 self.clear_db_perm()
                 self.clear_uiea_tableView()
                 self.eatechdetail()
 
             else:
+                Logger().info('Error EA Tech Auto Analyis Page ')
                 self.showtkhome()
-        except:
+        except Exception as e:
             self.showtkerror()
+            Logger().error(f"ERROR in EA Tech Auto Analyis Page: {e}")
 
     def eatechcomboclear(self):
         self.ui.ea_techPeriod_combo.clear()
@@ -1017,7 +993,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                         return False
             return True
         except BaseException as msg:
-            QMessageBox.warning(None, 'System Info',"Input Error")
+            QMessageBox.warning(None, 'System Info', "Input Error")
 
     def eatableviewsetup(self, model):
         self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(
@@ -1064,6 +1040,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         return ea_list
 
     def clear_uiea_tableView(self):
+        Logger().info('Clear EA Auto Analyis Table View')
         self.setterret_profo_var([])
         self.model = QStandardItemModel()
         self.model.clear()
@@ -1073,18 +1050,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def ea_tableView_clicked(self):
         try:
+            Logger().info('EA Auto Analyis Page Loading')
             self.selected_rows = self.eatable_click()
             self.opt_view(self.selected_rows)
-        except:
+        except Exception as e:
+            Logger().error(f"ERROR in EA Auto Analyis Page Clicked: {e}")
             pass
 
     def eatable_click(self):
+        Logger().info('EA Auto Analyis Page Row Data')
         selected_indexes = self.ui.ea_tableView.selectionModel().selectedRows()
         model = self.ui.ea_tableView.model()
         for index in selected_indexes:
             # 获取行号
             row = index.row()
-
             # 提取数据
             data = []
             for column in range(model.columnCount()):
@@ -1097,6 +1076,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def opt_view(self, opt_list):
         try:
+            Logger().info('EA Auto Analyis Row Loading')
             self.dict_entry_exit_tran = ast.literal_eval(opt_list[1])
             self.entry_exit_tran = self.setterEntryTechValue(
                 self.dict_entry_exit_tran)
@@ -1108,7 +1088,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.Profo_infopage(self.dict_paramlist, self.dict_entry_exit_tran,
                                 self.returns, self.positions, self.transactions)
 
-        except:
+        except Exception as e:
+            Logger().error(f"ERROR in EA Auto Analyis Page Calculate: {e}")
             pass
 
     def Profo_infopage(self, TechValue, EntryTechValue, Info_tableView, Positions_tableView, Transactions_tableView):
@@ -1205,6 +1186,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 ###########################
 
     def clear_db_perm(self):
+        Logger().info('Clear and Reset Data Value. ')
         self.setterEntryRangeValue({})
         self.setterEntryRangeTechValue({})
         self.setterEntryTechValue({})
@@ -1212,7 +1194,37 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.setterModeParamlValue(None)
         self.setterModelValue({})
         self.setterret_profo_var([])
-        print(f"Reset Perm Value")
+
+    def calculateinter(self):
+        try:
+            Logger().info('Calculate Inq Value ')
+            self.paramlist = self.getterTechValue()
+            self.paramlistkey = list(self.paramlist.keys())
+            for param in self.paramlistkey:
+                self.pa = talib_list()
+                self.pa.calculatereturn(param)
+        except BaseException as e:
+            Logger().error(f"Calculate Inq Value : {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
+
+    def tickerhistorydownload(self, pdtext):
+        try:
+            if (pdtext is not None):
+                Logger().info('Save the DataFrame to the CSV file ')
+                # create and show the file dialog
+                self.file_dialog = QFileDialog()
+                self.file_path, _ = self.file_dialog.getSaveFileName(
+                    filter='CSV files (*.csv);;All files (*.*)')
+                # save the DataFrame to the CSV file
+                if self.file_path:
+                    pdtext.to_csv(self.file_path)
+                    QMessageBox.information(
+                        None, 'Save Completed', f'The file has been saved to:\n{self.file_path}')
+
+        except Exception as e:
+            Logger().error(f"Ticker History Download !{e}")
+            QMessageBox.warning(None, 'Error Ticker History',
+                                'Please select the option that requires history.')
 
     def mouseDoubleClickEvent(self, event: QMouseEvent):
         if event.button() == Qt.MouseButton.LeftButton and event.modifiers() == Qt.KeyboardModifier.ControlModifier:

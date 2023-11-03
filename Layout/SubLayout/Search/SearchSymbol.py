@@ -3,6 +3,8 @@ from PyQt6.QtWidgets import QMessageBox
 import pandas as pd
 from datetime import datetime
 
+from Layout.Method_Class.logger import Logger
+
 
 class Tickersearch:
 
@@ -23,19 +25,23 @@ class Tickersearch:
                 print('股票代码不可用')
                 QMessageBox.warning(None, 'Error Ticker Symbol', '股票代碼不可用')
                 return False
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error', str(msg))
+        except Exception  as e:
+            Logger().error(f"YF.Ticker Checking: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
             return False
 
     def tickerinfo(self):
         self.ticker = yf.Ticker(self.texts)
+        Logger().info('YF.Ticker Loading')
         return self.ticker.info
 
     def tickerhisory(self, kwargs):
         self.ticker = yf.Ticker(self.texts)
+        Logger().info('YF.History Loading')
         data = self.ticker.history(**kwargs)
         return data
 
     def tickernew(self):
         self.ticker = yf.Ticker(self.texts)
+        Logger().info('YF.News Loading')
         return self.ticker.news

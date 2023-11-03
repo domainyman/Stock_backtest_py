@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QDialog, QHeaderView
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QHeaderView, QFileDialog, QMessageBox
 from Global.Value.UniversalValue import GlobalValue
+from Layout.Method_Class.logger import Logger
 from Layout.Ui_Layout.Info.Ui_prof_pf import Ui_Profo_info
 
 
@@ -12,6 +13,7 @@ class Profo_info(QDialog, Ui_Profo_info):
         # use the Ui_login_form
         self.ui = Ui_Profo_info()
         self.ui.setupUi(self)
+        Logger().info('EA Auto Analyis Profo_info Loading')
         self.TechValuetext = TechValue
         self.EntryTechValuetext = EntryTechValue
         self.Profo_infotext = Info_tableView

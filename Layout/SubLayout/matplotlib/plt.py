@@ -2,11 +2,13 @@ import matplotlib.pyplot as plt
 import mplfinance as mpf
 import talib
 from Global.Value.TechToolParam import TechValue
+from Layout.Method_Class.logger import Logger
 plt.rcParams['font.size'] = 10
 
 
 class matplotlib_Canvas():
     def __init__(self, sybmol, data):
+        Logger().info('Drawing Photo in Core ')
         # super().__init__()
         self.data = data
         self.sybmol = sybmol

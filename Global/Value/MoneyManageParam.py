@@ -1,24 +1,27 @@
+from Layout.Method_Class.logger import Logger
+
+
 class MoneyValue(object):
 
     model = None
     money_perm = {}
 
-    @staticmethod
-    def get_model_name_var():
-        print('Get Model Name Management Perm')
+    @classmethod
+    def get_model_name_var(cls):
+        Logger().info(f"Get Model Name: {cls.model}")
         return MoneyValue.model
 
-    @staticmethod
-    def set_model_name_var(value):
-        print('Set Model Name Management Perm')
+    @classmethod
+    def set_model_name_var(cls, value):
+        Logger().info(f"Set Model Name: {value}")
         MoneyValue.model = value
 
-    @staticmethod
-    def get_model_perm_var():
-        print('Get Model Value Management Perm')
+    @classmethod
+    def get_model_perm_var(cls):
+        Logger().info(f"Get Model Perm: {cls.money_perm}")
         return MoneyValue.money_perm
 
-    @staticmethod
-    def set_model_perm_var(value):
-        print('Set Money Value Management Perm')
+    @classmethod
+    def set_model_perm_var(cls, value):
+        Logger().info(f"Set Model Perm: {value}")
         MoneyValue.money_perm = value

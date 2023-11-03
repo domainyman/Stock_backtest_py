@@ -1,3 +1,4 @@
+from Layout.Method_Class.logger import Logger
 from Layout.Ui_Layout.Info.Ui_companyOfficers import Ui_CompanyOfficers
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6.QtWidgets import QDialog, QHeaderView
@@ -12,6 +13,7 @@ class CompanyOfficerPage(QDialog, Ui_CompanyOfficers):
         self.companyOfficerstext = text
         self.tableviewsetup(self.tableviewModelsetup(
             self.header(), self.tabledata()))
+        Logger().info('Loading Company Summary')
 
     def tableviewModelsetup(self, HeaderLabel, data):
         self.model = QStandardItemModel()
@@ -28,8 +30,6 @@ class CompanyOfficerPage(QDialog, Ui_CompanyOfficers):
     def tableviewsetup(self, model):
         self.ui.officertableview.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch)
-        # self.ui.officertableview.verticalHeader().setSectionResizeMode(
-        #     QHeaderView.ResizeMode.Stretch)
         self.ui.officertableview.horizontalHeader().setStyleSheet(
             "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
         self.ui.officertableview.verticalHeader().setStyleSheet(
@@ -54,8 +54,6 @@ class CompanyOfficerPage(QDialog, Ui_CompanyOfficers):
             print(keys)
 
     def tabledata(self):
-        # new_list = [{'name': officer['name'], 'title': officer['title'],  'totalPay': officer['totalPay'], 'yearBorn': officer['yearBorn']}
-        #             for officer in self.companyOfficerstext if 'name' in officer and 'title' in officer and 'totalPay' in officer and 'yearBorn' in officer]
         new_list = [{'name': officer.get('name'), 'title': officer.get('title'), 'totalPay': officer.get('totalPay'), 'yearBorn': officer.get(
             'yearBorn')} for officer in self.companyOfficerstext if 'name' in officer and 'title' in officer]
         return new_list

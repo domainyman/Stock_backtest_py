@@ -1,58 +1,117 @@
-class GlobalValue(object):
+from Layout.Method_Class.logger import Logger
 
+
+# class GlobalValue(object):
+
+#     symbol = ""
+#     info = {}
+#     history = None
+#     news = []
+#     TechTool = None
+
+#     @staticmethod
+#     def get_Symbol_static_var():
+#         Logger().info(f"Get Symbol Name : {GlobalValue.symbol}")
+#         return GlobalValue.symbol
+
+#     @staticmethod
+#     def set_Symbol_static_var(value):
+#         Logger().info(f"Set Symbol Name : {value}")
+#         GlobalValue.symbol = value
+
+#     @staticmethod
+#     def get_Symbol_info_var():
+#         Logger().info(f"Get Symbol Info : {GlobalValue.info}")
+#         return GlobalValue.info
+
+#     @staticmethod
+#     def set_Symbol_info_var(value):
+#         Logger().info(f"Set Symbol Info : {value}")
+#         GlobalValue.info = value
+
+#     @staticmethod
+#     def get_Symbol_history_var():
+#         Logger().info(f"Get Symbol history : {GlobalValue.history}")
+#         return GlobalValue.history
+
+#     @staticmethod
+#     def set_Symbol_history_var(value):
+#         Logger().info(f"Set Symbol history : {value}")
+#         GlobalValue.history = value
+
+#     @staticmethod
+#     def get_Symbol_new_var():
+#         Logger().info(f"Get Symbol News : {GlobalValue.news}")
+#         return GlobalValue.news
+
+#     @staticmethod
+#     def set_Symbol_new_var(value):
+#         Logger().info(f"Set Symbol News : {value}")
+#         GlobalValue.news = value
+
+#     @staticmethod
+#     def get_TechTool_history_var():
+#         Logger().info(f"Get Symbol Stock History : {GlobalValue.TechTool}")
+#         return GlobalValue.TechTool
+
+#     @staticmethod
+#     def set_TechTool_history_var(value):
+#         Logger().info(f"Set Symbol Stock History : {value}")
+#         GlobalValue.TechTool = value
+
+class GlobalValue:
     symbol = ""
     info = {}
     history = None
     news = []
     TechTool = None
 
-    @staticmethod
-    def get_Symbol_static_var():
-        print('Get Symbol Name : ' + GlobalValue.symbol)
-        return GlobalValue.symbol
+    @classmethod
+    def get_Symbol_static_var(cls):
+        Logger().info(f"Get Symbol Name: {cls.symbol}")
+        return cls.symbol
 
-    @staticmethod
-    def set_Symbol_static_var(value):
-        print('Set Symbol Name : ' + value)
-        GlobalValue.symbol = value
+    @classmethod
+    def set_Symbol_static_var(cls, value):
+        Logger().info(f"Set Symbol Name: {value}")
+        cls.symbol = value
 
-    @staticmethod
-    def get_Symbol_info_var():
-        print('Get Symbol Info')
-        return GlobalValue.info
+    @classmethod
+    def get_Symbol_info_var(cls):
+        Logger().info(f"Get Symbol Info: {cls.info}")
+        return cls.info
 
-    @staticmethod
-    def set_Symbol_info_var(value):
-        print('Set Symbol Info')
-        GlobalValue.info = value
+    @classmethod
+    def set_Symbol_info_var(cls, value):
+        Logger().info(f"Set Symbol Info: {value}")
+        cls.info = value
 
-    @staticmethod
-    def get_Symbol_history_var():
-        print('Get Symbol History')
-        return GlobalValue.history
+    @classmethod
+    def get_Symbol_history_var(cls):
+        Logger().info(f"Get Symbol History: {cls.history}")
+        return cls.history
 
-    @staticmethod
-    def set_Symbol_history_var(value):
-        print('Set Symbol History')
-        GlobalValue.history = value
+    @classmethod
+    def set_Symbol_history_var(cls, value):
+        Logger().info(f"Set Symbol History: {value}")
+        cls.history = value
 
-    @staticmethod
-    def get_Symbol_new_var():
-        print('Get Symbol News')
-        return GlobalValue.news
+    @classmethod
+    def get_Symbol_new_var(cls):
+        Logger().info(f"Get Symbol News: {cls.news}")
+        return cls.news
 
-    @staticmethod
-    def set_Symbol_new_var(value):
-        print('Set Symbol News')
-        GlobalValue.news = value
+    @classmethod
+    def set_Symbol_new_var(cls, value):
+        Logger().info(f"Set Symbol News: {value}")
+        cls.news = value
 
-    @staticmethod
-    def get_TechTool_history_var():
-        # print('Get Tech History')
-        return GlobalValue.TechTool
+    @classmethod
+    def get_TechTool_history_var(cls):
+        Logger().info(f"Get Symbol Stock History: {cls.TechTool}")
+        return cls.TechTool
 
-    @staticmethod
-    def set_TechTool_history_var(value):
-        print('Set Tech History')
-        GlobalValue.TechTool = value
-
+    @classmethod
+    def set_TechTool_history_var(cls, value):
+        Logger().info(f"Set Symbol Stock History: {value}")
+        cls.TechTool = value
