@@ -26,7 +26,7 @@ class minusdi():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['MINUS_DI']
         self.entryba = self.tech_dict['MINUS_DI']['LOW']
-        if (float(self.item) <= float(self.entryba)):
+        if (float(self.item) < float(self.entryba)):
             return True
         else:
             return False
@@ -35,7 +35,7 @@ class minusdi():
         self.tech_dict = self.getterEntryTechValue()
         self.item = testitem.loc['MINUS_DI']
         self.entryba = self.tech_dict['MINUS_DI']['HIGH']
-        if (float(self.item) >= float(self.entryba)):
+        if (float(self.item) > float(self.entryba)):
             return True
         else:
             return False
