@@ -35,7 +35,7 @@ class sar():
                 return True
             else:
                 return False
-        else:
+        elif (self.entryba == 'False'):
             if float(self.MIDPOINTitem) > float(self.Closeitem):
                 return True
             else:
@@ -51,7 +51,7 @@ class sar():
                 return True
             else:
                 return False
-        else:
+        elif (self.exitba == 'False'):
             if float(self.MIDPOINTitem) < float(self.Closeitem):
                 return True
             else:

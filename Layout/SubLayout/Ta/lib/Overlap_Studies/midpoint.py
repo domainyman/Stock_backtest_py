@@ -35,7 +35,7 @@ class midpoint():
                 return True
             else:
                 return False
-        elif (self.exitba == 'False'):
+        elif (self.entryba == 'False'):
             if float(self.MIDPOINTitem) > float(self.MIditem):
                 return True
             else:

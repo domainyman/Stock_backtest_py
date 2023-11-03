@@ -20,10 +20,10 @@ class ma():
         pass
 
     def Check_Entry(self, testitem):
-        pass
+        return True
 
     def Check_Exit(self, testitem):
-        pass
+        return True
 
 
 

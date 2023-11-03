@@ -108,10 +108,10 @@ class GlobalValue:
 
     @classmethod
     def get_TechTool_history_var(cls):
-        Logger().info(f"Get Symbol Stock History: {cls.TechTool}")
+        Logger().info(f"Get Symbol Stock History")
         return cls.TechTool
 
     @classmethod
     def set_TechTool_history_var(cls, value):
-        Logger().info(f"Set Symbol Stock History: {value}")
+        Logger().info(f"Set Symbol Stock History")
         cls.TechTool = value

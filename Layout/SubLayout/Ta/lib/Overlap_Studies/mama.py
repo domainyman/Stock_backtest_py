@@ -34,7 +34,7 @@ class mama():
                 return True
             else:
                 return False
-        else:
+        elif (self.entryba == 'False'):
             if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
             else:
@@ -50,7 +50,7 @@ class mama():
                 return True
             else:
                 return False
-        else:
+        elif (self.exitba == 'False'):
             if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
             else:

@@ -92,7 +92,7 @@ class kdj():
         else:
             self.datadef = 0
             return self.datadef
-        
+
     def highsetup(self):
         tech_dict = self.getterEntryTechValue()
         if 'KDJ' in tech_dict:
@@ -164,10 +164,14 @@ class kdj():
             "background-color: rgb(40, 40, 40);\n""color: rgb(255, 255, 255);")
 
         self.formlayout = QFormLayout()
-        self.formlayout.addRow(self.Fastk_periodlabel, self.fastk_periodlineedit)
-        self.formlayout.addRow(self.slowk_periodlabel, self.slowk_periodlineedit)
-        self.formlayout.addRow(self.slowk_matypelabel, self.slowk_matypelineedit)
-        self.formlayout.addRow(self.slowd_periodlabel, self.slowd_periodlineedit)
+        self.formlayout.addRow(self.Fastk_periodlabel,
+                               self.fastk_periodlineedit)
+        self.formlayout.addRow(self.slowk_periodlabel,
+                               self.slowk_periodlineedit)
+        self.formlayout.addRow(self.slowk_matypelabel,
+                               self.slowk_matypelineedit)
+        self.formlayout.addRow(self.slowd_periodlabel,
+                               self.slowd_periodlineedit)
         self.formlayout.addRow(self.slowd_matypelabel,
                                self.slowd_matypelineedit)
         self.button = QPushButton('Submit')
@@ -210,7 +214,7 @@ class kdj():
 
     def gettertoolhistory(self):
         return GlobalValue.get_TechTool_history_var()
-    
+
     def setterEntryTechValue(self, text):
         TechValue.set_tech_Entry_var(text)
 
@@ -220,9 +224,10 @@ class kdj():
     def calculate(self):
         self.datadb = self.gettertoolhistory()
         self.datadb["KDJ_SLOWK"], self.datadb["KDJ_SLOWD"] = talib.STOCH(
-            self.datadb['High'],self.datadb['Low'],self.datadb['Close'], fastk_period=int(self.fastk_period), slowk_period=int(self.slowk_period), slowk_matype=int(self.slowk_matype), slowd_period=int(self.slowd_period), slowd_matype=int(self.slowd_matype))
-        self.datadb['KDJ_SLOWJ']=3*self.datadb['KDJ_SLOWK']-2*self.datadb['KDJ_SLOWD']
-        
+            self.datadb['High'], self.datadb['Low'], self.datadb['Close'], fastk_period=int(self.fastk_period), slowk_period=int(self.slowk_period), slowk_matype=int(self.slowk_matype), slowd_period=int(self.slowd_period), slowd_matype=int(self.slowd_matype))
+        self.datadb['KDJ_SLOWJ'] = 3 * \
+            self.datadb['KDJ_SLOWK']-2*self.datadb['KDJ_SLOWD']
+
         self.settertoolhistory(self.datadb)
 
     def entrywidgetedit(self):

@@ -56,7 +56,7 @@ class bbands():
                 return True
             else:
                 return False
-        elif(self.entryba == 'False'):
+        elif(self.exitba == 'False'):
             if (float(self.MACDitem) < float(self.MACD_SIGNALitem) and float(self.MACDitem) < float(self.entryMIDDLEBAND)):
                 return True
             else:

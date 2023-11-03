@@ -46,13 +46,13 @@ class ad():
     def Check_Exit(self, testitem):
         self.tech_dict = self.getterEntryTechValue()
         self.entryba = self.tech_dict['AD']['Top Divergence']
+        self.itemclose = testitem.loc['Close']
+        self.itemad = testitem.loc['AD']
+        self.oldclose, self.oldad = self.get_db_for_entry_exit(testitem)
+        self.close_test = self.Check_AD_CLOSE_RELAT(
+            self.oldclose, self.itemclose)
+        self.ad_test = self.Check_AD_CLOSE_RELAT(self.oldad, self.itemad)
         if (self.entryba == 'True'):
-            self.itemclose = testitem.loc['Close']
-            self.itemad = testitem.loc['AD']
-            self.oldclose, self.oldad = self.get_db_for_entry_exit(testitem)
-            self.close_test = self.Check_AD_CLOSE_RELAT(
-                self.oldclose, self.itemclose)
-            self.ad_test = self.Check_AD_CLOSE_RELAT(self.oldad, self.itemad)
             if (self.close_test == "111" and self.ad_test == "000"):
                 return True
             else:

@@ -1,4 +1,5 @@
 import talib
+from Layout.Method_Class.logger import Logger
 from Layout.SubLayout.Ta.lib.Momentum.adx import adx
 from Layout.SubLayout.Ta.lib.Momentum.adxr import adxr
 from Layout.SubLayout.Ta.lib.Momentum.apo import apo
@@ -2229,6 +2230,7 @@ class talib_list():
 
     def groupreturn(self, text):
         try:
+            Logger().info('Technical indicators Widget')
             if (text == "HT_DCPERIOD"):
                 return self.ht_dcperiodgroup()
             elif (text == "HT_DCPHASE"):
@@ -2347,11 +2349,12 @@ class talib_list():
                 return self.adoscgroup()
             elif (text == "OBV"):
                 return self.obvgroup()
-        except BaseException as msg:
-            print(str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Widget : {e}")
 
     def basereturn(self, text):
         try:
+            Logger().info('Technical indicators Base Properties')
             if (text == "RSI"):
                 return self.rsibase()
             elif (text == "MACD"):
@@ -2470,11 +2473,12 @@ class talib_list():
                 return self.adoscbase()
             elif (text == "OBV"):
                 return self.obvbase()
-        except BaseException as msg:
-            print(str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Base Properties: {e}")
 
     def entry_exit_basereturn(self, text):
         try:
+            Logger().info('Technical indicators Exp Properties')
             if (text == "RSI"):
                 return self.rsientry_exit_base()
             elif (text == "MACD"):
@@ -2593,11 +2597,12 @@ class talib_list():
                 return self.adoscentry_exit_base()
             elif (text == "OBV"):
                 return self.obventry_exit_base()
-        except BaseException as msg:
-            print(str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Exp Properties: {e}")
 
     def entry_turn(self, text, testitemrow):
         try:
+            Logger().info('Technical indicators Exp Entry Properties')
             if (text == "RSI"):
                 return self.rsicheckentry(testitemrow)
             elif (text == "MACD"):
@@ -2716,11 +2721,12 @@ class talib_list():
                 return self.adcheckentry(testitemrow)
             elif (text == "ADOSC"):
                 return self.adosccheckentry(testitemrow)
-        except BaseException as msg:
-            print(str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Exp Entry Properties: {e}")
 
     def exit_turn(self, text, testitem):
         try:
+            Logger().info('Technical indicators Exp Exit Properties')
             if (text == "RSI"):
                 return self.rsicheckexit(testitem)
             elif (text == "MACD"):
@@ -2837,11 +2843,12 @@ class talib_list():
                 return self.adcheckexit(testitem)
             elif (text == "ADOSC"):
                 return self.adosccheckexit(testitem)
-        except BaseException as msg:
-            print(str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Exp Exit Properties: {e}")
 
     def entryreturn(self, text):
         try:
+            Logger().info('Technical indicators Exp Widget')
             if (text == "RSI"):
                 return self.rsientry()
             elif (text == "MACD"):
@@ -2958,11 +2965,12 @@ class talib_list():
                 return self.adentry()
             elif (text == "ADOSC"):
                 return self.adoscentry()
-        except BaseException as msg:
-            print(str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Exp Widget: {e}")
 
     def calculatereturn(self, text):
         try:
+            Logger().info('Technical indicators Calculate Properties')
             if (text == "RSI"):
                 self.rsicalculate()
             elif (text == "MACD"):
@@ -3081,8 +3089,8 @@ class talib_list():
                 self.adosccalculate()
             elif (text == "OBV"):
                 self.obvcalculate()
-        except BaseException as msg:
-            print(str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Calculate Properties: {e}")
 
     def matplotlib_main(self):
         matplotlib_Canvas(self.gettersymbolinfo(), self.gettertoolhistory())

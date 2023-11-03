@@ -9,16 +9,19 @@ class Logger:
             "[%(asctime)s] [%(levelname)s] %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S"
         )
-        
-        file_handler = logging.FileHandler(log_file)
-        file_handler.setLevel(logging.DEBUG)
-        file_handler.setFormatter(formatter)
+        if (self.logger.hasHandlers()):
+            self.logger.handlers.clear()
+        # 檢查是否已經存在 FileHandler
+        file_handlers = [handler for handler in self.logger.handlers if isinstance(handler, logging.FileHandler)]
+        if len(file_handlers) == 0:
+            file_handler = logging.FileHandler(log_file)
+            file_handler.setLevel(logging.DEBUG)
+            file_handler.setFormatter(formatter)
+            self.logger.addHandler(file_handler)
         
         console_handler = logging.StreamHandler()
         console_handler.setLevel(logging.INFO)
         console_handler.setFormatter(formatter)
-        
-        self.logger.addHandler(file_handler)
         self.logger.addHandler(console_handler)
     
     def debug(self, message):

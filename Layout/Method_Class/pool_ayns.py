@@ -5,6 +5,8 @@ import pytz
 import backtrader as bt
 import numpy as np
 import multiprocessing
+
+from Layout.Method_Class.logger import Logger
 np.seterr(invalid='ignore')
 
 
@@ -108,6 +110,7 @@ class optcerebrosetup:
 class tread_p_task:
 
     def __init__(self, mesh_conv, toolhistory, modelValue):
+        Logger().info('Running Tread Quantstats Backtest.')
         self.mesh_conv = mesh_conv
         self.toolhistory = toolhistory
         self.modelValue = modelValue

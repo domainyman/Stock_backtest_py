@@ -197,7 +197,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.uishow.show()
 
     def addsearchhistory(self, text):
-        Logger().info(f'Add Search History ,{text}')
+        Logger().info(f'Add Search History :{text}')
         return self.ui.Search_listview.addItem(text)
 
     def clearlineedit(self):
@@ -992,7 +992,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                         print(f"Key '{key}' contains the values: {values}")
                         return False
             return True
-        except BaseException as msg:
+        except Exception as msg:
             QMessageBox.warning(None, 'System Info', "Input Error")
 
     def eatableviewsetup(self, model):
@@ -1083,6 +1083,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.dict_paramlist = ast.literal_eval(opt_list[0])
             self.paramlist = self.setterTechValue(self.dict_paramlist)
             self.calculateinter()
+            print(self.gettertoolhistory())
             self.cal = cerebrosetup()
             self.returns, self.positions, self.transactions, self.gross_lev = self.cal.return_pf()
             self.Profo_infopage(self.dict_paramlist, self.dict_entry_exit_tran,

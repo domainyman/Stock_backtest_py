@@ -1,6 +1,7 @@
 from Global.Value.UniversalValue import GlobalValue
 from Global.Value.TechToolParam import TechValue
 from Global.Value.MoneyManageParam import MoneyValue
+from Layout.Method_Class.logger import Logger
 from Layout.SubLayout.Ta.talib_lib import talib_list
 import quantstats as qs
 import pytz
@@ -31,6 +32,7 @@ class bt_enter_exit(bt.Strategy):
 
 class optcerebrosetup():
     def __init__(self):
+        Logger().info('Running Quantstats Backtest.')
         self.cerebro = bt.Cerebro()
         self.cerebro.adddata(self.btfeel())
         self.cerebro.addstrategy(bt_enter_exit)

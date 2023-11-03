@@ -1,3 +1,4 @@
+from Layout.Method_Class.logger import Logger
 from Layout.Ui_Layout.TechAnalysis.Ui_techanalysisindicatorsTool import Ui_TechAnalysis
 from Layout.SubLayout.Ta.talib_lib import talib_list
 from PyQt6.QtWidgets import QDialog, QMessageBox, QMenu
@@ -30,12 +31,13 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
 
     def reloadvalue(self):
         try:
+            Logger().info('Technical indicators Page Loading')
             self.itemlist = self.getterTechValue()
             self.itemkey = self.itemlist.keys()
             self.ui.toollistWidget.addItems(list(self.itemkey))
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Page: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def showContextMenu(self, pos):
         item = self.ui.toollistWidget.itemAt(pos)
@@ -47,21 +49,20 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
             menu.addAction(self.d)
             action = menu.exec(self.mapToGlobal(pos))
             if action == self.e:
-                print("Opening Edit...")
                 self.indicatoredit(self.ui.toollistWidget.currentItem().text())
                 # Your code here
             if action == self.d:
-                print("Opening Del...")
                 self.deletedictitem()
                 if (self.clearwidget() == True):
                     self.deletelistitem(self.listcurrentRow())
                 # Your code here
             if action is not None:
-                print(
-                    f'Action "{action.text()}" selected for item "{item.text()}"')
+                Logger().info(f'Action "{action.text()}" selected for item "{item.text()}"')
+
 
     def deletedictitem(self):
         try:
+            Logger().info('Technical indicators Page Del Item')
             self.item = self.listwidgetitem()
             self.dict = self.getterTechValue()
             if (self.item in self.dict):
@@ -72,10 +73,10 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
             if (self.item in self.Entrydict):
                 del self.Entrydict[self.item]
             self.setterEntryTechValue(self.Entrydict)
-            
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Page Del Item: {e}")
+            QMessageBox.warning(None, 'System Error',str(e))
 
     def techtool_list(self):
         self.listkey = ["", "Cycle Indicators", "Momentum Indicators",
@@ -89,6 +90,7 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
         self.techgroupindicatorstoolsub(self.text)
 
     def techgroupindicatorstoolsub(self, text):
+        Logger().info('Add Group Technical indicators ')
         if (text == ""):
             self.subcombo()
         else:
@@ -100,7 +102,6 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
                 self.newdict.append(item)
             if (text == 'Momentum Indicators'):
                 self.newdict.append("KDJ")
-                # self.newdict.remove("APO")
             elif (text == 'Overlap Studies'):
                 self.newdict.remove('MAVP')
                 self.newdict.remove('MA')
@@ -118,20 +119,22 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
 
     def techtaddlist(self):
         try:
+            Logger().info('Add Technical indicators ')
             self.text = self.ui.techindicatorstool_combo.currentText()
             if (self.listcheckrepeat(self.text) == False):
                 self.insertbaseparam(self.text)
                 self.ui.toollistWidget.addItem(self.text)
 
             else:
+                Logger().info('Select Technical indicators Repeat')
                 QMessageBox.warning(None, 'Select Repeat',
                                     'Select the tool Repeat.')
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as msg:
+            QMessageBox.warning(None, 'System Error', str(msg))
 
     def insertbaseparam(self, text):
         try:
+            Logger().info('Add Technical indicators item ')
             self.returnbase = talib_list()
             self.base = self.returnbase.basereturn(text)
             self.global_dict = self.getterTechValue()
@@ -142,21 +145,22 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
                 self.Entryglobal_dict = self.getterEntryTechValue()
                 self.Entryglobal_dict.update(self.entrybase)
                 self.setterEntryTechValue(self.Entryglobal_dict)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in insert Technical indicators Page : {e}")
+            QMessageBox.warning(None, 'System Error',str(e))
 
     def listwidgetreset(self):
         try:
+            Logger().info('Technical indicators Page Widget Reset Loading')
             if (self.clearwidget() == True):
                 self.setterTechValue({})
                 self.setterEntryTechValue({})
                 self.ui.toollistWidget.clear()
                 self.ui.toollistWidget.clearSelection()
                 self.ui.toollistWidget.setCurrentItem(None)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Page Widget Reset : {e}")
+            QMessageBox.warning(None, 'System Error',str(e))
 
     def listwidgetitem(self):
         return self.ui.toollistWidget.currentItem().text()
@@ -172,13 +176,14 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
 
     def indicatoredit(self, text):
         try:
+            Logger().info('Opening Edit...')
             if (self.clearwidget() == True):
                 self.returngroup = talib_list()
                 self.returnwidget = self.returngroup.groupreturn(text)
                 self.ui.groupverticalLayout.addLayout(self.returnwidget)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Page Edit: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def setterTechValue(self, text):
         TechValue.set_tech_toolperm_var(text)
@@ -193,6 +198,7 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
         return TechValue.get_tech_Entry_var()
 
     def clearwidget(self):
+        Logger().info('Technical indicators Page Widget')
         layout = self.ui.groupverticalLayout  # 要清除的 QVBoxLayout
         for i in reversed(range(layout.count())):  # 從後往前迭代佈局中的元素
             item = layout.itemAt(i)
@@ -220,9 +226,10 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
             for i in range(self.ui.toollistWidget.count()):  # 迭代 QListWidget 中的所有項目
                 self.item = self.ui.toollistWidget.item(i)
                 if self.item.text() not in self.my_dict.keys():
-                    print(
-                        f"Error: {self.item.text()} is not a valid key in the dictionary")
-            return print("Checked Item List")
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+                    Logger().error(f"Error: {self.item.text()} is not a valid key in the dictionary")
+                    QMessageBox.information(
+                        None, "Error Item", f"Error: {self.item.text()} is not a valid key in the dictionary")
+            return QMessageBox.information(None, "Checked Item", "Checked Item")
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Page Close: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))

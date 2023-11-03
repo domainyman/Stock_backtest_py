@@ -52,7 +52,7 @@ class stochf():
                 return True
             else:
                 return False
-        elif (self.entryba == 'False'):
+        elif (self.exitba == 'False'):
             if float(self.MACDitem) > float(self.MACD_SIGNALitem):
                 return True
             else:

@@ -43,7 +43,7 @@ class macdext():
                 return True
             else:
                 return False
-        elif (self.exitba == 'False'):
+        elif (self.entryba == 'False'):
             if float(self.MACDitem) < float(self.MACD_SIGNALitem):
                 return True
             else:

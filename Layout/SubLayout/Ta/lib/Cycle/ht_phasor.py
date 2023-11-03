@@ -76,7 +76,7 @@ class ht_phasor():
                 return True
             else:
                 return False
-        elif (self.entryba == 'False'):
+        elif (self.exitba == 'False'):
             if float(self.HT_PHASORitem) > float(self.HT_PHASOR_QUADRATUREitem):
                 return True
             else:
