@@ -47,6 +47,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         # use the Ui_login_form
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.Clear_log_file()
         self.showtkhome()
         self.btn_click()
         self.side_meun_btn()
@@ -899,26 +900,31 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def eatechanalysisenterdetail(self):
         try:
+            Logger().info('EA Tech Auto Analyis Page Start')
             if (self.eatechanalysisenter() == True):
-                if (self.check_date_final(self.getterEntryRangeValue()) == True):
-                    self.clear_uiea_tableView()
+                if (self.check_date_final(self.getterEntryRangeValue()) == True) and (self.clear_uiea_tableView() == True):
                     self.mesh_cov = self._muitifrom_ticker()
                     if self.mesh_cov is not None and self.mesh_cov.any():
                         self.proc = tread_p_task(
                             self.mesh_cov, self.gettertoolhistory(), self.getterModelValue())
-                        self.results = self.proc.processes(cpu=20)
-                        self.splier_poc_prof(self.results)
-                        self.eatableviewsetup(self.eatableviewModelsetup(self.eaheader(
-                            self.getterret_profo_var()), self.getterret_profo_var()))
+                        self.results = self.proc.processes()
+                        self.eatableviewshow(self.results)
                     else:
+                        Logger().info('EA Tech Auto Analyis Cover Error')
                         QMessageBox.information(
                             None, 'System Error', 'No mode selected')
                 else:
                     QMessageBox.information(
                         None, 'Input Error', 'Input Error!,Please enter correct information')
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except BaseException as e:
+            Logger().error(f"ERROR in EA Tech Auto Analyis : {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
+
+    def eatableviewshow(self, results):
+        self.profo_var = self.getterret_profo_var()
+        self.splier_poc_prof(results)
+        self.eatableviewsetup(self.eatableviewModelsetup(
+            self.eaheader(self.profo_var), self.profo_var))
 
     def _muitifrom_ticker(self):
         types = self.getterModeParamlValue()
@@ -939,7 +945,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.uploading_poc_prof_var(item)
 
     def uploading_poc_prof_var(self, cov_list):
-        self.val = {"TechRange": cov_list[0], "EntryRange": cov_list[1], "avg_return": cov_list[2],
+        self.val = {"TechRange": cov_list[0], "EntryRange": cov_list[1], "comp": cov_list[2],
                     "cagr": cov_list[3], "sharpe_ratio": cov_list[4], "risk_return_ratio": cov_list[5]}
         return self.addret_profo_var(self.val)
 
@@ -999,7 +1005,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.ResizeToContents)
         self.ui.ea_tableView.setSortingEnabled(True)  # Enable sorting
-        # self.ui.ea_tableView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)  # Allow resizing of header labels
         self.ui.ea_tableView.horizontalHeader().setStretchLastSection(True)
         self.ui.ea_tableView.horizontalHeader().setStyleSheet(
             "QHeaderView::section{background-color: rgb(40, 40, 40); color: rgb(255, 255, 255);}")
@@ -1015,11 +1020,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         for officer in data:
             self.techrange = QStandardItem(str(officer['TechRange']))
             self.entryrange = QStandardItem(str(officer['EntryRange']))
-            self.avg_return = QStandardItem(str(officer['avg_return']))
-            self.cagr = QStandardItem(str(officer['cagr']))
-            self.sharpe_ratio = QStandardItem(str(officer['sharpe_ratio']))
+            self.avg_return = QStandardItem(
+                str("{:.2f}".format(officer['comp'])))
+            self.cagr = QStandardItem(str("{:.2f}".format(officer['cagr'])))
+            self.sharpe_ratio = QStandardItem(
+                str("{:.2f}".format(officer['sharpe_ratio'])))
             self.risk_return_ratio = QStandardItem(
-                str(officer['risk_return_ratio']))
+                str("{:.2f}".format(officer['risk_return_ratio'])))
             self.model.appendRow([self.techrange, self.entryrange, self.avg_return,
                                  self.cagr, self.sharpe_ratio, self.risk_return_ratio])
         return self.model
@@ -1055,7 +1062,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.opt_view(self.selected_rows)
         except Exception as e:
             Logger().error(f"ERROR in EA Auto Analyis Page Clicked: {e}")
-            pass
 
     def eatable_click(self):
         Logger().info('EA Auto Analyis Page Row Data')
@@ -1083,7 +1089,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.dict_paramlist = ast.literal_eval(opt_list[0])
             self.paramlist = self.setterTechValue(self.dict_paramlist)
             self.calculateinter()
-            print(self.gettertoolhistory())
             self.cal = cerebrosetup()
             self.returns, self.positions, self.transactions, self.gross_lev = self.cal.return_pf()
             self.Profo_infopage(self.dict_paramlist, self.dict_entry_exit_tran,
@@ -1091,7 +1096,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         except Exception as e:
             Logger().error(f"ERROR in EA Auto Analyis Page Calculate: {e}")
-            pass
 
     def Profo_infopage(self, TechValue, EntryTechValue, Info_tableView, Positions_tableView, Transactions_tableView):
         self.uishow = Profo_info(
@@ -1188,12 +1192,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def clear_db_perm(self):
         Logger().info('Clear and Reset Data Value. ')
+        ## TechValue ##
         self.setterEntryRangeValue({})
         self.setterEntryRangeTechValue({})
         self.setterEntryTechValue({})
         self.setterTechValue({})
+        ## MoneyValue ##
         self.setterModeParamlValue(None)
         self.setterModelValue({})
+        ## SegmentationRange ##
         self.setterret_profo_var([])
 
     def calculateinter(self):
@@ -1232,6 +1239,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.setWindowState(Qt.WindowState.WindowMaximized)
         else:
             super().mouseDoubleClickEvent(event)
+
+    def Clear_log_file(self):
+        with open('basic.log', 'w'):
+            pass
 
 
 if __name__ == "__main__":

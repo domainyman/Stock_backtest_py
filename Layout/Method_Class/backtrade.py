@@ -95,7 +95,6 @@ class basesetup():
         self.converted_dt = self.conv_date_to_America_New_York(datatime)
         selected_rows = self.df.loc[(self.df['Close'] == close) & (
             self.df.index == self.converted_dt)]
-        # print(selected_rows)
         return selected_rows
 
     def conv_date_to_America_New_York(self, datetime):
@@ -105,10 +104,12 @@ class basesetup():
         return converted_dt
 
     def tran_entry(self, row):
+        Logger().info('Backtest System Check Entry')
         self.entry_exit_tran = self.getterEntryTechValue()
         self.entry_exit_trankeys = list(self.entry_exit_tran.keys())
         self.Checklist = []
         for param in self.entry_exit_trankeys:
+            Logger().info(f'Backtest System Check Entry {param}')
             self.entryCheck = self.check_entery_para(
                 param, row)
             self.Checklist.append(self.entryCheck)
@@ -118,9 +119,11 @@ class basesetup():
             return False
 
     def tran_exit(self, row):
+        Logger().info('Backtest System Check Exit')
         self.exit_exit_trankeys = list(self.getterEntryTechValue().keys())
         self.Checklist = []
         for param in self.exit_exit_trankeys:
+            Logger().info(f'Backtest System Check Exit {param}')
             self.exitCheck = self.check_exit_para(
                 param, row)
             self.Checklist.append(self.exitCheck)
@@ -130,12 +133,14 @@ class basesetup():
             return False
 
     def check_entery_para(self, testname, testitemrow):
+        Logger().info('Backtest System Check Entry From Lib')
         self.name = testname
         self.libret = talib_list()
         self.entryCheck = self.libret.entry_turn(self.name, testitemrow)
         return self.entryCheck
 
     def check_exit_para(self, testname, testitem):
+        Logger().info('Backtest System Check Exit From Lib')
         self.name = testname
         self.libret = talib_list()
         self.entryCheck = self.libret.exit_turn(self.name, testitem)

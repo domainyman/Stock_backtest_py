@@ -1,3 +1,4 @@
+from Layout.Method_Class.logger import Logger
 from Layout.Ui_Layout.Entrymanagement.Ui_entrymanagement import Ui_EntryManagement
 from PyQt6.QtWidgets import QDialog, QMenu, QMessageBox
 from PyQt6.QtCore import Qt
@@ -29,15 +30,17 @@ class Entrymanagepage(QDialog, Ui_EntryManagement):
 
     def listwidgetreset(self):
         try:
+            Logger().info('Technical indicators Exp Page Reset')
             if (self.clearwidget() == True):
                 self.setterTechValue({})
                 self.setterEntryTechValue({})
                 self.ui.EntrytoollistWidget.clear()
                 self.ui.EntrytoollistWidget.clearSelection()
                 self.ui.EntrytoollistWidget.setCurrentItem(None)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                    'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(
+                f"ERROR in Technical indicators Exp Page Reset: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def showContextMenu(self, pos):
         item = self.ui.EntrytoollistWidget.itemAt(pos)
@@ -49,7 +52,6 @@ class Entrymanagepage(QDialog, Ui_EntryManagement):
             # menu.addAction(self.d)
             action = menu.exec(self.mapToGlobal(pos))
             if action == self.e:
-                print("Opening Edit...")
                 self.indicatoredit(
                     self.ui.EntrytoollistWidget.currentItem().text())
                 # Your code here
@@ -60,18 +62,15 @@ class Entrymanagepage(QDialog, Ui_EntryManagement):
             #         self.deletelistitem(self.listcurrentRow())
                 # Your code here
             if action is not None:
-                print(
+                Logger().info(
                     f'Action "{action.text()}" selected for item "{item.text()}"')
-
-    def listcurrentRow(self):
-        index = self.ui.EntrytoollistWidget.currentIndex()
-        return index.row()
 
     def deletelistitem(self, index):
         self.ui.EntrytoollistWidget.takeItem(index)
 
     def clearwidget(self):
         try:
+            Logger().info('Technical indicators Exp Page Clear Widget')
             layout = self.ui.EntrygroupverticalLayout  # 要清除的 QVBoxLayout
             for i in reversed(range(layout.count())):  # 從後往前迭代佈局中的元素
                 item = layout.itemAt(i)
@@ -91,34 +90,38 @@ class Entrymanagepage(QDialog, Ui_EntryManagement):
                             item.removeWidget(widget)
                             widget.setParent(None)
             return True
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                    'System Error !' + str(msg))
-            return False        
+        except BaseException as e:
+            Logger().error(
+                f"ERROR in Technical indicators Exp Page Clear Widget: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
+            return False
 
     def indicatoredit(self, text):
         try:
+            Logger().info('Technical indicators Exp Opt Insert')
             if (self.clearwidget() == True):
                 self.returngroup = talib_list()
                 self.returnwidget = self.returngroup.entryreturn(text)
                 self.ui.EntrygroupverticalLayout.addLayout(self.returnwidget)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(
+                f"ERROR in Technical indicators Exp Page Exp Insert: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def listwidgetitem(self):
         return self.ui.EntrytoollistWidget.currentItem().text()
 
     def deletedictitem(self):
         try:
+            Logger().info('Technical indicators Exp Page Del Item')
             self.item = self.listwidgetitem()
             self.dict = self.getterEntryTechValue()
             if (self.item in self.dict):
                 del self.dict[self.item]
             self.setterEntryTechValue(self.dict)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                    'System Error !' + str(msg)) 
+        except Exception as e:
+            Logger().error(f"ERROR in Technical indicators Exp Page Del Item: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def reloadvalue(self):
         self.itemlist = self.getterTechValue()

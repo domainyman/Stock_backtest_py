@@ -1,3 +1,4 @@
+from Layout.Method_Class.logger import Logger
 from Layout.Ui_Layout.Entrymanagement.Ui_entrymanagement import Ui_EntryManagement
 from PyQt6.QtWidgets import QDialog, QMenu, QMessageBox, QLabel, QLineEdit, QFormLayout, QVBoxLayout, QComboBox, QPushButton, QScrollBar, QMessageBox
 from PyQt6.QtCore import QSize, Qt
@@ -30,6 +31,7 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
 
     def listwidgetreset(self):
         try:
+            Logger().info('Technical indicators Opt Exp Page Reset')
             if (self.clearwidget() == True):
                 self.setterTechValue({})
                 self.setterEntryTechValue({})
@@ -38,9 +40,10 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                 self.ui.EntrytoollistWidget.clear()
                 self.ui.EntrytoollistWidget.clearSelection()
                 self.ui.EntrytoollistWidget.setCurrentItem(None)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(
+                f"ERROR in Technical indicators Opt Exp Page Reset: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def showContextMenu(self, pos):
         item = self.ui.EntrytoollistWidget.itemAt(pos)
@@ -52,7 +55,6 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
             # menu.addAction(self.d)
             action = menu.exec(self.mapToGlobal(pos))
             if action == self.e:
-                print("Opening Edit...")
                 self.indicatoredit(
                     self.ui.EntrytoollistWidget.currentItem().text())
                 # Your code here
@@ -63,18 +65,12 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
             #         self.deletelistitem(self.listcurrentRow())
                 # Your code here
             if action is not None:
-                print(
+                Logger().info(
                     f'Action "{action.text()}" selected for item "{item.text()}"')
-
-    def listcurrentRow(self):
-        index = self.ui.EntrytoollistWidget.currentIndex()
-        return index.row()
-
-    def deletelistitem(self, index):
-        self.ui.EntrytoollistWidget.takeItem(index)
 
     def clearwidget(self):
         try:
+            Logger().info('Technical indicators Exp Opt Page Clear Widget')
             layout = self.ui.EntrygroupverticalLayout  # 要清除的 QVBoxLayout
             for i in reversed(range(layout.count())):  # 從後往前迭代佈局中的元素
                 item = layout.itemAt(i)
@@ -94,18 +90,21 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                             item.removeWidget(widget)
                             widget.setParent(None)
             return True
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(
+                f"ERROR in Technical indicators Exp Opt Page Clear Widget: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
             return False
 
     def indicatoredit(self, text):
         try:
+            Logger().info('Technical indicators Exp Opt Insert')
             if (self.clearwidget() == True):
                 self.return_Tech_tool_perm(text)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(
+                f"ERROR in Technical indicators Exp Opt Page Exp Insert: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def return_Tech_tool_perm(self, text):
         self.tech_tool_key = self.getterEntryTechValue()
@@ -521,7 +520,9 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
         return self.tool_dict
 
     def uploadRangeValue(self, textmain, firstname, lastname, stepname, textname=None):
-        if (int(lastname) < int(firstname)) or (int(lastname) < int(stepname)):
+        Logger().info('Opt Technical indicators Exp Upload')
+        if (float(lastname) < float(firstname)):
+            Logger().info('Technical indicators Exp Page Exp Input Errot')
             QMessageBox.warning(None, 'System Error', 'Input Errot')
         else:
             if (textname == None):
@@ -530,7 +531,6 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                     textmain, firstname, lastname, stepname)
                 self.global_dict.update(tool_dict)
                 self.setterEntryRangeValue(self.global_dict)
-                print(self.getterEntryRangeValue())
                 QMessageBox.information(None, 'Parameter Saved',
                                         'Saved Parameter Setting')
             else:
@@ -539,12 +539,13 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                     textname, firstname, lastname, stepname)
                 self.global_dict[textmain].update(tool_dict)
                 self.setterEntryRangeValue(self.global_dict)
-                print(self.getterEntryRangeValue())
                 QMessageBox.information(None, 'Parameter Saved',
                                         'Saved Parameter Setting')
 
     def uploadboolvalue(self, textmain, boolname, textname=None):
+        Logger().info('Opt Technical indicators Exp Upload')
         if (boolname == ''):
+            Logger().info('Technical indicators Exp Page Exp Input Can not None')
             QMessageBox.information(None, 'Input Error',
                                     'Input Can not None')
         else:
@@ -554,7 +555,6 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                     textmain, boolname)
                 self.global_dict.update(tool_dict)
                 self.setterEntryRangeValue(self.global_dict)
-                print(self.getterEntryRangeValue())
                 QMessageBox.information(None, 'Parameter Saved',
                                         'Saved Parameter Setting')
             else:
@@ -563,12 +563,13 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                     textname, boolname)
                 self.global_dict[textmain].update(tool_dict)
                 self.setterEntryRangeValue(self.global_dict)
-                print(self.getterEntryRangeValue())
                 QMessageBox.information(None, 'Parameter Saved',
                                         'Saved Parameter Setting')
 
     def uploadboolvaluedict(self, textmain, boolname, textname=None, textcontext=None):
+        Logger().info('Opt Technical indicators Exp Upload')
         if (boolname == ''):
+            Logger().info('Technical indicators Exp Page Exp Input Can not None')
             QMessageBox.information(None, 'Input Error',
                                     'Input Can not None')
         else:
@@ -579,23 +580,11 @@ class optEntrymanagepage(QDialog, Ui_EntryManagement):
                 self.global_dict[textmain][textname][textcontext] = boolname
                 # self.global_dict[textmain].update(self.tool_dict)
                 self.setterEntryRangeValue(self.global_dict)
-                print(self.getterEntryRangeValue())
                 QMessageBox.information(None, 'Parameter Saved',
                                         'Saved Parameter Setting')
 
     def listwidgetitem(self):
         return self.ui.EntrytoollistWidget.currentItem().text()
-
-    def deletedictitem(self):
-        try:
-            self.item = self.listwidgetitem()
-            self.dict = self.getterEntryTechValue()
-            if (self.item in self.dict):
-                del self.dict[self.item]
-            self.setterEntryTechValue(self.dict)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
 
     def reloadvalue(self):
         self.itemlist = self.getterTechValue()

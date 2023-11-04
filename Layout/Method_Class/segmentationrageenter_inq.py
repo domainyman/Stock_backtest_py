@@ -6,6 +6,8 @@ import numpy as np
 from prettytable import PrettyTable
 import pandas as pd
 
+from Layout.Method_Class.logger import Logger
+
 
 
 class seqmentationrange_conv():
@@ -23,7 +25,7 @@ class seqmentationrange_inq():
 
     def __init__(self) -> None:
         self.techrange = self.getterEntryRangeTechValue()
-        print(self.techrange)
+        Logger().info(f'seqmentationrange inq {self.techrange}')
 
     def separationtech(self) -> None:
         try:
@@ -49,11 +51,11 @@ class seqmentationrange_inq():
             self.combinations = self.combinations_data(self.matchlist)
             self.table = self.PrettyTabletest(
                 self.field_name(self.matchlist), self.combinations)
-            print(self.table)
+            Logger().info(f'seqmentationrange_inq Table {self.table}')
             self.csv_loading_tech(self.table,self.field_name(self.matchlist))
             return self.combinations
         except Exception as e:
-            print(e)
+            Logger().error(f"ERROR in seqmentationrange inq Table: {e}")
 
     def field_name(self, input_list):
         return [list(dic[0].keys())[0] for dic in input_list]
@@ -207,7 +209,7 @@ class seqmentationrange_entry():
 
     def __init__(self):
         self.techrange = self.getterEntryRangeValue()
-        print(self.techrange)
+        Logger().info(f'seqmentationrange Exp {self.techrange}')
 
     def separationtech(self) -> None:
         try:
@@ -223,11 +225,11 @@ class seqmentationrange_entry():
             self.combinations = self.combinations_data(self.matchlist)
             self.table = self.PrettyTabletest(
                 self.field_name(self.matchlist), self.combinations)
-            print(self.table)
+            Logger().info(f'seqmentationrange Exp Table {self.table}')
             self.csv_loading_entry(self.table,self.field_name(self.matchlist))
             return self.combinations
         except Exception as e:
-            print(e)
+            Logger().error(f"ERROR in seqmentationrange Exp Table: {e}")
 
     def field_name(self, input_list):
         return [list(dic[0].keys())[0] for dic in input_list]

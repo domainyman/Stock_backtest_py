@@ -1,3 +1,4 @@
+from Layout.Method_Class.logger import Logger
 from Layout.Ui_Layout.TechAnalysis.Ui_techanalysisindicatorsTool import Ui_TechAnalysis
 from Layout.SubLayout.Ta.talib_lib import talib_list
 from PyQt6.QtWidgets import QDialog, QMessageBox, QMenu, QLabel, QLineEdit, QFormLayout, QVBoxLayout, QPushButton, QScrollBar, QMessageBox
@@ -17,6 +18,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         self.setuptech()
 
     def mulitbaserange(self, textname, textperm) -> dict:
+        Logger().info('Technical indicators Muit Opt Loading')
         if (textperm == 'matype'):
             self.baseoption = {textname: {textperm: {
                 'First': 0, 'Last': 9, 'Step': 1}}}
@@ -29,11 +31,13 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         return self.baseoption
 
     def baserange(self, textname) -> dict:
+        Logger().info('Technical indicators Base Opt Loading')
         self.baseoption = {textname: {
             'First': 0, 'Last': 100, 'Step': 25}}
         return self.baseoption
 
     def mulitentrybaserange(self, textname, textperm, textvalue=None):
+        Logger().info('Technical indicators Exp Muit Opt Loading')
         self.dict_key_value = self.getterEntryTechValue()[textname][textperm]
         if isinstance(self.dict_key_value, (int, float)):
             self.baseoption = {textname: {textperm: {
@@ -46,16 +50,8 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                 textperm: {'True', 'False', 'Both Test'}}}
         return self.baseoption
 
-    def toolvalueseyup(self, textmain, textname):
-        tech_dict = self.getterTechValue()
-        if textmain in tech_dict:
-            self.data = tech_dict[textmain][textname]
-            return self.data
-        else:
-            self.datadef = 0
-            return self.datadef
-
     def checktoolperm_name(self, text):
+        Logger().info('Technical indicators Opt indicator Contains')
         self.list = []
         self.tech_tool_key = self.getterTechValue()
         if (self.check_dict_contains_dict(self.tech_tool_key, text) == True):
@@ -67,6 +63,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         return self.list
 
     def checkenterperm_name(self, text):
+        Logger().info('Technical indicators Opt Exp Contains')
         self.list = []
         self.tech_tool_key = self.getterEntryTechValue()
         if (self.check_dict_contains_dict(self.tech_tool_key, text) == True):
@@ -78,6 +75,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         return self.list
 
     def setuptech(self):
+        Logger().info('Opt Technical indicators Page Loading')
         self.reloadvalue()
         self.ui.techgroupindicatorstool_combo.addItems(self.techtool_list())
         self.ui.Btn_add.clicked.connect(self.techtaddlist)
@@ -92,12 +90,14 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
 
     def reloadvalue(self):
         try:
+            Logger().info('Opt Technical indicators Page Reload Value')
             self.itemlist = self.getterTechValue()
             self.itemkey = self.itemlist.keys()
             self.ui.toollistWidget.addItems(list(self.itemkey))
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(
+                f"ERROR in Opt Technical indicators Page Reload Value: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def showContextMenu(self, pos):
         item = self.ui.toollistWidget.itemAt(pos)
@@ -109,21 +109,20 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
             menu.addAction(self.d)
             action = menu.exec(self.mapToGlobal(pos))
             if action == self.e:
-                print("Opening Edit...")
                 self.indicatoredit(self.ui.toollistWidget.currentItem().text())
                 # Your code here
             if action == self.d:
-                print("Opening Del...")
                 self.deletedictitem()
                 if (self.clearwidget() == True):
                     self.deletelistitem(self.listcurrentRow())
                 # Your code here
             if action is not None:
-                print(
+                Logger().info(
                     f'Action "{action.text()}" selected for item "{item.text()}"')
 
     def deletedictitem(self):
         try:
+            Logger().info('Opt Technical indicators Page Del Item')
             self.item = self.listwidgetitem()
 
             self.dict = self.getterTechValue()
@@ -146,9 +145,10 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                 del self.rangevaldict[self.item]
             self.setterEntryRangeValue(self.rangevaldict)
 
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except BaseException as e:
+            Logger().error(
+                f"ERROR in Opt Technical indicators Page Del Item: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def techtool_list(self):
         self.listkey = ["", "Cycle Indicators", "Momentum Indicators",
@@ -162,6 +162,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         self.techgroupindicatorstoolsub(self.text)
 
     def techgroupindicatorstoolsub(self, text):
+        Logger().info('Opt Technical indicators Page Retuen Group')
         if (text == ""):
             self.subcombo()
         else:
@@ -191,23 +192,23 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
 
     def techtaddlist(self):
         try:
+            Logger().info('Opt Technical indicators Page insert Item')
             self.text = self.ui.techindicatorstool_combo.currentText()
             if (self.listcheckrepeat(self.text) == False):
                 self.insertbaseparam(self.text)
-                print(self.getterTechValue())
-                print(self.getterEntryTechValue())
-                print(self.getterEntryRangeTechValue())
-                print(self.getterEntryRangeValue())
                 self.ui.toollistWidget.addItem(self.text)
             else:
+                Logger().info('Opt Technical indicators Page insert Item - Select Repeat')
                 QMessageBox.warning(None, 'Select Repeat',
                                     'Select the tool Repeat.')
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            Logger().error(
+                f"ERROR in Opt Technical indicators Page insert Item: {e}")
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def insertbaseparam(self, text):
         try:
+            Logger().info('Opt Technical indicators Page insert Base Properties')
             self.returnbase = talib_list()
             self.base = self.returnbase.basereturn(text)
             if (self.base != None):
@@ -250,7 +251,6 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                         self.sign_valuekey = self.Entryglobal_dict[text][perm].keys(
                         )
                         for sign_value in self.sign_valuekey:
-                            print(sign_value)
                             self.keyentryvalue = self.mulitentrybaserange(
                                 text, perm, textvalue=sign_value)
                             if perm not in self.entryrange_dict[text]:
@@ -270,12 +270,12 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                             self.entryrange_dict.update(self.entrybaserange)
                             self.setterEntryRangeValue(self.entryrange_dict)
 
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as e:
+            QMessageBox.warning(None, 'System Error', str(e))
 
     def listwidgetreset(self):
         try:
+            Logger().info('Reset Opt Technical indicators Base Properties Widget')
             if (self.clearwidget() == True):
                 self.setterTechValue({})
                 self.setterEntryTechValue({})
@@ -284,9 +284,8 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                 self.ui.toollistWidget.clear()
                 self.ui.toollistWidget.clearSelection()
                 self.ui.toollistWidget.setCurrentItem(None)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as msg:
+            QMessageBox.warning(None, 'System Error', str(msg))
 
     def listwidgetitem(self):
         return self.ui.toollistWidget.currentItem().text()
@@ -302,11 +301,12 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
 
     def indicatoredit(self, text):
         try:
+            Logger().info('Opening Edit...')
             if (self.clearwidget() == True):
                 self.return_Tech_tool_perm(text)
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))
+        except Exception as msg:
+            Logger().error(f"ERROR in Opt Technical indicators Page Edit: {e}")
+            QMessageBox.warning(None, 'System Error', str(msg))
 
     def return_Tech_tool_perm(self, text):
         self.tech_tool_key = self.getterTechValue()
@@ -532,13 +532,15 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
     def tool_dicts(self, textname, firstname, lastname, stepname):
         self.tool_dict = {}
         self.tool_dict[textname] = {}
-        self.tool_dict[textname]['First'] = int(firstname)
-        self.tool_dict[textname]['Last'] = int(lastname)
-        self.tool_dict[textname]['Step'] = int(stepname)
+        self.tool_dict[textname]['First'] = float(firstname)
+        self.tool_dict[textname]['Last'] = float(lastname)
+        self.tool_dict[textname]['Step'] = float(stepname)
         return self.tool_dict
 
     def uploadRangeValue(self, textmain, firstname, lastname, stepname, textname=None):
-        if (int(lastname) < int(firstname)) or (int(lastname) < int(stepname)):
+        Logger().info('Opt Technical indicators Upload')
+        if (float(lastname) < float(firstname)):
+            Logger().info('Opt Technical indicators Input Errot')
             QMessageBox.warning(None, 'System Error', 'Input Errot')
         else:
             if (textname == None):
@@ -547,7 +549,6 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                     textmain, firstname, lastname, stepname)
                 self.global_dict.update(tool_dict)
                 self.setterEntryRangeTechValue(self.global_dict)
-                print(self.getterEntryRangeTechValue())
                 QMessageBox.information(None, 'Parameter Saved',
                                         'Saved Parameter Setting')
             else:
@@ -556,7 +557,6 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                     textname, firstname, lastname, stepname)
                 self.global_dict[textmain].update(tool_dict)
                 self.setterEntryRangeTechValue(self.global_dict)
-                print(self.getterEntryRangeTechValue())
                 QMessageBox.information(None, 'Parameter Saved',
                                         'Saved Parameter Setting')
 
@@ -585,6 +585,7 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
         return TechValue.get_entry_range_perm()
 
     def clearwidget(self):
+        Logger().info('Opt Technical indicators Widget')
         layout = self.ui.groupverticalLayout  # 要清除的 QVBoxLayout
         for i in reversed(range(layout.count())):  # 從後往前迭代佈局中的元素
             item = layout.itemAt(i)
@@ -604,17 +605,3 @@ class OptimizationIndicatorTool(QDialog, Ui_TechAnalysis):
                         item.removeWidget(widget)
                         widget.setParent(None)
         return True
-
-    def closeEvent(self, event):
-        try:
-            self.items = []
-            self.my_dict = self.getterTechValue()
-            for i in range(self.ui.toollistWidget.count()):  # 迭代 QListWidget 中的所有項目
-                self.item = self.ui.toollistWidget.item(i)
-                if self.item.text() not in self.my_dict.keys():
-                    print(
-                        f"Error: {self.item.text()} is not a valid key in the dictionary")
-            return print("Checked Item List")
-        except BaseException as msg:
-            QMessageBox.warning(None, 'System Error',
-                                'System Error !' + str(msg))

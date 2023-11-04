@@ -85,7 +85,6 @@ class Moneymanagepage(QDialog, Ui_MoneyManagement):
             self.subclearcombo()
         else:
             self.subclearcombo()
-            print(text)
             if (text == "Portfolio Model"):
                 self.itemmodeldict = self.InitialModelitem()
                 self.ui.money_management_item_combo.addItems(

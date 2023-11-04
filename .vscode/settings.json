@@ -3,4 +3,5 @@
         "editor.defaultFormatter": "ms-python.autopep8",
         "editor.formatOnSave": true,
     },
+    "git.ignoreLimitWarning": true,
 }

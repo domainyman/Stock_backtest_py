@@ -198,7 +198,7 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
         return TechValue.get_tech_Entry_var()
 
     def clearwidget(self):
-        Logger().info('Technical indicators Page Widget')
+        Logger().info('Technical indicators Widget')
         layout = self.ui.groupverticalLayout  # 要清除的 QVBoxLayout
         for i in reversed(range(layout.count())):  # 從後往前迭代佈局中的元素
             item = layout.itemAt(i)
@@ -219,17 +219,3 @@ class TechAnalysispage(QDialog, Ui_TechAnalysis):
                         widget.setParent(None)
         return True
 
-    def closeEvent(self, event):
-        try:
-            self.items = []
-            self.my_dict = self.getterTechValue()
-            for i in range(self.ui.toollistWidget.count()):  # 迭代 QListWidget 中的所有項目
-                self.item = self.ui.toollistWidget.item(i)
-                if self.item.text() not in self.my_dict.keys():
-                    Logger().error(f"Error: {self.item.text()} is not a valid key in the dictionary")
-                    QMessageBox.information(
-                        None, "Error Item", f"Error: {self.item.text()} is not a valid key in the dictionary")
-            return QMessageBox.information(None, "Checked Item", "Checked Item")
-        except Exception as e:
-            Logger().error(f"ERROR in Technical indicators Page Close: {e}")
-            QMessageBox.warning(None, 'System Error', str(e))

@@ -1,3 +1,6 @@
+from Layout.Method_Class.logger import Logger
+
+
 class TechValue(object):
 
     tool_perm = {}
@@ -5,48 +8,44 @@ class TechValue(object):
     range_perm = {}
     range_entry_perm = {}
 
-    @staticmethod
-    def get_tech_toolperm_var():
-        # print('Get Tech Tool Perm')
-        return TechValue.tool_perm
+    @classmethod
+    def get_tech_toolperm_var(cls):
+        Logger().info(f"Get Technical indicator properties: {cls.tool_perm}")
+        return cls.tool_perm
 
-    @staticmethod
-    def set_tech_toolperm_var(value):
-        # print('Set Tech Tool Perm')
-        TechValue.tool_perm = value
+    @classmethod
+    def set_tech_toolperm_var(cls,value):
+        Logger().info(f"Set Technical indicator properties: {value}")
+        cls.tool_perm = value
 
-    @staticmethod
-    def get_tech_Entry_var():
-        # print('Get Entry Tech Perm')
-        return TechValue.Entry_perm
+    @classmethod
+    def get_tech_Entry_var(cls):
+        Logger().info(f"Get Exp properties: {cls.Entry_perm}")
+        return cls.Entry_perm
 
-    @staticmethod
-    def set_tech_Entry_var(value):
-        # print('Set Entry Tech Perm')
-        TechValue.Entry_perm = value
-
-
+    @classmethod
+    def set_tech_Entry_var(cls,value):
+        Logger().info(f"Set Technical indicator properties: {value}")
+        cls.Entry_perm = value
 ##
 
-    @staticmethod
-    def get_tech_range_perm():
-        # print('Get Tool Range Tech Perm')
-        return TechValue.range_perm
+    @classmethod
+    def get_tech_range_perm(cls):
+        Logger().info(f"Get Technical indicator Range : {cls.range_perm}")
+        return cls.range_perm
 
-    @staticmethod
-    def set_tech_range_perm(value):
-        # print('Set Tool Range Tech Perm')
-        TechValue.range_perm = value
-
+    @classmethod
+    def set_tech_range_perm(cls,value):
+        Logger().info(f"Set Technical indicator Range: {value}")
+        cls.range_perm = value
 
 ##
+    @classmethod
+    def get_entry_range_perm(cls):
+        Logger().info(f"Get Exp Range : {cls.range_entry_perm}")
+        return cls.range_entry_perm
 
-    @staticmethod
-    def get_entry_range_perm():
-        # print('Get Entry Range Perm')
-        return TechValue.range_entry_perm
-
-    @staticmethod
-    def set_entry_range_perm(value):
-        # print('Set Entry Range Perm')
-        TechValue.range_entry_perm = value
+    @classmethod
+    def set_entry_range_perm(cls,value):
+        Logger().info(f"Set Exp Range: {value}")
+        cls.range_entry_perm = value

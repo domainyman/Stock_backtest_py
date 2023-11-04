@@ -5,7 +5,7 @@ import pytz
 import backtrader as bt
 import numpy as np
 import multiprocessing
-
+import numba
 from Layout.Method_Class.logger import Logger
 np.seterr(invalid='ignore')
 
@@ -51,23 +51,26 @@ class optcerebrosetup:
         self.db = self.btfeel(datadb)
         self.cerebro.adddata(self.db)
         self.cerebro.addstrategy(bt_enter_exit)
-        # self.cerebro.addobserver(bt.observers.DrawDown)
+        self.cerebro.addobserver(bt.observers.DrawDown)
         self.cerebro.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio')
         self.loopperm()
         results = self.cerebro.run()
         portfolio_stats = results[0].analyzers.getbyname('pyfolio')
         self.returns, self.positions, self.transactions, self.gross_lev = portfolio_stats.get_pf_items()
-        self.return_prof = qs.stats.avg_return(self.returns)
+        self.retuen_comp = qs.stats.comp(self.returns)
         self.return_cagr = qs.stats.cagr(self.returns)
         self.return_sharpe_ratio = qs.stats.sharpe(self.returns)
         self.return_risk_return_ratio = qs.stats.risk_return_ratio(
             self.returns)
 
     def opt_file(self):
-        return self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio
+        return self.retuen_comp, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio
+
+    def returns_retuen_comp(self):
+        return self.retuen_comp
 
     def returns_return_prof(self):
-        return self.return_prof
+        return qs.stats.avg_return(self.returns)
 
     def returns_return_cagr(self):
         return self.return_cagr
@@ -115,16 +118,11 @@ class tread_p_task:
         self.toolhistory = toolhistory
         self.modelValue = modelValue
 
-    def processes(self, cpu):
-        multiprocessing.freeze_support()
-        with ProcessPoolExecutor(max_workers=cpu) as executor:
-            futures = [executor.submit(
-                self.task, mesh, self.toolhistory) for mesh in self.mesh_conv]
-            results = []
-            for future in as_completed(futures):
-                data = future.result()
-                results.append(data)
-            return results
+    def processes(self):
+        with ProcessPoolExecutor(max_workers=multiprocessing.cpu_count()) as executor:
+            results = list(executor.map(self.task, self.mesh_conv, [
+                           self.toolhistory]*len(self.mesh_conv)))
+        return results
 
     def task(self, mesh_conv, toolhistory):
         try:
@@ -134,9 +132,8 @@ class tread_p_task:
             self.return_sharpe_ratio = optcerebrosetup(datadb, self.modelValue)
             self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio = self.return_sharpe_ratio.opt_file()
             return [TechValue, EntryTechValue, self.return_prof, self.return_cagr, self.return_sharpe_ratio, self.return_risk_return_ratio]
-        except :
+        except:
             return []
-    
 
     def split_data(self, mesh_conv):
         return mesh_conv[0], mesh_conv[1]
@@ -224,19 +221,14 @@ class param_return:
         }
         if (model == 'cal'):
             if param in methods:
-                datadb = methods[param]().calculate(
-                    TechValue=TechValue, toolhistory=toolhistory)
-                return datadb
+                return methods[param]().calculate(TechValue=TechValue, toolhistory=toolhistory)
+
         if (model == 'enter'):
             if param in methods:
-                datadb = methods[param]().entry(
-                    row=row, entryTechValue=entryTechValue, toolhistory=toolhistory)
-                return datadb
+                return methods[param]().entry(row=row, entryTechValue=entryTechValue, toolhistory=toolhistory)
         if (model == 'exit'):
             if param in methods:
-                datadb = methods[param]().exit(
-                    row=row, entryTechValue=entryTechValue, toolhistory=toolhistory)
-                return datadb
+                return methods[param]().exit(row=row, entryTechValue=entryTechValue, toolhistory=toolhistory)
 
 
 class basesetup:
@@ -258,7 +250,6 @@ class basesetup:
         self.converted_dt = self.conv_date_to_America_New_York(datatime)
         selected_rows = self.df.loc[(self.df['Close'] == close) & (
             self.df.index == self.converted_dt)]
-        # print(selected_rows)
         return selected_rows
 
     def conv_date_to_America_New_York(self, datetime):
@@ -293,8 +284,6 @@ class basesetup:
 
     def getterret_profo_var(self):
         return Dataset.get__var()
-
-# TechValue['RSI']
 
 
 class rsi_inq():
