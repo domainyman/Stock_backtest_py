@@ -48,23 +48,24 @@ class Tickersearch:
         return self.ticker.news
 
     def re_data_add_30d(self, kwargs):
-        period = kwargs['period']
-        match = re.match(r'(\d+)([yYmMdD])', period)
+        if 'period' in kwargs:
+            period = kwargs['period']
+            match = re.match(r'(\d+)([yYmMdD])', period)
 
-        if match:
-            num = int(match.group(1))
-            unit = match.group(2).lower()
+            if match:
+                num = int(match.group(1))
+                unit = match.group(2).lower()
 
-            if unit == 'y':
-                num_days = num * 365
-            elif unit == 'm':
-                num_days = num * 30
-            elif unit == 'd':
-                num_days = num
+                if unit == 'y':
+                    num_days = num * 365
+                elif unit == 'm':
+                    num_days = num * 30
+                elif unit == 'd':
+                    num_days = num
 
-            period = (datetime.now() - timedelta(days=num_days)) - \
-                timedelta(days=30)
-            kwargs['start'] = period.strftime('%Y-%m-%d')
-            kwargs['end'] = datetime.now().strftime('%Y-%m-%d')
-            del kwargs['period']
+                period = (datetime.now() - timedelta(days=num_days)) - \
+                    timedelta(days=30)
+                kwargs['start'] = period.strftime('%Y-%m-%d')
+                kwargs['end'] = datetime.now().strftime('%Y-%m-%d')
+                del kwargs['period']
         return kwargs
