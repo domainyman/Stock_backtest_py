@@ -39,6 +39,7 @@ import backtrader as bt
 import ast
 from prettytable import PrettyTable
 import multiprocessing
+import re
 
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
@@ -1067,11 +1068,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         Logger().info('EA Auto Analyis Page Row Data')
         selected_indexes = self.ui.ea_tableView.selectionModel().selectedRows()
         model = self.ui.ea_tableView.model()
+        data = []
         for index in selected_indexes:
-            # 获取行号
             row = index.row()
-            # 提取数据
-            data = []
             for column in range(model.columnCount()):
                 item = model.index(row, column)
                 if item.isValid():
@@ -1093,7 +1092,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.returns, self.positions, self.transactions, self.gross_lev = self.cal.return_pf()
             self.Profo_infopage(self.dict_paramlist, self.dict_entry_exit_tran,
                                 self.returns, self.positions, self.transactions)
-
         except Exception as e:
             Logger().error(f"ERROR in EA Auto Analyis Page Calculate: {e}")
 

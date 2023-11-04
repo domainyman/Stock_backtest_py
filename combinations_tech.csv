@@ -1,5 +1,17 @@
-AD
-{'AD': 0.0}
-{'AD': 25.0}
-{'AD': 50.0}
-{'AD': 75.0}
+SMA
+"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 80.0, 'Parameters_5': 130.0}}"
+"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 80.0, 'Parameters_5': 130.0}}"
+"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 80.0, 'Parameters_5': 130.0}}"
+"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 80.0, 'Parameters_5': 130.0}}"
+"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 90.0, 'Parameters_5': 130.0}}"
+"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 90.0, 'Parameters_5': 130.0}}"
+"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 90.0, 'Parameters_5': 130.0}}"
+"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 90.0, 'Parameters_5': 130.0}}"
+"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 80.0, 'Parameters_5': 140.0}}"
+"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 80.0, 'Parameters_5': 140.0}}"
+"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 80.0, 'Parameters_5': 140.0}}"
+"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 80.0, 'Parameters_5': 140.0}}"
+"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 90.0, 'Parameters_5': 140.0}}"
+"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 90.0, 'Parameters_5': 140.0}}"
+"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 90.0, 'Parameters_5': 140.0}}"
+"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 90.0, 'Parameters_5': 140.0}}"

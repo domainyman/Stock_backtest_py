@@ -1,8 +1,8 @@
 import yfinance as yf
 from PyQt6.QtWidgets import QMessageBox
 import pandas as pd
-from datetime import datetime
-
+from datetime import datetime, timedelta
+import re
 from Layout.Method_Class.logger import Logger
 
 
@@ -25,7 +25,7 @@ class Tickersearch:
                 print('股票代码不可用')
                 QMessageBox.warning(None, 'Error Ticker Symbol', '股票代碼不可用')
                 return False
-        except Exception  as e:
+        except Exception as e:
             Logger().error(f"YF.Ticker Checking: {e}")
             QMessageBox.warning(None, 'System Error', str(e))
             return False
@@ -38,10 +38,33 @@ class Tickersearch:
     def tickerhisory(self, kwargs):
         self.ticker = yf.Ticker(self.texts)
         Logger().info('YF.History Loading')
-        data = self.ticker.history(**kwargs)
+        self.kwargs = self.re_data_add_30d(kwargs)
+        data = self.ticker.history(**self.kwargs)
         return data
 
     def tickernew(self):
         self.ticker = yf.Ticker(self.texts)
         Logger().info('YF.News Loading')
         return self.ticker.news
+
+    def re_data_add_30d(self, kwargs):
+        period = kwargs['period']
+        match = re.match(r'(\d+)([yYmMdD])', period)
+
+        if match:
+            num = int(match.group(1))
+            unit = match.group(2).lower()
+
+            if unit == 'y':
+                num_days = num * 365
+            elif unit == 'm':
+                num_days = num * 30
+            elif unit == 'd':
+                num_days = num
+
+            period = (datetime.now() - timedelta(days=num_days)) - \
+                timedelta(days=30)
+            kwargs['start'] = period.strftime('%Y-%m-%d')
+            kwargs['end'] = datetime.now().strftime('%Y-%m-%d')
+            del kwargs['period']
+        return kwargs

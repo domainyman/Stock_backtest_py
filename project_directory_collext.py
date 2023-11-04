@@ -2,6 +2,8 @@ import os
 import ast
 import glob
 from pytube import YouTube
+from datetime import datetime, timedelta
+import re
 
 # class collect_py_file:
 #     def collect_py_files(directory):
@@ -74,27 +76,58 @@ from pytube import YouTube
 # if __name__ == "__main__":
 #     det_import()
 
-class youtube_download:
-# Provide the YouTube video URL
-    def url(self):
-        return ["https://youtu.be/jM1lmadm9_Y?si=8o0IUegyWW-jaDrx",
-                "https://youtu.be/ow6joumT6T4?si=0SOuZFHbFW_HpHNj",
-                ]
+# class youtube_download:
+# # Provide the YouTube video URL
+#     def url(self):
+#         return ["https://youtu.be/jM1lmadm9_Y?si=8o0IUegyWW-jaDrx",
+#                 "https://youtu.be/ow6joumT6T4?si=0SOuZFHbFW_HpHNj",
+#                 ]
 
 
 
-    # Create a YouTube object
-for item in youtube_download().url():
-    yt = YouTube(item)
+#     # Create a YouTube object
+# for item in youtube_download().url():
+#     yt = YouTube(item)
 
-# Get the highest resolution video stream
-    stream = yt.streams.get_highest_resolution()
+# # Get the highest resolution video stream
+#     stream = yt.streams.get_highest_resolution()
 
-# Download the video
-    stream.download()
+# # Download the video
+#     stream.download()
 
-print("Video downloaded successfully!")
+# print("Video downloaded successfully!")
+
+
+# if __name__ == "__main__":
+#     youtube_download()
+
+def re_data_add_30d(kwargs):
+    period = kwargs['period']
+    match = re.match(r'(\d+)([yYmMdD])', period)
+
+    if match:
+        num = int(match.group(1))
+        unit = match.group(2).lower()
+
+        if unit == 'y':
+            num_days = num * 365
+        elif unit == 'm':
+            num_days = num * 30
+        elif unit == 'd':
+            num_days = num
+
+        period = (datetime.now() - timedelta(days=num_days)) - \
+            timedelta(days=30)
+        kwargs['start'] = period.strftime('%Y-%m-%d')
+        kwargs['end'] = datetime.now().strftime('%Y-%m-%d')
+        del kwargs['period']
+    return kwargs
 
 
 if __name__ == "__main__":
-    youtube_download()
+    kwargs = {'interval': '1d', 'period': '2y'}
+    re_data_add_30d(kwargs)  
+    kwargs = {'interval': '30m', 'period': '5d'}
+    re_data_add_30d(kwargs)  
+    kwargs = {'interval': '30m', 'period': '1mo'}
+    re_data_add_30d(kwargs)  
