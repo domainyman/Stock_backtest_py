@@ -181,138 +181,142 @@ color: rgb(255, 255, 255);</string>
            <height>16777215</height>
           </size>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetMinimumSize</enum>
-          </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-             <widget class="QLabel" name="Label_Logo">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);</string>
-              </property>
-              <property name="text">
-               <string>Meun</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Btn_Home">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+           <widget class="QLabel" name="Label_Logo">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="text">
+             <string>Meun</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_Home">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(25, 69, 85);</string>
-              </property>
-              <property name="text">
-               <string>Home</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Btn_Search">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+            </property>
+            <property name="text">
+             <string>Home</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_Search">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(25, 69, 85);</string>
-              </property>
-              <property name="text">
-               <string>Ticker Search</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Btn_Info">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+            </property>
+            <property name="text">
+             <string>Ticker Search</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_Info">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(25, 69, 85);</string>
-              </property>
-              <property name="text">
-               <string>Ticker Info</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Btn_History">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+            </property>
+            <property name="text">
+             <string>Ticker Info</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_History">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(25, 69, 85);</string>
-              </property>
-              <property name="text">
-               <string>Ticker History</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Btn_News">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+            </property>
+            <property name="text">
+             <string>Ticker History</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_News">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(25, 69, 85);</string>
-              </property>
-              <property name="text">
-               <string>Ticker News</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Btn_TA">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+            </property>
+            <property name="text">
+             <string>Ticker News</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_TA">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(25, 69, 85);</string>
-              </property>
-              <property name="text">
-               <string>Ticker Technical Analysis</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Btn_AA">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+            </property>
+            <property name="text">
+             <string>Ticker Technical Analysis</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_AA">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(25, 69, 85);</string>
-              </property>
-              <property name="text">
-               <string>Ticker Auto Analysis</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Btn_EAA">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+            </property>
+            <property name="text">
+             <string>Ticker Auto Analysis</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_EAA">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(25, 69, 85);</string>
-              </property>
-              <property name="text">
-               <string>Ticker Optimization Analysis</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Btn_Exit">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+            </property>
+            <property name="text">
+             <string>Ticker Optimization Analysis</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_ib">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(25, 69, 85);</string>
-              </property>
-              <property name="text">
-               <string>Exit</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Interactive Brokers</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>13</width>
+              <height>374</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_Exit">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(25, 69, 85);</string>
+            </property>
+            <property name="text">
+             <string>Exit</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1228,8 +1232,8 @@ background-color: rgb(25, 69, 85);</string>
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>637</width>
-                          <height>171</height>
+                          <width>89</width>
+                          <height>89</height>
                          </rect>
                         </property>
                         <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -1257,8 +1261,8 @@ background-color: rgb(25, 69, 85);</string>
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>637</width>
-                          <height>171</height>
+                          <width>89</width>
+                          <height>89</height>
                          </rect>
                         </property>
                         <layout class="QVBoxLayout" name="verticalLayout_24">
@@ -2058,8 +2062,8 @@ color: rgb(255, 255, 255);</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>763</width>
-                     <height>493</height>
+                     <width>89</width>
+                     <height>89</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_25">

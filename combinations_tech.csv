@@ -1,17 +1,16 @@
-SMA
-"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 80.0, 'Parameters_5': 130.0}}"
-"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 80.0, 'Parameters_5': 130.0}}"
-"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 80.0, 'Parameters_5': 130.0}}"
-"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 80.0, 'Parameters_5': 130.0}}"
-"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 90.0, 'Parameters_5': 130.0}}"
-"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 90.0, 'Parameters_5': 130.0}}"
-"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 90.0, 'Parameters_5': 130.0}}"
-"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 90.0, 'Parameters_5': 130.0}}"
-"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 80.0, 'Parameters_5': 140.0}}"
-"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 80.0, 'Parameters_5': 140.0}}"
-"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 80.0, 'Parameters_5': 140.0}}"
-"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 80.0, 'Parameters_5': 140.0}}"
-"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 90.0, 'Parameters_5': 140.0}}"
-"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 40.0, 'Parameters_4': 90.0, 'Parameters_5': 140.0}}"
-"{'SMA': {'Parameters_1': 0.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 90.0, 'Parameters_5': 140.0}}"
-"{'SMA': {'Parameters_1': 5.0, 'Parameters_2': 10.0, 'Parameters_3': 50.0, 'Parameters_4': 90.0, 'Parameters_5': 140.0}}"
+RSI
+{'RSI': 0.0}
+{'RSI': 7.0}
+{'RSI': 14.0}
+{'RSI': 21.0}
+{'RSI': 28.0}
+{'RSI': 35.0}
+{'RSI': 42.0}
+{'RSI': 49.0}
+{'RSI': 56.0}
+{'RSI': 63.0}
+{'RSI': 70.0}
+{'RSI': 77.0}
+{'RSI': 84.0}
+{'RSI': 91.0}
+{'RSI': 98.0}

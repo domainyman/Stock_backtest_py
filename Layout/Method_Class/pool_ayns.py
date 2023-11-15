@@ -5,7 +5,6 @@ import pytz
 import backtrader as bt
 import numpy as np
 import multiprocessing
-import numba
 from Layout.Method_Class.logger import Logger
 np.seterr(invalid='ignore')
 
