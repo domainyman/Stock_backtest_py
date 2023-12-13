@@ -340,7 +340,7 @@ background-color: rgb(25, 69, 85);</string>
           <item>
            <widget class="QStackedWidget" name="stackedWidget">
             <property name="currentIndex">
-             <number>5</number>
+             <number>8</number>
             </property>
             <widget class="QWidget" name="main_page">
              <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -1232,7 +1232,7 @@ background-color: rgb(25, 69, 85);</string>
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>89</width>
+                          <width>98</width>
                           <height>89</height>
                          </rect>
                         </property>
@@ -1261,7 +1261,7 @@ background-color: rgb(25, 69, 85);</string>
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>89</width>
+                          <width>98</width>
                           <height>89</height>
                          </rect>
                         </property>
@@ -1710,8 +1710,8 @@ background-color: rgb(25, 69, 85);</string>
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>639</width>
-                        <height>360</height>
+                        <width>98</width>
+                        <height>89</height>
                        </rect>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_22">
@@ -2062,7 +2062,7 @@ color: rgb(255, 255, 255);</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>89</width>
+                     <width>98</width>
                      <height>89</height>
                     </rect>
                    </property>
@@ -2142,6 +2142,120 @@ background-color: rgb(25, 69, 85);</string>
                    </widget>
                   </item>
                  </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="ib_page">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_26">
+                <item>
+                 <layout class="QFormLayout" name="formLayout_6">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_54">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>100</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                    <property name="cursor">
+                     <cursorShape>ArrowCursor</cursorShape>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(25, 69, 85);</string>
+                    </property>
+                    <property name="text">
+                     <string>Symbol</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="ib_ymbol_edit">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(40, 40, 40);
+color: rgb(255, 255, 255);</string>
+                    </property>
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QPushButton" name="ib_setting_btn">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(25, 69, 85);</string>
+                    </property>
+                    <property name="text">
+                     <string>Click To Setting</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_55">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777211</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(25, 69, 85);</string>
+                    </property>
+                    <property name="text">
+                     <string>Setting</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="Line" name="line_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>

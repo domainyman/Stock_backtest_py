@@ -4,6 +4,7 @@ from PyQt6.QtCore import Qt, QDate, QUrl
 from PyQt6.QtWidgets import QApplication, QMainWindow, QHeaderView, QFileDialog, QMessageBox
 from PyQt6.QtGui import QStandardItemModel, QStandardItem, QDesktopServices, QMouseEvent
 from Layout.Method_Class.logger import Logger
+from Layout.SubLayout.IB.IB_setting import IB_setting
 from Layout.SubLayout.info.Profo_infoPage import Profo_info
 from Layout.Ui_Layout.Ui_main import Ui_MainWindow
 from Layout.SubLayout.info.LongBusSumPage import LongBusSumPage
@@ -109,6 +110,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         self.ui.ea_tableView.doubleClicked.connect(self.ea_tableView_clicked)
 
+        self.ui.ib_setting_btn.clicked.connect(self.ib_setting_show)
+
     def side_meun_btn(self):
         Logger().info('Setup Core Side Btn')
         self.ui.Btn_Home.clicked.connect(self.showtkhome)
@@ -119,6 +122,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.Btn_TA.clicked.connect(self.techanalysispage)
         self.ui.Btn_AA.clicked.connect(self.aatechanalysispage)
         self.ui.Btn_EAA.clicked.connect(self.eatechanalysispage)
+        self.ui.Btn_ib.clicked.connect(self.ibpage)
 
     def showtkhome(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
@@ -144,6 +148,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def showeatechanalysis(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.eatechanalysis_page)
 
+    def showIB(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.ib_page)
+
     def showtkerror(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.error_page)
 
@@ -165,6 +172,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def Optentrymanagepage(self):
         self.uishow = optEntrymanagepage()
+        self.uishow.show()
+    
+    def ib_setting_show(self):
+        self.uishow = IB_setting()
         self.uishow.show()
 
     # Base Setting
@@ -1099,6 +1110,27 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.uishow = Profo_info(
             TechValue, EntryTechValue, Info_tableView, Positions_tableView, Transactions_tableView)
         self.uishow.show()
+    # EA Tech Auto Analyis Page
+    # ...............................................................................
+    # IB Page
+    def ibpage(self):
+            try:
+                if (self.gettersymbol() != ""):
+                    Logger().info('IB Page Loading')
+                    self.showIB()
+                    self.clear_db_perm()
+                    self.ibdetail()
+
+                else:
+                    Logger().info('Error IB Page ')
+                    self.showtkhome()
+            except Exception as e:
+                self.showtkerror()
+                Logger().error(f"ERROR in IB Page: {e}")
+
+
+    def ibdetail(self):
+        self.ui.ib_ymbol_edit.setText(self.gettersymbol())
 
 #####################
     def settersymbol(self, text):

@@ -1,16 +1,33 @@
-RSI
-{'RSI': 0.0}
-{'RSI': 7.0}
-{'RSI': 14.0}
-{'RSI': 21.0}
-{'RSI': 28.0}
-{'RSI': 35.0}
-{'RSI': 42.0}
-{'RSI': 49.0}
-{'RSI': 56.0}
-{'RSI': 63.0}
-{'RSI': 70.0}
-{'RSI': 77.0}
-{'RSI': 84.0}
-{'RSI': 91.0}
-{'RSI': 98.0}
+RSI,MACD
+{'RSI': 0.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 0.0, 'signalperiod': 0.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 25.0, 'signalperiod': 0.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 0.0, 'signalperiod': 0.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 25.0, 'signalperiod': 0.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 0.0, 'signalperiod': 9.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 25.0, 'signalperiod': 9.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 0.0, 'signalperiod': 9.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 25.0, 'signalperiod': 9.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 0.0, 'signalperiod': 3.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 25.0, 'signalperiod': 3.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 0.0, 'signalperiod': 3.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 25.0, 'signalperiod': 3.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 0.0, 'signalperiod': 6.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 25.0, 'signalperiod': 6.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 0.0, 'signalperiod': 6.0}}"
+{'RSI': 0.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 25.0, 'signalperiod': 6.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 0.0, 'signalperiod': 0.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 25.0, 'signalperiod': 0.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 0.0, 'signalperiod': 0.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 25.0, 'signalperiod': 0.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 0.0, 'signalperiod': 9.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 25.0, 'signalperiod': 9.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 0.0, 'signalperiod': 9.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 25.0, 'signalperiod': 9.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 0.0, 'signalperiod': 3.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 25.0, 'signalperiod': 3.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 0.0, 'signalperiod': 3.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 25.0, 'signalperiod': 3.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 0.0, 'signalperiod': 6.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 0.0, 'slowperiod': 25.0, 'signalperiod': 6.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 0.0, 'signalperiod': 6.0}}"
+{'RSI': 12.0},"{'MACD': {'fastperiod': 12.0, 'slowperiod': 25.0, 'signalperiod': 6.0}}"
